@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Ragdoll Archers</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1e293b;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #unity-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    #unity-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #1e293b;
+    }
+    #loading-cover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: #0f172a;
+      color: #f8fafc;
+      z-index: 10;
+    }
+    #loading-cover img {
+      width: 96px;
+      height: 96px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+    #loading-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    #unity-progress-bar-empty {
+      width: 240px;
+      height: 10px;
+      border-radius: 999px;
+      background: #334155;
+      overflow: hidden;
+    }
+    #unity-progress-bar-full {
+      width: 0%;
+      height: 100%;
+      background: #f59e0b;
+      transition: width 0.15s ease;
+    }
+  </style>
+  <script>
+    // Block external popup/redirect attempts from in-game promo links
+    window.open = function () { return null; };
+
+    // Clean offline SDK stub so Unity runs without fetching blocked external SDK scripts
+    window.Crazygames = window.Crazygames || {};
+    window.CrazyGames = {
+      SDK: {
+        environment: 'crazygames',
+        addInitCallback: function (cb) {
+          if (typeof cb === 'function') {
+            setTimeout(function () {
+              cb({
+                userAccountAvailable: false,
+                systemInfo: {
+                  countryCode: 'US',
+                  locale: 'en-US',
+                  device: { type: 'desktop' },
+                  os: { name: 'Windows' },
+                  browser: { name: 'Chrome' }
+                }
+              });
+            }, 0);
+          }
+        },
+        ad: {
+          hasAdblock: function (cb) {
+            if (typeof cb === 'function') setTimeout(function () { cb(null, false); }, 0);
+          },
+          requestAd: function (adType, callbacks) {
+            if (callbacks && typeof callbacks.adStarted === 'function') callbacks.adStarted();
+            setTimeout(function () {
+              if (callbacks && typeof callbacks.adFinished === 'function') callbacks.adFinished();
+            }, 10);
+          }
+        },
+        banner: {
+          requestOverlayBanners: function (banners, cb) {
+            if (Array.isArray(banners) && typeof cb === 'function') {
+              banners.forEach(function (b) { cb(b.id, 'bannerError', 'disabled'); });
+            }
+          }
+        },
+        game: {
+          gameplayStart: function () {},
+          gameplayStop: function () {},
+          happytime: function () {},
+          loadingStart: function () {},
+          loadingStop: function () {},
+          inviteLink: function () { return ''; },
+          showInviteButton: function () {},
+          hideInviteButton: function () {}
+        },
+        user: {
+          addAuthListener: function () {},
+          getUser: function (cb) { if (typeof cb === 'function') cb(null, null); },
+          getUserToken: function (cb) { if (typeof cb === 'function') cb('not_logged_in', null); },
+          getXsollaUserToken: function (cb) { if (typeof cb === 'function') cb('not_logged_in', null); },
+          addScore: function () {},
+          showAuthPrompt: function (cb) { if (typeof cb === 'function') cb('disabled', null); },
+          showAccountLinkPrompt: function (cb) { if (typeof cb === 'function') cb('disabled', null); }
+        }
+      }
+    };
+
+    // Intercept blocked external SDK script tag injection and satisfy load listener locally
+    (function () {
+      var origAppendChild = HTMLHeadElement.prototype.appendChild;
+      HTMLHeadElement.prototype.appendChild = function (node) {
+        if (node && node.tagName === 'SCRIPT' && typeof node.src === 'string' &&
+            (node.src.indexOf('crazygames-sdk') !== -1 || node.src.indexOf('trafficjam3d') !== -1)) {
+          node.removeAttribute('src');
+          setTimeout(function () {
+            node.dispatchEvent(new Event('load'));
+          }, 0);
+          return node;
+        }
+        return origAppendChild.call(this, node);
+      };
+    })();
+  </script>
+</head>
+<body>
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" tabindex="0"></canvas>
+  </div>
+  <div id="loading-cover">
+    <img src="../../logos/ragdoll-archers.png" alt="Ragdoll Archers">
+    <div id="loading-title">Loading Ragdoll Archers...</div>
+    <div id="unity-progress-bar-empty">
+      <div id="unity-progress-bar-full"></div>
+    </div>
+  </div>
+  <script>
+    const loaderUrl = "https://cdn.jsdelivr.net/gh/bubbls/ruffle@7117cc5006472d782b65d96abd375597d6273242/v11121212.js";
+    const config = {
+      dataUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/6697b6deba8b617c67b69c55dcd07cb1.data.unityweb",
+      frameworkUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/0be3c3ee7115b26e1ae28e643afdf1f2.js.unityweb",
+      codeUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/b3397c29f6878557c1c614cbf9e196ea.wasm.unityweb",
+      companyName: "Ericetto",
+      productName: "Ragdoll Archers",
+      productVersion: "0.1"
+    };
+
+    const container = document.querySelector("#unity-container");
+    const canvas = document.querySelector("#unity-canvas");
+    const loadingCover = document.querySelector("#loading-cover");
+    const progressBarFull = document.querySelector("#unity-progress-bar-full");
+
+    const unityLoader = document.createElement("script");
+    unityLoader.src = loaderUrl;
+    unityLoader.onload = function () {
+      createUnityInstance(canvas, config, function (progress) {
+        progressBarFull.style.width = (100 * progress) + "%";
+      }).then(function (unityInstance) {
+        window.unityInstance = unityInstance;
+        loadingCover.style.display = "none";
+      }).catch(function (message) {
+        document.getElementById("loading-title").textContent = "Failed to load: " + message;
+      });
+    };
+    document.body.appendChild(unityLoader);
+
+    document.addEventListener("pointerdown", function () {
+      container.focus();
+      window.focus();
+      canvas.focus();
+    });
+  </script>
+</body>
+</html>

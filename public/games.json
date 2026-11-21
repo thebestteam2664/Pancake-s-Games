@@ -31,6 +31,16 @@
       "iframe": "<iframe src=\"./games/ragdoll-hit/index.html\" title=\"Ragdoll Hit\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
+      "id": "ragdoll-archers",
+      "title": "Ragdoll Archers",
+      "category": "Action",
+      "controls": "Mouse Drag to aim & draw bow · Release to shoot · Space to jump",
+      "description": "Physics-driven stickman archery combat from the creator of Ragdoll Hit—fire special arrows, defeat bosses, and battle in 2-player PvP.",
+      "thumbnail": "./logos/ragdoll-archers.png",
+      "featured": true,
+      "iframe": "<iframe src=\"./games/ragdoll-archers/index.html\" title=\"Ragdoll Archers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
       "id": "retro-bowl",
       "title": "Retro Bowl",
       "category": "Sports",
@@ -511,16 +521,6 @@
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drifthunters/index.html\" title=\"Drift Hunters\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "moto-x3m",
-      "title": "Moto X3M",
-      "category": "Racing",
-      "controls": "Up/Down to accelerate & brake · Left/Right to flip in mid-air",
-      "description": "Race stunt bikes across explosive obstacle courses, land backflips to shave seconds, and beat the clock.",
-      "thumbnail": "./logos/moto-x3m.png",
-      "featured": false,
-      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/motox3m/index.html\" title=\"Moto X3M\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
-    },
-    {
       "id": "drive-mad",
       "title": "Drive Mad",
       "category": "Racing",
@@ -549,16 +549,6 @@
       "thumbnail": "./logos/drift-boss.png",
       "featured": false,
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drift-boss/index.html\" title=\"Drift Boss\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
-    },
-    {
-      "id": "moto-x3m-winter",
-      "title": "Moto X3M Winter",
-      "category": "Racing",
-      "controls": "Up/Down to accelerate & brake · Left/Right to flip in mid-air",
-      "description": "Race stunt bikes across icy winter loops, snowmen, and explosive holiday ramps while landing backflips.",
-      "thumbnail": "./logos/moto-x3m-winter.jpg",
-      "featured": false,
-      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/motox3m-winter/index.html\" title=\"Moto X3M Winter\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "monkey-mart",
@@ -599,6 +589,576 @@
       "thumbnail": "./logos/bitlife.png",
       "featured": false,
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/bitlife/index.html\" title=\"BitLife\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "duck-life-4",
+      "title": "Duck Life 4",
+      "category": "Racing",
+      "controls": "Arrow Keys or Mouse Click to train & race your duck",
+      "description": "Train a team of racing ducks across six regions, master mini-games, and win championship tournaments.",
+      "thumbnail": "./logos/duck-life-4.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ducklife4/index.html\" title=\"Duck Life 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "vex-6",
+      "title": "Vex 6",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to run, jump, slide, and wall-climb",
+      "description": "Sprint, vault, and wall-jump through razor-sharp obstacle acts packed with traps, moving platforms, and daily stages.",
+      "thumbnail": "./logos/vex-6.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/vex6/index.html\" title=\"Vex 6\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "vex-5",
+      "title": "Vex 5",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to run, jump, slide, and wall-climb",
+      "description": "Test your stickman parkour precision across deadly spike gauntlets, ziplines, and timed challenge rooms.",
+      "thumbnail": "./logos/vex-5.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/vex5/index.html\" title=\"Vex 5\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fireboy-watergirl-2",
+      "title": "Fireboy & Watergirl 2",
+      "category": "Arcade",
+      "controls": "Arrow Keys for Fireboy · WASD for Watergirl",
+      "description": "Guide both elemental heroes through the Light Temple by flipping mirrors, beams, and switches together.",
+      "thumbnail": "./logos/fireboy-watergirl-2.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fireboywatergirl2/index.html\" title=\"Fireboy & Watergirl 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fireboy-watergirl-3",
+      "title": "Fireboy & Watergirl 3",
+      "category": "Arcade",
+      "controls": "Arrow Keys for Fireboy · WASD for Watergirl",
+      "description": "Team up inside the slippery Ice Temple, solving cooperative physics puzzles across frozen slopes and portals.",
+      "thumbnail": "./logos/fireboy-watergirl-3.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fireboywatergirl3/index.html\" title=\"Fireboy & Watergirl 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "stack",
+      "title": "Stack",
+      "category": "Arcade",
+      "controls": "Space or Mouse Click to drop the sliding block",
+      "description": "Time each drop with razor precision to build the tallest isometric tower without slicing away your base.",
+      "thumbnail": "./logos/stack.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stack/index.html\" title=\"Stack\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "death-run-3d",
+      "title": "Death Run 3D",
+      "category": "Racing",
+      "controls": "WASD or Arrow Keys to dodge shifting neon blocks",
+      "description": "First-person hyper-speed neon tunnel runner where split-second reactions keep you alive through moving walls.",
+      "thumbnail": "./logos/death-run-3d.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/death-run-3d/index.html\" title=\"Death Run 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "pac-man",
+      "title": "Pac-Man",
+      "category": "Arcade",
+      "controls": "Arrow Keys or WASD to navigate the maze",
+      "description": "Chomp every pellet in the classic neon maze, snatch Power Pellets, and outsmart Blinky, Pinky, Inky, and Clyde.",
+      "thumbnail": "./logos/pac-man.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/pacman/index.html\" title=\"Pac-Man\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "snake",
+      "title": "Google Snake",
+      "category": "Arcade",
+      "controls": "Arrow Keys or WASD to steer your snake",
+      "description": "Crisp arcade Snake with customizable speeds, apple modes, walls, and obstacles—grow huge without crashing.",
+      "thumbnail": "./logos/snake.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/snake/index.html\" title=\"Google Snake\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "flappy-bird",
+      "title": "Flappy Bird",
+      "category": "Arcade",
+      "controls": "Space, Up Arrow, or Mouse Click to flap",
+      "description": "Tap to keep flying and thread your way cleanly through endless green pipes for a new high-score medal.",
+      "thumbnail": "./logos/flappy-bird.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/flappybird/index.html\" title=\"Flappy Bird\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "clicker-heroes",
+      "title": "Clicker Heroes",
+      "category": "Idle",
+      "controls": "Mouse Click to strike monsters and hire heroes",
+      "description": "Slay waves of fantasy bosses, recruit and level up dozens of heroes, and ascend for massive idle DPS multipliers.",
+      "thumbnail": "./logos/clicker-heroes.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/clickerheroes/index.html\" title=\"Clicker Heroes\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "we-become-what-we-behold",
+      "title": "We Become What We Behold",
+      "category": "Idle",
+      "controls": "Mouse Move & Click to frame photos for the TV feed",
+      "description": "Short satirical 5-minute game about news cycles, viral outrage, and how what you put on screen shapes a crowd.",
+      "thumbnail": "./logos/we-become-what-we-behold.webp",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/wbwwb/index.html\" title=\"We Become What We Behold\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "there-is-no-game",
+      "title": "There Is No Game",
+      "category": "Arcade",
+      "controls": "Mouse Click & Drag to break the rules and find secrets",
+      "description": "Clever fourth-wall-breaking point-and-click puzzle where the narrator insists there is nothing to play here.",
+      "thumbnail": "./logos/there-is-no-game.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/thereisnogame/index.html\" title=\"There Is No Game\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "tetris",
+      "title": "Tetris",
+      "category": "Arcade",
+      "controls": "Left/Right to move · Up to rotate · Space for hard drop",
+      "description": "Classic falling-block puzzle action—rotate tetrominoes, chain line clears, and keep up as the drop speed climbs.",
+      "thumbnail": "./logos/tetris.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/tetris/index.html\" title=\"Tetris\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "cell-machine",
+      "title": "Cell Machine",
+      "category": "Idle",
+      "controls": "Mouse Drag to place logic cells · Space to run simulation",
+      "description": "Arrange movers, rotators, generators, and pushers into self-running machines to destroy every enemy cell.",
+      "thumbnail": "./logos/cell-machine.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/cell-machine/index.html\" title=\"Cell Machine\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "n-gon",
+      "title": "n-gon",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to aim & shoot · Space for tech shield",
+      "description": "Minimalist 2D physics roguelite shooter where wildly stacking gun mods and bot upgrades break the rules.",
+      "thumbnail": "./logos/n-gon.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ngon/index.html\" title=\"n-gon\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "justfall-lol",
+      "title": "JustFall.lol",
+      "category": "Action",
+      "controls": "WASD or Arrow Keys to move · Space to jump · Shift to dive",
+      "description": "Hexagonal penguin knockout survival—keep moving across disappearing ice tiles to outlast every rival.",
+      "thumbnail": "./logos/justfall-lol.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/justfalllol/index.html\" title=\"JustFall.lol\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "cut-the-rope",
+      "title": "Cut the Rope",
+      "category": "Arcade",
+      "controls": "Mouse Click & Swipe to slice ropes and pop bubbles",
+      "description": "Snip ropes in the right order, ride air cushions, and collect every gold star to feed candy to Om Nom.",
+      "thumbnail": "./logos/cut-the-rope.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/cuttherope/index.html\" title=\"Cut the Rope\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "stickman-climb",
+      "title": "Stickman Climb",
+      "category": "Action",
+      "controls": "A/D or Left/Right Arrows to swing your pickaxe",
+      "description": "Hook your pickaxe onto ledges and fling your pot-bound stickman up tricky vertical obstacle courses.",
+      "thumbnail": "./logos/stickman-climb.avif",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stickmanclimb/index.html\" title=\"Stickman Climb\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "hexgl",
+      "title": "HexGL",
+      "category": "Racing",
+      "controls": "WASD or Arrow Keys to steer anti-gravity craft",
+      "description": "Sleek futuristic WebGL anti-gravity racer where sharp apex turns and boost pads push your lap times to the limit.",
+      "thumbnail": "./logos/hexgl.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/hexgl/index.html\" title=\"HexGL\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fruit-ninja",
+      "title": "Fruit Ninja",
+      "category": "Arcade",
+      "controls": "Mouse Click & Swipe to slice flying fruit",
+      "description": "Swipe rapidly across the screen to slice juicy fruit combos in mid-air while dodging explosive bombs.",
+      "thumbnail": "./logos/fruit-ninja.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fruitninja/index.html\" title=\"Fruit Ninja\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "chrome-dino",
+      "title": "Chrome Dino",
+      "category": "Arcade",
+      "controls": "Space or Up Arrow to jump · Down Arrow to duck",
+      "description": "Endless pixel T-Rex desert runner—leap over cacti clusters and duck beneath swooping pterodactyls.",
+      "thumbnail": "./logos/chrome-dino.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/dino/index.html\" title=\"Chrome Dino\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "vex-4",
+      "title": "Vex 4",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to run, jump, slide, and wall-climb",
+      "description": "High-speed stickman parkour gauntlet packed with spinning saws, crumbling blocks, and timed act challenges.",
+      "thumbnail": "./logos/vex-4.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/vex4/index.html\" title=\"Vex 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "vex-3",
+      "title": "Vex 3",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to run, jump, slide, and wall-climb",
+      "description": "Classic stickman obstacle parkour—chain wall-jumps and precision slides across lethal trap stages.",
+      "thumbnail": "./logos/vex-3.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/vex3/index.html\" title=\"Vex 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "duck-life",
+      "title": "Duck Life",
+      "category": "Racing",
+      "controls": "Arrow Keys or Mouse Click to train & race your duck",
+      "description": "Train a baby duck in running, flying, and swimming mini-games to earn coins and win the championship.",
+      "thumbnail": "./logos/duck-life.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ducklife1/unity/index.html\" title=\"Duck Life\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "duck-life-2",
+      "title": "Duck Life 2",
+      "category": "Racing",
+      "controls": "Arrow Keys or Mouse Click to train & race around the world",
+      "description": "Take your champion duck on a global racing tour—level up climbing, flying, and swimming stats for the World Cup.",
+      "thumbnail": "./logos/duck-life-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ducklife2/unity/index.html\" title=\"Duck Life 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "duck-life-3",
+      "title": "Duck Life 3",
+      "category": "Racing",
+      "controls": "Arrow Keys or Mouse Click to train & evolve your duck",
+      "description": "Pick an evolving athletic duck breed and train across pro leagues to conquer the ultimate Duck Life finals.",
+      "thumbnail": "./logos/duck-life-3.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ducklife3/unity/index.html\" title=\"Duck Life 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "duck-life-6",
+      "title": "Duck Life: Space",
+      "category": "Racing",
+      "controls": "WASD, Arrow Keys, or Mouse Click to train & race across planets",
+      "description": "Blast off to alien planets, customize your space-suited duck, and win intergalactic racing tournaments.",
+      "thumbnail": "./logos/duck-life-6.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ducklife6/index.html\" title=\"Duck Life: Space\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fireboy-watergirl-4",
+      "title": "Fireboy & Watergirl 4",
+      "category": "Arcade",
+      "controls": "Arrow Keys for Fireboy · WASD for Watergirl",
+      "description": "Coordinate both elemental heroes inside the Crystal Temple using teleportation portals and synced switches.",
+      "thumbnail": "./logos/fireboy-watergirl-4.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fireboywatergirl4/index.html\" title=\"Fireboy & Watergirl 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "60s-burger-run",
+      "title": "60 Seconds Burger Run",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows to run · Up Arrow or Space to jump",
+      "description": "Dash through pixel platform stages, ride buses, and reach the burger joint before it closes in 60 seconds.",
+      "thumbnail": "./logos/60s-burger-run.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/60sburgerrun/index.html\" title=\"60 Seconds Burger Run\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "slope-ball",
+      "title": "Slope Ball",
+      "category": "Racing",
+      "controls": "Space or Left Click to bounce and dodge spikes",
+      "description": "Neon rhythm-speed ball runner where sharp jumps dodge red triangles and floating platforms at breakneck pace.",
+      "thumbnail": "./logos/slope-ball.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/slope-ball/index.html\" title=\"Slope Ball\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "worlds-hardest-game-2",
+      "title": "World's Hardest Game 2",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to dodge blue dots and grab coins",
+      "description": "Brutal precision maze challenge—weave past tight patrolling blue circles, snatch yellow coins, and reach the goal.",
+      "thumbnail": "./logos/worlds-hardest-game-2.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/worldhardestgame2/index.html\" title=\"World's Hardest Game 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "geometry-rash",
+      "title": "Geometry Rash",
+      "category": "Arcade",
+      "controls": "Space, Up Arrow, or Mouse Click to jump",
+      "description": "Fast-paced cube runner inspired by Geometry Dash—leap over spikes and ride jump pads to beat every stage.",
+      "thumbnail": "./logos/geometry-rash.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/geometryrash/index.html\" title=\"Geometry Rash\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "stickman-boost",
+      "title": "Stickman Boost",
+      "category": "Action",
+      "controls": "WASD or Arrow Keys to sprint, slide, climb, and backflip",
+      "description": "Acrobatic stickman stunt runner—chain wall-runs, ziplines, and motorcycle boosts across trap-filled courses.",
+      "thumbnail": "./logos/stickman-boost.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stickmanboost/index.html\" title=\"Stickman Boost\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "lows-adventures-2",
+      "title": "Low's Adventures 2",
+      "category": "Arcade",
+      "controls": "Arrow Keys or A/D to move · W/Up to jump · Space to stomp",
+      "description": "Charming retro pixel platformer—collect coins, stomp enemies, and unlock hidden keys across 32 handcrafted stages.",
+      "thumbnail": "./logos/lows-adventures-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/lowsadventures2/index.html\" title=\"Low's Adventures 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "rise-higher",
+      "title": "Rise Higher",
+      "category": "Arcade",
+      "controls": "Mouse Move or Drag to guard the rising balloon",
+      "description": "Sweep falling blocks aside with your shield orb to protect the delicate balloon as it climbs higher and higher.",
+      "thumbnail": "./logos/rise-higher.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/risehigher/index.html\" title=\"Rise Higher\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "factory-balls-forever",
+      "title": "Factory Balls Forever",
+      "category": "Idle",
+      "controls": "Mouse Drag to dip and mask balls in order",
+      "description": "Clever logic puzzle—layer paint buckets, belts, hats, and stencils in the exact sequence to match the target ball.",
+      "thumbnail": "./logos/factory-balls-forever.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/factoryballsforever/index.html\" title=\"Factory Balls Forever\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "universal-paperclips",
+      "title": "Universal Paperclips",
+      "category": "Idle",
+      "controls": "Mouse Click to manufacture paperclips and expand AI",
+      "description": "Deep incremental strategy classic—start by clicking single paperclips and scale into planetary automation.",
+      "thumbnail": "./logos/universal-paperclips.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/universal-paperclips/index.html\" title=\"Universal Paperclips\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "little-alchemy",
+      "title": "Little Alchemy",
+      "category": "Idle",
+      "controls": "Mouse Drag to combine elements and discover new items",
+      "description": "Mix air, earth, fire, and water to unlock hundreds of unexpected creations from dinosaurs to spaceships.",
+      "thumbnail": "./logos/little-alchemy.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/littlealchemy/index.html\" title=\"Little Alchemy\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "wordle",
+      "title": "Wordle",
+      "category": "Arcade",
+      "controls": "Keyboard to type 5-letter guesses · Enter to submit",
+      "description": "Unlimited 5-letter word deduction puzzle—use green and yellow tile clues to crack the secret word in six tries.",
+      "thumbnail": "./logos/wordle.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/wordle/index.html\" title=\"Wordle\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "champion-island",
+      "title": "Champion Island Games",
+      "category": "Sports",
+      "controls": "Arrow Keys or WASD to explore · Space for action",
+      "description": "Pixel RPG sports adventure featuring table tennis, skateboarding, archery, rugby, marathon, and climbing events.",
+      "thumbnail": "./logos/champion-island.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/championisland/index.html\" title=\"Champion Island Games\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "halloween-2016",
+      "title": "Magic Cat Academy",
+      "category": "Horror",
+      "controls": "Mouse Drag to draw spell symbols over ghosts",
+      "description": "Cast wand gestures at incoming haunted library spirits as Momo the black cat before they reach you.",
+      "thumbnail": "./logos/halloween-2016.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/halloween2016/index.html\" title=\"Magic Cat Academy\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "dante",
+      "title": "Dante",
+      "category": "Horror",
+      "controls": "Arrow Keys or WASD to move · Mouse to aim & fire",
+      "description": "Atmospheric retro-pixel arcade demon-slayer shooter where tight dodging meets fast boss fights.",
+      "thumbnail": "./logos/dante.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/dante/index.html\" title=\"Dante\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "xx142-b2",
+      "title": "xx142-b2.exe",
+      "category": "Horror",
+      "controls": "Keyboard commands & WASD to hack through infected nodes",
+      "description": "Tense retro terminal-hacking cyber horror puzzle where you quarantine corrupted memory sectors in time.",
+      "thumbnail": "./logos/xx142-b2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/xx142-b2.exe/index.html\" title=\"xx142-b2.exe\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "super-smash-bros",
+      "title": "Super Smash Bros",
+      "category": "Action",
+      "controls": "Keyboard customizable in emulator bar · Z/X for attacks",
+      "description": "Classic N64 arena brawler—knock Mario, Link, Pikachu, Fox, and Kirby off iconic stages with high-percent smash hits.",
+      "thumbnail": "./logos/super-smash-bros.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/supersmashbros/index.html\" title=\"Super Smash Bros\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "pokemon",
+      "title": "Pokemon Collection",
+      "category": "Arcade",
+      "controls": "Arrow Keys to move · Z/X for A/B buttons · Enter for Start",
+      "description": "Play classic handheld Pokemon editions including Red, Blue, Yellow, Gold, Silver, Crystal, Ruby, Sapphire, Emerald, and FireRed.",
+      "thumbnail": "./logos/pokemon.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/pokemon/index.html\" title=\"Pokemon Collection\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "minecraft-classic",
+      "title": "Minecraft 1.5.2",
+      "category": "Action",
+      "controls": "WASD to move · Space to jump · Click to mine & build",
+      "description": "Full browser-based voxel survival and creative sandbox—mine ore, craft tools, and build towering worlds.",
+      "thumbnail": "./logos/minecraft-classic.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/online-mc/index.html\" title=\"Minecraft 1.5.2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "blood-tournament",
+      "title": "Blood Tournament",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to aim & fire · 1-4 to swap guns",
+      "description": "Fast-paced 3D arena shooter—battle relentless waves of fighters across closed combat arenas.",
+      "thumbnail": "./logos/blood-tournament.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/bloodtournament/index.html\" title=\"Blood Tournament\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "btd-6",
+      "title": "Bloons TD 6",
+      "category": "Idle",
+      "controls": "Mouse Click to place & upgrade monkey towers",
+      "description": "Fan-made tower defense edition—deploy dart monkeys, snipers, and hero upgrades to pop escalating bloon waves.",
+      "thumbnail": "./logos/btd-6.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/btd6/index.html\" title=\"Bloons TD 6\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "osu",
+      "title": "osu!",
+      "category": "Arcade",
+      "controls": "Mouse to aim circles · Z/X or Click on the beat",
+      "description": "Rhythm action hit-circle challenge—click approach rings, drag sliders, and spin fast in sync with the music.",
+      "thumbnail": "./logos/osu.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/osu/index.html\" title=\"osu!\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "osu-mania",
+      "title": "osu!mania",
+      "category": "Arcade",
+      "controls": "D, F, J, K keys to hit falling rhythm notes",
+      "description": "Four-key vertical rhythm challenge—nail dense chord streams and long holds to build massive accuracy combos.",
+      "thumbnail": "./logos/osu-mania.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/osumania/index.html\" title=\"osu!mania\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "sand-game",
+      "title": "Sand Game",
+      "category": "Idle",
+      "controls": "Mouse Click & Drag to draw sand, water, fire, and TNT",
+      "description": "Falling-sand physics sandbox—mix lava, ice, acid, plants, gunpowder, and oil to spark chain reactions.",
+      "thumbnail": "./logos/sand-game.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/sand/index.html\" title=\"Sand Game\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "offline-paradise",
+      "title": "Offline Paradise",
+      "category": "Action",
+      "controls": "WASD or Arrow Keys to move · Space to dash & dodge",
+      "description": "Crisp neon pixel arcade action runner—chain dashes and survive intense bullet-hell boss patterns.",
+      "thumbnail": "./logos/offline-paradise.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/offlineparadise/index.html\" title=\"Offline Paradise\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "wall-smash",
+      "title": "Wall Smash",
+      "category": "Action",
+      "controls": "Mouse Aim & Click to launch projectiles and shatter walls",
+      "description": "Physics demolition smasher—angle heavy shots through stacked blocks and targets in as few throws as possible.",
+      "thumbnail": "./logos/wall-smash.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/wallsmash/index.html\" title=\"Wall Smash\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "i-wanna-be-thy-copy",
+      "title": "I Wanna Be Thy Copy",
+      "category": "Arcade",
+      "controls": "Arrow Keys to move · Shift to jump · Z to shoot",
+      "description": "Unforgiving precision platformer full of sneaky spike traps, tight double-jumps, and retro boss battles.",
+      "thumbnail": "./logos/i-wanna-be-thy-copy.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/iwbtc/index.html\" title=\"I Wanna Be Thy Copy\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "commodore-clicker",
+      "title": "Commodore Clicker",
+      "category": "Idle",
+      "controls": "Mouse Click to draw pixels & buy C64 hardware upgrades",
+      "description": "Retro incremental clicker—render a Commodore 64 display pixel by pixel while upgrading CPU clock speeds.",
+      "thumbnail": "./logos/commodore-clicker.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/commodoreclicker/index.html\" title=\"Commodore Clicker\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fluid-sim",
+      "title": "WebGL Fluid Sim",
+      "category": "Idle",
+      "controls": "Mouse Drag to swirl glowing fluid plumes · Panel for presets",
+      "description": "Mesmerizing interactive WebGL fluid physics toy—paint swirling neon smoke trails and customize glow settings.",
+      "thumbnail": "./logos/fluid-sim.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fluidsim/index.html\" title=\"WebGL Fluid Sim\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     }
   ]
 }
