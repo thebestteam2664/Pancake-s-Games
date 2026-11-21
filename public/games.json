@@ -8,7 +8,7 @@
       "description": "Fast-paced third-person battle royale and box-fight builder against live opponents or practice bots.",
       "thumbnail": "./logos/1v1-lol.png",
       "featured": true,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/1v1lol/index.html\" title=\"1v1.lol\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/1v1lol/index.html\" title=\"1v1.lol\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "football-bros",
@@ -38,7 +38,7 @@
       "description": "Manage your pro football franchise, draft stars, call plays, and throw game-winning drives in 8-bit style.",
       "thumbnail": "./logos/retro-bowl.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/retrobowl/index.html\" title=\"Retro Bowl\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/retrobowl/index.html\" title=\"Retro Bowl\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "retro-bowl-college",
@@ -48,7 +48,7 @@
       "description": "Coach a college football program—recruit top freshmen, manage GPA and morale, and chase the national bowl.",
       "thumbnail": "./logos/retro-bowl-college.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/retrobowlcollege/index.html\" title=\"Retro Bowl College\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/retrobowlcollege/index.html\" title=\"Retro Bowl College\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "1-on-1-soccer",
@@ -58,7 +58,7 @@
       "description": "Classic 1v1 arcade soccer duels on a fast turf pitch—win quick matches solo or against a friend.",
       "thumbnail": "./logos/1-on-1-soccer.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/1on1soccer/index.html\" title=\"1 on 1 Soccer\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/1on1soccer/index.html\" title=\"1 on 1 Soccer\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "2d-rocket-league",
@@ -68,7 +68,7 @@
       "description": "Top-down rocket-powered car soccer—boost into aerial clears, smash goals, and defend your net.",
       "thumbnail": "./logos/2d-rocket-league.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/2drocketleague/index.html\" title=\"2D Rocket League\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/rocketleague/index.html\" title=\"2D Rocket League\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "soccer-tournament",
@@ -88,17 +88,17 @@
       "description": "Line up crazy trick shots across floating islands, sticky walls, and ice traps to sink under par.",
       "thumbnail": "./logos/stickman-golf.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/stickmangolf/index.html\" title=\"Stickman Golf\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stickmangolf/index.html\" title=\"Stickman Golf\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "boxing-physics-2",
-      "title": "Boxing Physics 2",
+      "id": "drunken-boxing-2",
+      "title": "Drunken Boxing 2",
       "category": "Sports",
-      "controls": "W / Up Arrow to punch & lunge · Two-player keys supported",
-      "description": "Wild ragdoll boxing modes including soccer, trap floors, and crazy knockouts solo or 2-player.",
-      "thumbnail": "./logos/boxing-physics-2.png",
+      "controls": "WASD / Arrow Keys to throw wild punches and dodge · 1P or 2P local",
+      "description": "Wobbly 1v1 and 2-player ragdoll boxing where timing your energy bar lands hilarious knockouts.",
+      "thumbnail": "./logos/drunken-boxing-2.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/boxingphysics2/index.html\" title=\"Boxing Physics 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/c363f572a1dc4ca186647cece386385e/\" title=\"Drunken Boxing 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "soccer-random",
@@ -108,7 +108,7 @@
       "description": "Two-button physics soccer chaos across changing weather, balls, and wild stadium physics.",
       "thumbnail": "./logos/soccer-random.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/soccerrandom/index.html\" title=\"Soccer Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/soccerrandom/index.html\" title=\"Soccer Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "basket-random",
@@ -118,7 +118,7 @@
       "description": "Wild physics basketball with changing courts, giant hoops, and sudden two-player buzzer beaters.",
       "thumbnail": "./logos/basket-random.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/basketrandom/index.html\" title=\"Basket Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/basketrandom/index.html\" title=\"Basket Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "basketball-stars",
@@ -128,7 +128,7 @@
       "description": "1v1 and 2v2 arcade streetball matchups with dunks, three-pointers, and signature supershots.",
       "thumbnail": "./logos/basketball-stars.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/basketball-stars/index.html\" title=\"Basketball Stars\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/basketball-stars/index.html\" title=\"Basketball Stars\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "basket-bros",
@@ -138,7 +138,7 @@
       "description": "Fast-paced arcade basketball with high-flying dunks, crazy power-ups, and 1v1 or 2-player local matches.",
       "thumbnail": "./logos/basket-bros.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/basketbros/index.html\" title=\"Basket Bros\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/basketbros/index.html\" title=\"Basket Bros\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "boxing-random",
@@ -148,7 +148,7 @@
       "description": "Unpredictable ragdoll boxing matches with elastic arms, knockout rounds, and random arenas.",
       "thumbnail": "./logos/boxing-random.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/boxingrandom/index.html\" title=\"Boxing Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/boxingrandom/index.html\" title=\"Boxing Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "8-ball-pool",
@@ -158,7 +158,7 @@
       "description": "Line up bank shots, apply cue spin, and sink the 8-ball cleanly against CPU or a friend.",
       "thumbnail": "./logos/8-ball-pool.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/pool/index.html\" title=\"8 Ball Pool\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/50a8e5775cf8476992f756811468bcbd/\" title=\"8 Ball Pool\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "fnaf-1",
@@ -168,7 +168,7 @@
       "description": "Survive five midnight shifts at Freddy Fazbear's Pizza by conserving power and monitoring security feeds.",
       "thumbnail": "./logos/fnaf-1.ico",
       "featured": true,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/fnaf/index.html\" title=\"Five Nights at Freddy's 1\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fnaf/index.html\" title=\"Five Nights at Freddy's 1\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "fnaf-2",
@@ -178,7 +178,7 @@
       "description": "No doors to hide behind—use the Freddy mask, flashlight, and Prize Corner music box to survive the night.",
       "thumbnail": "./logos/fnaf-2.ico",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/fnaf2/index.html\" title=\"Five Nights at Freddy's 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/fnaf/2/2\" title=\"Five Nights at Freddy's 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "fnaf-3",
@@ -188,7 +188,7 @@
       "description": "Thirty years later at Fazbear's Fright, track Springtrap across cameras and keep audio, camera, and vent systems online.",
       "thumbnail": "./logos/fnaf-3.ico",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/fnaf3/index.html\" title=\"Five Nights at Freddy's 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/fnaf/3/2\" title=\"Five Nights at Freddy's 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "fnaf-4",
@@ -198,7 +198,7 @@
       "description": "Defend the bedroom from nightmare animatronics using only a flashlight and sharp listening at each doorway.",
       "thumbnail": "./logos/fnaf-4.ico",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/fnaf4/index.html\" title=\"Five Nights at Freddy's 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/fnaf/4/inde\" title=\"Five Nights at Freddy's 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "baldis-basics",
@@ -208,17 +208,17 @@
       "description": "Collect all 7 notebooks around the schoolhouse and escape while outsmarting Baldi and the hallway cast.",
       "thumbnail": "./logos/baldis-basics.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/baldis-basics/index.html\" title=\"Baldi's Basics\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/baldi-basics/inde\" title=\"Baldi's Basics\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "backrooms-2d",
-      "title": "Backrooms 2D",
+      "title": "Backrooms",
       "category": "Horror",
-      "controls": "WASD or Arrow Keys to explore · E to interact",
-      "description": "Navigate endless yellow maze corridors, manage your sanity, and escape the creature lurking in the Backrooms.",
+      "controls": "WASD to move · Mouse to look · E to interact · Shift to sprint",
+      "description": "Explore eerie yellow maze levels, solve clues, and escape the creatures lurking inside the Backrooms.",
       "thumbnail": "./logos/backrooms-2d.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/2d/index.html\" title=\"Backrooms 2D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/2eb8260c11ae4628926d434548a81ec5/\" title=\"Backrooms\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "bad-time-simulator",
@@ -228,7 +228,7 @@
       "description": "Test your reflexes in the iconic Sans boss fight with bone traps, Gaster Blasters, and practice modes.",
       "thumbnail": "./logos/bad-time-simulator.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/badtimesimulator/index.html\" title=\"Bad Time Simulator\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/badtimesimulator/index.html\" title=\"Bad Time Simulator\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "among-us",
@@ -238,7 +238,7 @@
       "description": "Complete ship tasks across the Skeld while watching out for impostors lurking in the vents.",
       "thumbnail": "./logos/among-us.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/amongusnew/index.html\" title=\"Among Us\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/amongus/index.html\" title=\"Among Us\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "slope",
@@ -248,7 +248,7 @@
       "description": "Steer a high-speed ball down endless neon-lined 3D slopes, dodging red blocks and tight gaps.",
       "thumbnail": "./logos/slope.png",
       "featured": true,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/slope/index.html\" title=\"Slope\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/slope/index.html\" title=\"Slope\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "snow-rider-3d",
@@ -258,7 +258,7 @@
       "description": "Carve down icy mountain slopes on a sled, dodge rolling snowballs and pines, and unlock new sleds.",
       "thumbnail": "./logos/snow-rider-3d.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/snowrider3d/index.html\" title=\"Snow Rider 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/3b79a8537ebc414fb4f9672a9b8c68c8/\" title=\"Snow Rider 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "tunnel-rush",
@@ -268,7 +268,7 @@
       "description": "High-speed first-person tunnel dodging as rotating geometric barriers accelerate faster every second.",
       "thumbnail": "./logos/tunnel-rush.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/tunnelrush/index.html\" title=\"Tunnel Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/tunnelrush/index.html\" title=\"Tunnel Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "subway-surfers",
@@ -278,7 +278,7 @@
       "description": "Dash along the subway tracks, leap over oncoming trains, and collect coins and jetpack boosts.",
       "thumbnail": "./logos/subway-surfers.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/subway-surfers-ny/index.html\" title=\"Subway Surfers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/subway-surfers-ny/index.html\" title=\"Subway Surfers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "temple-run-2",
@@ -288,7 +288,7 @@
       "description": "Sprint across cliffside ruins, zip lines, and minecart tracks while outrunning the demon monkey.",
       "thumbnail": "./logos/temple-run-2.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/templerun2/index.html\" title=\"Temple Run 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/templerun2/index.html\" title=\"Temple Run 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "geometry-dash",
@@ -298,7 +298,7 @@
       "description": "Time every leap and rocket glide to the rhythm across spike-filled geometric obstacle courses.",
       "thumbnail": "./logos/geometry-dash.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/gdlite/index.html\" title=\"Geometry Dash\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/geometrydash/index.html\" title=\"Geometry Dash\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "a-dance-of-fire-and-ice",
@@ -308,7 +308,7 @@
       "description": "Precision one-button rhythm game where two orbiting planets step along winding musical paths.",
       "thumbnail": "./logos/a-dance-of-fire-and-ice.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/adofai/index.html\" title=\"A Dance of Fire and Ice\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/adofai/index.html\" title=\"A Dance of Fire and Ice\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "crossy-road",
@@ -318,7 +318,7 @@
       "description": "Hop across busy highways, train tracks, and floating river logs without getting caught behind.",
       "thumbnail": "./logos/crossy-road.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/crossyroad/index.html\" title=\"Crossy Road\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/crossyroad/index.html\" title=\"Crossy Road\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "stickman-hook",
@@ -328,7 +328,7 @@
       "description": "Launch off bounce pads and swing through grapples across hundreds of fast momentum levels.",
       "thumbnail": "./logos/stickman-hook.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/stickman-hook/index.html\" title=\"Stickman Hook\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stickman-hook/index.html\" title=\"Stickman Hook\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "cluster-rush",
@@ -338,7 +338,7 @@
       "description": "Leap across speeding semi-trucks in mid-air while dodging falling containers and exploding rigs.",
       "thumbnail": "./logos/cluster-rush.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/cluster-rush/index.html\" title=\"Cluster Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/cluster-rush/index.html\" title=\"Cluster Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "ovo",
@@ -348,7 +348,7 @@
       "description": "Tight speedrun stickman platformer built around wall-jumps, slide boosts, and smash dives.",
       "thumbnail": "./logos/ovo.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/ovo/index.html\" title=\"OvO\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/ovo/index.html\" title=\"OvO\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "vex-7",
@@ -358,7 +358,7 @@
       "description": "Parkour stickman gauntlet packed with sawblades, falling blocks, grappling hooks, and checkpoints.",
       "thumbnail": "./logos/vex-7.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/vex7/index.html\" title=\"Vex 7\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/vex7/index.html\" title=\"Vex 7\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "run-3",
@@ -368,7 +368,7 @@
       "description": "Sprint through floating space tunnels, shift gravity onto any wall, and unlock new alien runners.",
       "thumbnail": "./logos/run-3.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/run3/index.html\" title=\"Run 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/run3/index.html\" title=\"Run 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "jetpack-joyride",
@@ -378,7 +378,7 @@
       "description": "Blast through a secret laboratory with bullet-powered jetpacks, laser dodges, and mech vehicles.",
       "thumbnail": "./logos/jetpack-joyride.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/jetpackjoyride/index.html\" title=\"Jetpack Joyride\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/jetpackjoyride/index.html\" title=\"Jetpack Joyride\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "doodle-jump",
@@ -388,7 +388,7 @@
       "description": "Bounce higher and higher up spring-loaded platforms while dodging monsters and grabbing jetpacks.",
       "thumbnail": "./logos/doodle-jump.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/doodlejump/index.html\" title=\"Doodle Jump\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/doodlejump/index.html\" title=\"Doodle Jump\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "paper-io-2",
@@ -398,7 +398,7 @@
       "description": "Draw loops across the arena to claim territory while protecting your vulnerable tail from rivals.",
       "thumbnail": "./logos/paper-io-2.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/paperio/index.html\" title=\"Paper.io\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/paperio/index.html\" title=\"Paper.io\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "master-chess",
@@ -408,7 +408,7 @@
       "description": "Classic chess match against adjustable CPU levels or pass-and-play on a clean wooden board.",
       "thumbnail": "./logos/master-chess.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/chess/index.html\" title=\"Master Chess\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/chess/index.html\" title=\"Master Chess\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "time-shooter-3",
@@ -418,7 +418,7 @@
       "description": "Breach rooms with riot shields and time-slowing SWAT tactics where time only advances when you move.",
       "thumbnail": "./logos/time-shooter-3.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/timeshooter3/index.html\" title=\"Time Shooter 3 SWAT\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/time-shooter-3/\" title=\"Time Shooter 3 SWAT\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "rooftop-snipers",
@@ -428,7 +428,7 @@
       "description": "Hilarious 2-button physics sniper duel where you knock rivals off rooftops with crazy recoil.",
       "thumbnail": "./logos/rooftop-snipers.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/rooftopsnipers/index.html\" title=\"Rooftop Snipers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/rooftopsnipers/index.html\" title=\"Rooftop Snipers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "superhot",
@@ -438,7 +438,7 @@
       "description": "Time moves only when you move—dodge slow-motion bullets, snatch weapons mid-air, and clear every room.",
       "thumbnail": "./logos/superhot.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/superhot/index.html\" title=\"SUPERHOT\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/superhot/index.html\" title=\"SUPERHOT\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "getaway-shootout",
@@ -448,7 +448,7 @@
       "description": "Race three wacky rivals to the extraction chopper while grabbing weapons and power-ups along the way.",
       "thumbnail": "./logos/getaway-shootout.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/getawayshooter/index.html\" title=\"Getaway Shootout\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/getawayshooter/index.html\" title=\"Getaway Shootout\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "house-of-hazards",
@@ -458,7 +458,7 @@
       "description": "Complete everyday chores around the house while dodging lasers, flying toast, and friend-triggered traps.",
       "thumbnail": "./logos/house-of-hazards.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/houseofhazards/index.html\" title=\"House of Hazards\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/house-of-hazards/\" title=\"House of Hazards\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "funny-shooter-2",
@@ -468,17 +468,17 @@
       "description": "Fast first-person arena shooter battling waves of bizarre red giants with wild upgradeable weapons.",
       "thumbnail": "./logos/funny-shooter-2.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/funnyshooter2/index.html\" title=\"Funny Shooter 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/a1b7ac4025214a5cb0bd01a4f675513a/\" title=\"Funny Shooter 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "rocket-bot-royale",
-      "title": "Rocket Bot Royale",
+      "id": "happy-wheels",
+      "title": "Happy Wheels",
       "category": "Action",
-      "controls": "A/D to drive · Mouse to aim & fire rockets · Blast terrain to launch",
-      "description": "Multiplayer 2D tank battle royale—blast across floating islands, collect upgrades, and survive rising water.",
-      "thumbnail": "./logos/rocket-bot-royale.png",
+      "controls": "Arrow Keys to drive & lean · Space for primary action · Shift/Ctrl for secondary",
+      "description": "Ragdoll physics obstacle courses packed with wild vehicles, traps, and community-created levels.",
+      "thumbnail": "./logos/happy-wheels.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/rocket/index.html\" title=\"Rocket Bot Royale\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/happywheels/index.html\" title=\"Happy Wheels\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "10-minutes-till-dawn",
@@ -488,17 +488,17 @@
       "description": "Survive relentless night hordes in this roguelite twin-stick survival shooter with elemental skill builds.",
       "thumbnail": "./logos/10-minutes-till-dawn.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/10minutestilldawn/index.html\" title=\"10 Minutes Till Dawn\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"./games/10-minutes-till-dawn/index.html\" title=\"10 Minutes Till Dawn\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "fleeing-the-complex",
-      "title": "Fleeing the Complex",
-      "category": "Action",
-      "controls": "Mouse Click to pick choices and quick-time actions",
-      "description": "Classic Henry Stickmin interactive escape adventure with dozens of hilarious paths and endings.",
-      "thumbnail": "./logos/fleeing-the-complex.png",
+      "id": "friday-night-funkin",
+      "title": "Friday Night Funkin'",
+      "category": "Arcade",
+      "controls": "Arrow Keys or WASD to hit notes on the beat · Enter to confirm",
+      "description": "Hit the arrows in rhythm through iconic musical rap battles to win every week's showdown.",
+      "thumbnail": "./logos/friday-night-funkin.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/fleeingthecomplex/index.html\" title=\"Fleeing the Complex\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fridaynightfunkin/index.html\" title=\"Friday Night Funkin'\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "drift-hunters",
@@ -508,7 +508,7 @@
       "description": "Tune suspension, turbo, and gear ratios on classic drift cars and chain massive slides across 3D tracks.",
       "thumbnail": "./logos/drift-hunters.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/drifthunters/index.html\" title=\"Drift Hunters\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drifthunters/index.html\" title=\"Drift Hunters\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "moto-x3m",
@@ -518,7 +518,7 @@
       "description": "Race stunt bikes across explosive obstacle courses, land backflips to shave seconds, and beat the clock.",
       "thumbnail": "./logos/moto-x3m.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/motox3m/index.html\" title=\"Moto X3M\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/motox3m/index.html\" title=\"Moto X3M\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "drive-mad",
@@ -528,7 +528,7 @@
       "description": "Navigate wild physics bridges and monster truck stages without flipping your vehicle into the water.",
       "thumbnail": "./logos/drive-mad.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/drivemad/index.html\" title=\"Drive Mad\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drivemad/index.html\" title=\"Drive Mad\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "madalin-stunt-cars-2",
@@ -538,17 +538,17 @@
       "description": "Free-roam 3D supercar sandbox filled with mega ramps, loops, and customizable exotic sports cars.",
       "thumbnail": "./logos/madalin-stunt-cars-2.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/madalincars/index.html\" title=\"Madalin Cars Multiplayer\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/madalincars/index.html\" title=\"Madalin Cars Multiplayer\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "polytrack",
-      "title": "Polytrack",
+      "id": "drift-boss",
+      "title": "Drift Boss",
       "category": "Racing",
-      "controls": "WASD or Arrow Keys to steer, drift, and reset · R to restart run",
-      "description": "High-speed low-poly time-trial racing with huge loops, sharp hairpins, and track editor leaderboards.",
-      "thumbnail": "./logos/polytrack.jpg",
+      "controls": "Hold Space or Mouse Click to drift right · Release to go straight",
+      "description": "One-button precision drifting on endless floating corners—collect coins and unlock new rides.",
+      "thumbnail": "./logos/drift-boss.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/polytrack/index.html\" title=\"Polytrack\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drift-boss/index.html\" title=\"Drift Boss\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "eggy-car",
@@ -558,7 +558,7 @@
       "description": "Drive carefully over steep hills without letting the fragile egg bounce off the roof of your car.",
       "thumbnail": "./logos/eggy-car.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://eggycar.netlify.app/\" title=\"Eggy Car\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/59a98bf799ef499d9d7b9285bccaa196/\" title=\"Eggy Car\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "monkey-mart",
@@ -568,7 +568,7 @@
       "description": "Stock banana stands, serve customers, hire assistant monkeys, and expand your bustling grocery store.",
       "thumbnail": "./logos/monkey-mart.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/monkeymart/index.html\" title=\"Monkey Mart\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/monkeymart/index.html\" title=\"Monkey Mart\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "tiny-fishing",
@@ -578,7 +578,7 @@
       "description": "Cast your line deeper with every upgrade, reel in legendary catches, and earn passive aquarium coins.",
       "thumbnail": "./logos/tiny-fishing.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/tinyfishing/index.html\" title=\"Tiny Fishing\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://html5.gamedistribution.com/5ee4b0222a474e44880b6c6d9f96754d/\" title=\"Tiny Fishing\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "cookie-clicker",
@@ -588,7 +588,7 @@
       "description": "Bake cookies by hand, unlock grandmas, farms, and portals, and scale your production to trillions per second.",
       "thumbnail": "./logos/cookie-clicker.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/cookieclicker/index.html\" title=\"Cookie Clicker\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/cookieclicker/index.html\" title=\"Cookie Clicker\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "bitlife",
@@ -598,7 +598,7 @@
       "description": "Interactive life simulator where every choice shapes your career, wealth, relationships, and legacy.",
       "thumbnail": "./logos/bitlife.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://h-selenite.netlify.app/semag/bitlife/index.html\" title=\"BitLife\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/bitlife/index.html\" title=\"BitLife\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     }
   ]
 }
