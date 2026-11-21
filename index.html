@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pancake's Games — Unblocked Browser Games</title>
+    <meta
+      name="description"
+      content="Play popular unblocked browser games on Pancake's Games including 1v1.lol, Ragdoll Hit, Five Nights at Freddy's, Slope, Retro Bowl, and Drift Hunters."
+    />
+    <meta property="og:title" content="Pancake's Games — Unblocked Browser Games" />
+    <meta
+      property="og:description"
+      content="Play popular unblocked browser games on Pancake's Games including 1v1.lol, Ragdoll Hit, Five Nights at Freddy's, Slope, Retro Bowl, and Drift Hunters."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body class="bg-transparent text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
+    <!-- Homepage Looping Animated Fireplace Wallpaper -->
+    <div id="wallpaper-stage" aria-hidden="true">
+      <video
+        id="wallpaper-video"
+        class="wallpaper-video is-visible"
+        src="/assets/aistudio/minecraft-relaxing-fireplace.1920x1080_9596826d.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
+    <div id="bg-vignette" aria-hidden="true"></div>
+
+    <!-- Top Bar: Strict 3-zone contract -->
+    <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+      <div class="mx-auto flex max-w-[1320px] items-center justify-between gap-8 px-6 py-4">
+        <!-- Zone 1: Single text element wordmark -->
+        <a
+          href="#top"
+          id="brand-home-link"
+          class="font-display text-xl font-bold tracking-tight text-slate-50 hover:text-amber-300 transition-all duration-200 hover:scale-[1.02] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-sm"
+        >
+          Pancake's Games
+        </a>
+
+        <!-- Zone 2: 5 single-line text nav links -->
+        <nav aria-label="Primary categories" class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+          <button type="button" data-nav-filter="All" class="nav-link whitespace-nowrap shrink-0 hover:text-amber-400 transition-colors cursor-pointer">
+            All Games
+          </button>
+          <button type="button" data-nav-filter="Sports" class="nav-link whitespace-nowrap shrink-0 hover:text-amber-400 transition-colors cursor-pointer">
+            Sports
+          </button>
+          <button type="button" data-nav-filter="Action" class="nav-link whitespace-nowrap shrink-0 hover:text-amber-400 transition-colors cursor-pointer">
+            Action
+          </button>
+          <button type="button" data-nav-filter="Horror" class="nav-link whitespace-nowrap shrink-0 hover:text-amber-400 transition-colors cursor-pointer">
+            Horror
+          </button>
+          <button type="button" data-nav-filter="Saved" class="nav-link whitespace-nowrap shrink-0 hover:text-amber-400 transition-colors cursor-pointer">
+            Saved Games
+          </button>
+        </nav>
+
+        <!-- Zone 3: 1 primary action -->
+        <div class="flex items-center shrink-0">
+          <button
+            type="button"
+            id="random-game-btn"
+            class="btn-tactile px-4 py-2 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 hover:shadow-[0_0_20px_-4px_rgba(251,191,36,0.55)] rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          >
+            Random Game
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top" class="relative z-10 mx-auto max-w-[1320px] px-6 pb-20">
+      <!-- Active Game Player Theater -->
+      <section
+        id="player-section"
+        aria-label="Active game player"
+        class="hidden pt-6 pb-10"
+      >
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+          <button
+            type="button"
+            id="player-back-btn"
+            class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-200 bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+          >
+            <span aria-hidden="true">&#8592;</span>
+            <span>Back to Games</span>
+          </button>
+          <p id="player-save-status" class="text-xs text-slate-400">
+            Progress auto-saves for this browser session. Use Fullscreen to keep your mouse locked inside the game.
+          </p>
+        </div>
+
+        <div id="player-container" class="rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden shadow-2xl">
+          <div class="flex flex-wrap items-center justify-between gap-4 px-5 py-3.5 border-b border-slate-800 bg-slate-900">
+            <div class="min-w-0">
+              <h2 id="player-title" class="font-display text-xl font-bold text-slate-50 truncate"></h2>
+              <p id="player-meta" class="mt-0.5 text-xs text-slate-400 truncate"></p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                type="button"
+                id="player-save-btn"
+                class="px-3.5 py-2 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500/20 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Save Progress
+              </button>
+              <button
+                type="button"
+                id="player-favorite-btn"
+                class="px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Save Favorite
+              </button>
+              <button
+                type="button"
+                id="player-reload-btn"
+                class="px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Restart
+              </button>
+              <a
+                id="player-direct-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0"
+              >
+                Open Tab
+              </a>
+              <button
+                type="button"
+                id="player-fullscreen-btn"
+                class="px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Fullscreen
+              </button>
+            </div>
+          </div>
+
+          <!-- Optional Save Checkpoint / Export Code Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-2.5 border-b border-slate-800/80 bg-slate-950/70">
+            <label for="player-save-note" class="text-xs text-slate-400 shrink-0">
+              Checkpoint / Save Code:
+            </label>
+            <div class="flex flex-1 min-w-[220px] items-center gap-2">
+              <input
+                id="player-save-note"
+                type="text"
+                placeholder="Optional note or game export code (e.g. Night 4 or Cookie Clicker code)..."
+                class="w-full px-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 bg-slate-900 border border-slate-800 rounded-md focus:outline-none focus:border-amber-400"
+              />
+              <button
+                type="button"
+                id="player-copy-note-btn"
+                class="hidden px-3 py-1.5 text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Copy Code
+              </button>
+            </div>
+            <span id="player-playtime" class="font-mono text-xs text-slate-400 tabular-nums shrink-0">0m played</span>
+          </div>
+
+          <div id="iframe-stage" class="relative w-full bg-slate-950 aspect-[16/9] max-h-[76vh]">
+            <!-- Active game iframe mounted here -->
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-4 px-5 py-3 border-t border-slate-800 bg-slate-900/80 text-xs text-slate-400">
+            <span id="player-controls-text"></span>
+            <button
+              type="button"
+              id="player-mute-stop-btn"
+              class="text-xs font-medium text-slate-300 hover:text-amber-400 transition-colors cursor-pointer"
+            >
+              Stop Game &amp; Mute
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Homescreen Banner + Hero Spotlight -->
+      <section id="hero-section" class="pt-8 pb-12 border-b border-slate-800/80">
+        <!-- Pancake Homescreen Stretched Banner -->
+        <div class="anim-fade-up relative w-full h-64 sm:h-[336px] rounded-2xl overflow-hidden border border-slate-800/90 bg-slate-950/90 mb-8 shadow-2xl">
+          <img
+            src="/assets/aistudio/IMG_2198_1c376b59.jpeg"
+            alt="Pancake the hamster banner"
+            referrerpolicy="no-referrer"
+            class="banner-ambient-img w-full h-full object-fill scale-x-[0.92] origin-center"
+          />
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/90 via-transparent to-slate-950/90"></div>
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 p-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="text-xs font-medium text-amber-400">Official Mascot</p>
+              <p class="font-display text-2xl sm:text-3xl font-bold text-slate-50">Welcome to Pancake's Games</p>
+            </div>
+            <p class="text-xs text-slate-300">Auto-saving unblocked browser arcade</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          <div class="anim-fade-up anim-delay-1 lg:col-span-6 flex flex-col justify-between py-2">
+            <div>
+              <h1 class="font-display text-[clamp(2.15rem,3.4vw,3.15rem)] font-bold leading-[1.08] tracking-tight text-slate-50 text-balance">
+                Play your favorite games and keep your progress saved
+              </h1>
+              <p class="mt-4 max-w-xl text-base leading-relaxed text-slate-300">
+                Jump into Football Bros, 1v1.lol, Ragdoll Hit, Five Nights at Freddy's, Retro Bowl, Slope, and dozens more hits—saved automatically so you can close the tab and pick right back up later.
+              </p>
+              <div class="mt-7 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  id="hero-play-featured-btn"
+                  class="btn-tactile px-6 py-3 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 hover:shadow-[0_0_24px_-4px_rgba(251,191,36,0.5)] rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+                >
+                  Play 1v1.lol
+                </button>
+                <button
+                  type="button"
+                  id="hero-fullscreen-featured-btn"
+                  class="btn-tactile px-5 py-3 text-sm font-semibold text-slate-100 bg-slate-900/85 backdrop-blur-sm border border-slate-700 hover:border-amber-400 hover:text-amber-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+                >
+                  Play Fullscreen
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-800/80 grid grid-cols-3 gap-6">
+              <div>
+                <p class="text-xs text-slate-400">Available Titles</p>
+                <p id="stat-total-games" class="mt-1 font-mono text-2xl font-bold text-slate-50 tabular-nums">60</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-400">Saved Progress</p>
+                <p id="stat-saved-count" class="mt-1 font-mono text-2xl font-bold text-emerald-400 tabular-nums">0</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-400">Favorites</p>
+                <p id="stat-favorites-count" class="mt-1 font-mono text-2xl font-bold text-slate-50 tabular-nums">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="anim-fade-up anim-delay-2 lg:col-span-6">
+            <div
+              id="featured-carousel"
+              class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-slate-800/90 bg-slate-900/85 backdrop-blur-sm flex flex-col justify-between shadow-2xl transition-colors duration-300 hover:border-amber-400/50"
+            >
+              <div class="relative flex-1 min-h-[250px] overflow-hidden">
+                <div
+                  id="featured-track"
+                  class="flex h-full w-full"
+                  aria-live="polite"
+                >
+                  <div class="featured-slide is-active relative w-full h-full shrink-0 flex items-center justify-center group">
+                    <img
+                      src="/logos/1v1-lol.png"
+                      alt="1v1.lol featured game logo"
+                      referrerpolicy="no-referrer"
+                      class="featured-slide-img h-full w-full max-h-[260px] object-contain p-5 pb-16 bg-slate-900/70"
+                    />
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/35 to-transparent"></div>
+                    <div class="absolute inset-x-0 bottom-0 p-5 flex flex-wrap items-end justify-between gap-4">
+                      <div>
+                        <p class="featured-slide-kicker text-xs font-medium text-amber-400">Featured Pick · Action</p>
+                        <p class="featured-slide-title mt-1 font-display text-2xl font-bold text-slate-50">1v1.lol</p>
+                      </div>
+                      <div class="featured-slide-actions flex items-center gap-2 shrink-0">
+                        <button
+                          type="button"
+                          id="hero-card-play-btn"
+                          class="btn-tactile px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+                        >
+                          Play Now
+                        </button>
+                        <button
+                          type="button"
+                          id="hero-card-fs-btn"
+                          class="btn-tactile px-4 py-2 text-xs font-semibold text-slate-100 bg-slate-900/90 border border-slate-700 hover:border-amber-400 rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+                        >
+                          Fullscreen
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="featured-sweep" class="featured-sweep" aria-hidden="true"></div>
+              </div>
+
+              <div class="relative z-10 bg-slate-950/95 border-t border-slate-800/80">
+                <div class="h-0.5 w-full bg-slate-800/80 overflow-hidden">
+                  <div id="featured-progress-bar" class="h-full w-full bg-gradient-to-r from-amber-500 to-amber-300"></div>
+                </div>
+                <div class="flex items-center justify-between px-5 py-2">
+                  <span id="featured-counter" class="text-[11px] font-mono text-slate-400 tabular-nums">1 / 5</span>
+                  <div
+                    id="featured-dots"
+                    role="tablist"
+                    aria-label="Featured games"
+                    class="flex items-center gap-1"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Continue Playing (Saved Progress Strip) -->
+      <section id="saved-section" class="hidden pt-10">
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 class="font-display text-lg font-bold text-slate-100">Continue Playing (Saved Progress)</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Clears saved session, playtime &amp; checkpoint notes. External games also store internal levels under their own host site data.</p>
+          </div>
+          <button
+            type="button"
+            id="clear-saved-btn"
+            class="text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
+          >
+            Clear all saves
+          </button>
+        </div>
+        <div id="saved-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Catalog Section -->
+      <section id="catalog-section" class="pt-12">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-6 border-b border-slate-800/80">
+          <div>
+            <h2 id="catalog-heading" class="font-display text-2xl font-bold text-slate-50">All Games</h2>
+            <p class="mt-1 text-sm text-slate-400">
+              Click Play to start or Fullscreen to keep your mouse locked inside the game.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <label for="search-input" class="sr-only">Search games</label>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Search FNAF, Ragdoll Hit, Slope..."
+              class="w-full sm:w-72 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-900/85 backdrop-blur-sm border border-slate-800 rounded-lg focus:outline-none focus:border-amber-400 focus:shadow-[0_0_0_3px_rgba(251,191,36,0.16)] transition-all duration-200"
+            />
+          </div>
+        </div>
+
+        <!-- Interactive Category Filter Tabs -->
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+          <div id="category-tabs" role="tablist" aria-label="Filter games by category" class="inline-flex flex-wrap items-center gap-1 p-1 rounded-xl bg-slate-900/85 backdrop-blur-sm border border-slate-800">
+            <button type="button" role="tab" data-category="All" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              All
+            </button>
+            <button type="button" role="tab" data-category="Action" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Action
+            </button>
+            <button type="button" role="tab" data-category="Horror" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Horror
+            </button>
+            <button type="button" role="tab" data-category="Arcade" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Arcade
+            </button>
+            <button type="button" role="tab" data-category="Racing" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Racing
+            </button>
+            <button type="button" role="tab" data-category="Sports" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Sports
+            </button>
+            <button type="button" role="tab" data-category="Idle" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Idle
+            </button>
+            <button type="button" role="tab" data-category="Saved" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Saved
+            </button>
+            <button type="button" role="tab" data-category="Favorites" class="cat-tab px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer">
+              Favorites
+            </button>
+          </div>
+
+          <p id="results-count" class="text-xs font-mono text-slate-400 tabular-nums"></p>
+        </div>
+
+        <!-- Loading / Error / Empty states -->
+        <div id="catalog-status" class="hidden mt-8 rounded-xl border border-slate-800 bg-slate-900/85 backdrop-blur-sm p-8 text-center"></div>
+
+        <!-- Games Grid -->
+        <div id="games-grid" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </section>
+    </main>
+
+    <footer class="relative z-10 border-t border-slate-800/80 bg-slate-950/75 backdrop-blur-md">
+      <div class="mx-auto max-w-[1320px] px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <p>Pancake's Games · Unblocked browser arcade with saved progress &amp; fullscreen play.</p>
+        <button type="button" id="footer-top-btn" class="hover:text-amber-300 transition-colors cursor-pointer">
+          Back to Top
+        </button>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

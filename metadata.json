@@ -1,0 +1,6 @@
+{
+  "name": "Recess Arcade",
+  "description": "A clean unblocked browser games hub built with HTML, CSS, and JavaScript, loading playable iframe games from a JSON catalog.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

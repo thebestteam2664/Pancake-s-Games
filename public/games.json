@@ -1,0 +1,604 @@
+{
+  "games": [
+    {
+      "id": "1v1-lol",
+      "title": "1v1.lol",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to aim & build · 1-4 / Z-V for structures",
+      "description": "Fast-paced third-person battle royale and box-fight builder against live opponents or practice bots.",
+      "thumbnail": "/logos/1v1-lol.png",
+      "featured": true,
+      "iframe": "<iframe src=\"https://1v1-lol-online.github.io/file/\" title=\"1v1.lol\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "football-bros",
+      "title": "Football Bros",
+      "category": "Sports",
+      "controls": "WASD or Arrow Keys to move · Space to pass, stiff-arm, or dive tackle",
+      "description": "Fast-paced arcade American football with big hits, trick plays, franchise runs, and instant 1v1 action.",
+      "thumbnail": "/logos/football-bros.jpg",
+      "featured": false,
+      "iframe": "<iframe src=\"https://football-bros.github.io/\" title=\"Football Bros\" allow=\"fullscreen; autoplay; gamepad\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "ragdoll-hit",
+      "title": "Ragdoll Hit",
+      "category": "Action",
+      "controls": "A/D or Arrow Keys to strike · Space to jump",
+      "description": "Chaotic physics-based stickman brawler where momentum, timing, and knockouts decide every duel.",
+      "thumbnail": "/logos/ragdoll-hit.webp",
+      "featured": false,
+      "iframe": "<iframe src=\"https://freetoplayz.github.io/ragdoll-hit/\" title=\"Ragdoll Hit\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "retro-bowl",
+      "title": "Retro Bowl",
+      "category": "Sports",
+      "controls": "Mouse drag to aim passes · W/S or Arrow Keys to juke",
+      "description": "Manage your pro football franchise, draft stars, call plays, and throw game-winning drives in 8-bit style.",
+      "thumbnail": "/logos/retro-bowl.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/retro-bowl/\" title=\"Retro Bowl\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "4th-and-goal-2022",
+      "title": "4th and Goal 2022",
+      "category": "Sports",
+      "controls": "Arrow Keys to run · Space to spin or tackle · A/S/D to pass",
+      "description": "Classic top-down gridiron strategy—pick formations, read the blitz, and march downfield for the championship.",
+      "thumbnail": "/logos/4th-and-goal-2022.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h2/4th-and-goal-2022/\" title=\"4th and Goal 2022\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "football-legends",
+      "title": "Football Legends",
+      "category": "Sports",
+      "controls": "WASD / Arrow Keys to move & jump · X/Z or K/L to kick & supershot",
+      "description": "Head-to-head arcade soccer tournament featuring superstar abilities, power shots, and 2-player local matches.",
+      "thumbnail": "/logos/football-legends.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h4/football-legends/\" title=\"Football Legends\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "football-masters",
+      "title": "Football Masters",
+      "category": "Sports",
+      "controls": "WASD / Arrow Keys to move · X/Z or K/L to shoot & activate special",
+      "description": "Fast 1v1 and 2v2 tournament soccer with bicycle kicks, teleport strikes, and quick championship brackets.",
+      "thumbnail": "/logos/football-masters.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h4/football-masters/\" title=\"Football Masters\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "a-small-world-cup",
+      "title": "A Small World Cup",
+      "category": "Sports",
+      "controls": "Mouse drag and release to launch your ragdoll player at the ball",
+      "description": "Hilarious one-button ragdoll mini-soccer where you sling your striker across the pitch to score golden goals.",
+      "thumbnail": "/logos/a-small-world-cup.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h2/a-small-world-cup/\" title=\"A Small World Cup\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "head-soccer-2023",
+      "title": "Head Soccer 2023",
+      "category": "Sports",
+      "controls": "A/D or Left/Right to move · W/Up to jump · Z/X to kick",
+      "description": "Big-head arcade soccer duels with fast volleys, acrobatic headers, and sudden-death overtime.",
+      "thumbnail": "/logos/head-soccer-2023.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h4/head-soccer-2023/\" title=\"Head Soccer 2023\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "penalty-shooters-2",
+      "title": "Penalty Shooters 2",
+      "category": "Sports",
+      "controls": "Click and hold to aim your shot · Click to dive as goalkeeper",
+      "description": "Step up to the penalty spot and defend your net across World Cup knockout brackets.",
+      "thumbnail": "/logos/penalty-shooters-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h6/penalty-shooters-2/\" title=\"Penalty Shooters 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "soccer-random",
+      "title": "Soccer Random",
+      "category": "Sports",
+      "controls": "W or Up Arrow to jump and kick",
+      "description": "Two-button physics soccer chaos across changing weather, balls, and wild stadium physics.",
+      "thumbnail": "/logos/soccer-random.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/soccer-random/\" title=\"Soccer Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "basket-random",
+      "title": "Basket Random",
+      "category": "Sports",
+      "controls": "W or Up Arrow to jump and shoot",
+      "description": "Wild physics basketball with changing courts, giant hoops, and sudden two-player buzzer beaters.",
+      "thumbnail": "/logos/basket-random.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/basket-random/\" title=\"Basket Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "basketball-stars",
+      "title": "Basketball Stars",
+      "category": "Sports",
+      "controls": "WASD / Arrow Keys to move · X/Z or K/L to shoot, steal, and dash",
+      "description": "1v1 and 2v2 arcade streetball matchups with dunks, three-pointers, and signature supershots.",
+      "thumbnail": "/logos/basketball-stars.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/basketball-stars/\" title=\"Basketball Stars\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "basketball-legends",
+      "title": "Basketball Legends",
+      "category": "Sports",
+      "controls": "WASD / Arrow Keys to move · X/Z to shoot, dunk, and block",
+      "description": "Play solo or 2-player tournament hoops with mega-dunks, fast breaks, and alley-oops.",
+      "thumbnail": "/logos/basketball-legends.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/basketball-legends/\" title=\"Basketball Legends\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "boxing-random",
+      "title": "Boxing Random",
+      "category": "Sports",
+      "controls": "W or Up Arrow to jump and punch",
+      "description": "Unpredictable ragdoll boxing matches with elastic arms, knockout rounds, and random arenas.",
+      "thumbnail": "/logos/boxing-random.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h77/boxing-random/\" title=\"Boxing Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "8-ball-pool",
+      "title": "8 Ball Pool",
+      "category": "Sports",
+      "controls": "Mouse to aim cue and pull back to set shot power",
+      "description": "Line up bank shots, apply cue spin, and sink the 8-ball cleanly against CPU or a friend.",
+      "thumbnail": "/logos/8-ball-pool.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/8-ball-pool/\" title=\"8 Ball Pool\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-1",
+      "title": "Five Nights at Freddy's 1",
+      "category": "Horror",
+      "controls": "Mouse to check cameras, toggle lights, and close security doors",
+      "description": "Survive five midnight shifts at Freddy Fazbear's Pizza by conserving power and monitoring security feeds.",
+      "thumbnail": "/logos/fnaf-1.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/1/\" title=\"Five Nights at Freddy's 1\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-2",
+      "title": "Five Nights at Freddy's 2",
+      "category": "Horror",
+      "controls": "Mouse to switch cameras, flash hallway, wind music box, and wear mask",
+      "description": "No doors to hide behind—use the Freddy mask, flashlight, and Prize Corner music box to survive the night.",
+      "thumbnail": "/logos/fnaf-2.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/2/\" title=\"Five Nights at Freddy's 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-3",
+      "title": "Five Nights at Freddy's 3",
+      "category": "Horror",
+      "controls": "Mouse to play audio lures, seal vents, and reboot system panels",
+      "description": "Thirty years later at Fazbear's Fright, track Springtrap across cameras and keep audio, camera, and vent systems online.",
+      "thumbnail": "/logos/fnaf-3.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/3/\" title=\"Five Nights at Freddy's 3\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-4",
+      "title": "Five Nights at Freddy's 4",
+      "category": "Horror",
+      "controls": "Mouse to check doors, closet, and bed · Listen closely for audio cues",
+      "description": "Defend the bedroom from nightmare animatronics using only a flashlight and sharp listening at each doorway.",
+      "thumbnail": "/logos/fnaf-4.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/4/\" title=\"Five Nights at Freddy's 4\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-sl",
+      "title": "FNAF: Sister Location",
+      "category": "Horror",
+      "controls": "Mouse & keyboard prompts for vents, keypad, and breaker controls",
+      "description": "Work the late-night maintenance shift beneath Circus Baby's Entertainment and Rental across story-driven nights.",
+      "thumbnail": "/logos/fnaf-sl.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/sl/\" title=\"FNAF: Sister Location\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-ps",
+      "title": "FNAF: Pizzeria Simulator",
+      "category": "Horror",
+      "controls": "Mouse to manage pizzeria upgrades, terminal tasks, and salvage checks",
+      "description": "Build and run your own pizzeria by day, then complete noisy terminal tasks while watching the vents at night.",
+      "thumbnail": "/logos/fnaf-ps.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/ps/\" title=\"FNAF: Pizzeria Simulator\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-ucn",
+      "title": "FNAF: Ultimate Custom Night",
+      "category": "Horror",
+      "controls": "Mouse & hotkeys for doors, vents, heater, power generator, and cameras",
+      "description": "Face up to 50 selectable animatronics from across the series with customizable AI difficulty levels.",
+      "thumbnail": "/logos/fnaf-ucn.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/ucn/\" title=\"FNAF: Ultimate Custom Night\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fnaf-world",
+      "title": "FNAF World",
+      "category": "Horror",
+      "controls": "WASD / Arrow Keys to explore · Mouse for turn-based battle skills",
+      "description": "Classic RPG spin-off where you assemble parties of animatronics, unlock chips, and explore Animatronica.",
+      "thumbnail": "/logos/fnaf-w.ico",
+      "featured": false,
+      "iframe": "<iframe src=\"https://irv77.github.io/hd_fnaf/w/\" title=\"FNAF World\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "slope",
+      "title": "Slope",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or A/D to steer",
+      "description": "Steer a high-speed ball down endless neon-lined 3D slopes, dodging red blocks and tight gaps.",
+      "thumbnail": "/logos/slope.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/slope/\" title=\"Slope\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "snow-rider-3d",
+      "title": "Snow Rider 3D",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or A/D to steer · Up/Space to jump",
+      "description": "Carve down icy mountain slopes on a sled, dodge rolling snowballs and pines, and unlock new sleds.",
+      "thumbnail": "/logos/snow-rider-3d.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/snow-rider-3d/\" title=\"Snow Rider 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "tunnel-rush",
+      "title": "Tunnel Rush",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or A/D to spin through gaps",
+      "description": "High-speed first-person tunnel dodging as rotating geometric barriers accelerate faster every second.",
+      "thumbnail": "/logos/tunnel-rush.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/tunnel-rush/\" title=\"Tunnel Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "subway-surfers",
+      "title": "Subway Surfers",
+      "category": "Arcade",
+      "controls": "Arrow Keys or WASD to switch lanes, jump, and roll · Space for hoverboard",
+      "description": "Dash along the subway tracks, leap over oncoming trains, and collect coins and jetpack boosts.",
+      "thumbnail": "/logos/subway-surfers.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/subway-surfers-san-francisco/\" title=\"Subway Surfers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "temple-run-2",
+      "title": "Temple Run 2",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to turn, jump, and slide · Space for power-up",
+      "description": "Sprint across cliffside ruins, zip lines, and minecart tracks while outrunning the demon monkey.",
+      "thumbnail": "/logos/temple-run-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/temple-run-2/\" title=\"Temple Run 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "geometry-dash",
+      "title": "Geometry Dash",
+      "category": "Arcade",
+      "controls": "Space, Up Arrow, or Mouse Click to jump and fly",
+      "description": "Time every leap and rocket glide to the rhythm across spike-filled geometric obstacle courses.",
+      "thumbnail": "/logos/geometry-dash.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/geometry-dash/\" title=\"Geometry Dash\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "a-dance-of-fire-and-ice",
+      "title": "A Dance of Fire and Ice",
+      "category": "Arcade",
+      "controls": "Any Key or Click on the beat",
+      "description": "Precision one-button rhythm game where two orbiting planets step along winding musical paths.",
+      "thumbnail": "/logos/a-dance-of-fire-and-ice.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/a-dance-of-fire-and-ice/\" title=\"A Dance of Fire and Ice\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "crossy-road",
+      "title": "Crossy Road",
+      "category": "Arcade",
+      "controls": "Arrow Keys or WASD to hop across lanes",
+      "description": "Hop across busy highways, train tracks, and floating river logs without getting caught behind.",
+      "thumbnail": "/logos/crossy-road.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/crossy-road/\" title=\"Crossy Road\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "stickman-hook",
+      "title": "Stickman Hook",
+      "category": "Arcade",
+      "controls": "Hold Space or Left Mouse Button to grapple and swing",
+      "description": "Launch off bounce pads and swing through grapples across hundreds of fast momentum levels.",
+      "thumbnail": "/logos/stickman-hook.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/stickman-hook/\" title=\"Stickman Hook\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "cluster-rush",
+      "title": "Cluster Rush",
+      "category": "Arcade",
+      "controls": "A/D or Left/Right to steer · Space to jump",
+      "description": "Leap across speeding semi-trucks in mid-air while dodging falling containers and exploding rigs.",
+      "thumbnail": "/logos/cluster-rush.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/cluster-rush/\" title=\"Cluster Rush\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "ovo",
+      "title": "OvO",
+      "category": "Arcade",
+      "controls": "Arrow Keys to move & jump · Down Arrow to slide and ground-pound",
+      "description": "Tight speedrun stickman platformer built around wall-jumps, slide boosts, and smash dives.",
+      "thumbnail": "/logos/ovo.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/ovo/\" title=\"OvO\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "vex-7",
+      "title": "Vex 7",
+      "category": "Arcade",
+      "controls": "WASD or Arrow Keys to run, climb, and grapple",
+      "description": "Parkour stickman gauntlet packed with sawblades, falling blocks, grappling hooks, and checkpoints.",
+      "thumbnail": "/logos/vex-7.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h9/vex-7/\" title=\"Vex 7\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "dreadhead-parkour",
+      "title": "Dreadhead Parkour",
+      "category": "Arcade",
+      "controls": "A/D to run · W to jump · S to slide",
+      "description": "Backflip over bombs, slide under spikes, and chain stylish parkour runs to the finish line.",
+      "thumbnail": "/logos/dreadhead-parkour.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/dreadhead-parkour/\" title=\"Dreadhead Parkour\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "jetpack-joyride",
+      "title": "Jetpack Joyride",
+      "category": "Arcade",
+      "controls": "Hold Space or Left Mouse Button to fly",
+      "description": "Blast through a secret laboratory with bullet-powered jetpacks, laser dodges, and mech vehicles.",
+      "thumbnail": "/logos/jetpack-joyride.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/jetpack-joyride/\" title=\"Jetpack Joyride\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "doodle-jump",
+      "title": "Doodle Jump",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or A/D to steer",
+      "description": "Bounce higher and higher up spring-loaded platforms while dodging monsters and grabbing jetpacks.",
+      "thumbnail": "/logos/doodle-jump.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/doodle-jump/\" title=\"Doodle Jump\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "paper-io-2",
+      "title": "Paper.io 2",
+      "category": "Arcade",
+      "controls": "Mouse or WASD / Arrow Keys to steer and capture territory",
+      "description": "Draw loops across the arena to claim territory while protecting your vulnerable tail from rivals.",
+      "thumbnail": "/logos/paper-io-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h9/paper-io-2/\" title=\"Paper.io 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "master-chess",
+      "title": "Master Chess",
+      "category": "Arcade",
+      "controls": "Mouse Click to select pieces and legal squares",
+      "description": "Classic chess match against adjustable CPU levels or pass-and-play on a clean wooden board.",
+      "thumbnail": "/logos/master-chess.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/master-chess/\" title=\"Master Chess\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "smash-karts",
+      "title": "Smash Karts",
+      "category": "Action",
+      "controls": "WASD or Arrow Keys to drive · Space to fire pickups",
+      "description": "3D multiplayer kart combat arena packed with rockets, mines, miniguns, and fast map power-ups.",
+      "thumbnail": "/logos/smash-karts.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/smash-karts/\" title=\"Smash Karts\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "rooftop-snipers",
+      "title": "Rooftop Snipers",
+      "category": "Action",
+      "controls": "W / I to jump · Hold E / O to aim and release to shoot",
+      "description": "Hilarious 2-button physics sniper duel where you knock rivals off rooftops with crazy recoil.",
+      "thumbnail": "/logos/rooftop-snipers.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/rooftop-snipers/\" title=\"Rooftop Snipers\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "getaway-shootout",
+      "title": "Getaway Shootout",
+      "category": "Action",
+      "controls": "W/E to jump left/right · R to fire weapon",
+      "description": "Race three wacky rivals to the extraction chopper while grabbing weapons and power-ups along the way.",
+      "thumbnail": "/logos/getaway-shootout.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h4/getaway-shootout/\" title=\"Getaway Shootout\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "house-of-hazards",
+      "title": "House of Hazards",
+      "category": "Action",
+      "controls": "A/D to move · W to jump · S to crouch/grab",
+      "description": "Complete everyday chores around the house while dodging lasers, flying toast, and friend-triggered traps.",
+      "thumbnail": "/logos/house-of-hazards.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/house-of-hazards/\" title=\"House of Hazards\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "funny-shooter-2",
+      "title": "Funny Shooter 2",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to shoot · 1-7 weapons · Shift to sprint",
+      "description": "Fast first-person arena shooter battling waves of bizarre red giants with wild upgradeable weapons.",
+      "thumbnail": "/logos/funny-shooter-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h4/funny-shooter-2/\" title=\"Funny Shooter 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "bullet-force",
+      "title": "Bullet Force",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to aim & fire · R to reload · Shift to sprint",
+      "description": "Tactical 3D FPS featuring custom weapon loadouts, killstreaks, and fast team deathmatch maps.",
+      "thumbnail": "/logos/bullet-force.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/bullet-force/\" title=\"Bullet Force\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "10-minutes-till-dawn",
+      "title": "10 Minutes Till Dawn",
+      "category": "Action",
+      "controls": "WASD to move · Mouse to aim & shoot · R to reload",
+      "description": "Survive relentless night hordes in this roguelite twin-stick survival shooter with elemental skill builds.",
+      "thumbnail": "/logos/10-minutes-till-dawn.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/10-minutes-till-dawn/\" title=\"10 Minutes Till Dawn\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "gunspin",
+      "title": "Gunspin",
+      "category": "Action",
+      "controls": "Left Mouse Button or Space to fire and boost forward",
+      "description": "Shoot at the exact angle while spinning in mid-air to launch your gun as far across the desert as possible.",
+      "thumbnail": "/logos/gunspin.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/gunspin/\" title=\"Gunspin\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "fleeing-the-complex",
+      "title": "Fleeing the Complex",
+      "category": "Action",
+      "controls": "Mouse Click to pick choices and quick-time actions",
+      "description": "Classic Henry Stickmin interactive escape adventure with dozens of hilarious paths and endings.",
+      "thumbnail": "/logos/fleeing-the-complex.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h7/fleeing-the-complex/\" title=\"Fleeing the Complex\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "drift-hunters",
+      "title": "Drift Hunters",
+      "category": "Racing",
+      "controls": "WASD or Arrow Keys to drive · Space for handbrake · C for camera",
+      "description": "Tune suspension, turbo, and gear ratios on classic drift cars and chain massive slides across 3D tracks.",
+      "thumbnail": "/logos/drift-hunters.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/drift-hunters/\" title=\"Drift Hunters\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "moto-x3m",
+      "title": "Moto X3M",
+      "category": "Racing",
+      "controls": "Up/Down to accelerate & brake · Left/Right to flip in mid-air",
+      "description": "Race stunt bikes across explosive obstacle courses, land backflips to shave seconds, and beat the clock.",
+      "thumbnail": "/logos/moto-x3m.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/moto-x3m/\" title=\"Moto X3M\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "drive-mad",
+      "title": "Drive Mad",
+      "category": "Racing",
+      "controls": "W/S or Up/Down Arrows or A/D to drive and balance",
+      "description": "Navigate wild physics bridges and monster truck stages without flipping your vehicle into the water.",
+      "thumbnail": "/logos/drive-mad.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h77/drive-mad/\" title=\"Drive Mad\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "madalin-stunt-cars-2",
+      "title": "Madalin Stunt Cars 2",
+      "category": "Racing",
+      "controls": "WASD or Arrow Keys to drive · Shift for nitro · Space for handbrake",
+      "description": "Free-roam 3D supercar sandbox filled with mega ramps, loops, and customizable exotic sports cars.",
+      "thumbnail": "/logos/madalin-stunt-cars-2.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/madalin-stunt-cars-2/\" title=\"Madalin Stunt Cars 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "blumgi-rocket",
+      "title": "Blumgi Rocket",
+      "category": "Racing",
+      "controls": "Hold Space or W/Up to fire rocket boost · A/D to tilt",
+      "description": "Blast a rocket-powered stunt car through hills, caves, and portals to reach the checkered flag.",
+      "thumbnail": "/logos/blumgi-rocket.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h2/blumgi-rocket/\" title=\"Blumgi Rocket\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "eggy-car",
+      "title": "Eggy Car",
+      "category": "Racing",
+      "controls": "Left/Right Arrows or A/D to accelerate and brake gently",
+      "description": "Drive carefully over steep hills without letting the fragile egg bounce off the roof of your car.",
+      "thumbnail": "/logos/eggy-car.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/eggy-car/\" title=\"Eggy Car\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "monkey-mart",
+      "title": "Monkey Mart",
+      "category": "Idle",
+      "controls": "WASD or Arrow Keys or Mouse drag to run your supermarket",
+      "description": "Stock banana stands, serve customers, hire assistant monkeys, and expand your bustling grocery store.",
+      "thumbnail": "/logos/monkey-mart.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h8/monkey-mart/\" title=\"Monkey Mart\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "tiny-fishing",
+      "title": "Tiny Fishing",
+      "category": "Idle",
+      "controls": "Mouse Click to cast · Hold & drag to hook rare fish",
+      "description": "Cast your line deeper with every upgrade, reel in legendary catches, and earn passive aquarium coins.",
+      "thumbnail": "/logos/tiny-fishing.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/tiny-fishing/\" title=\"Tiny Fishing\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "cookie-clicker",
+      "title": "Cookie Clicker",
+      "category": "Idle",
+      "controls": "Mouse Click to bake cookies and buy upgrades",
+      "description": "Bake cookies by hand, unlock grandmas, farms, and portals, and scale your production to trillions per second.",
+      "thumbnail": "/logos/cookie-clicker.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/cookie-clicker/\" title=\"Cookie Clicker\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    },
+    {
+      "id": "bitlife",
+      "title": "BitLife",
+      "category": "Idle",
+      "controls": "Mouse Click to make life decisions and advance years",
+      "description": "Interactive life simulator where every choice shapes your career, wealth, relationships, and legacy.",
+      "thumbnail": "/logos/bitlife.png",
+      "featured": false,
+      "iframe": "<iframe src=\"https://htmlxm.github.io/h/bitlife/\" title=\"BitLife\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+    }
+  ]
+}

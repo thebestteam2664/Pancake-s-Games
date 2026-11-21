@@ -1,0 +1,374 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    background-color: #020617;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Homepage animated looping video wallpaper stage */
+#wallpaper-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #020617;
+  pointer-events: none;
+}
+
+.wallpaper-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: saturate(1.06) brightness(0.88);
+  transition: opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+.wallpaper-video.is-visible {
+  opacity: 1;
+}
+
+#bg-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(2, 6, 23, 0.08) 0%, rgba(2, 6, 23, 0.56) 100%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.24) 0%, rgba(2, 6, 23, 0.14) 45%, rgba(2, 6, 23, 0.62) 100%);
+}
+
+/* Smooth keyframes */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes theaterEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bannerAmbient {
+  0% {
+    transform: scaleX(0.92) scaleY(1);
+  }
+  100% {
+    transform: scaleX(0.945) scaleY(1.028);
+  }
+}
+
+@keyframes featuredLogoGlide {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideTextGlide {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes carouselSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-110%) skewX(-18deg);
+  }
+  35% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(210%) skewX(-18deg);
+  }
+}
+
+@keyframes featuredProgressFill {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes btnSwapPop {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes statPop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Entrance classes */
+.anim-fade-up {
+  animation: heroFadeUp 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-delay-1 {
+  animation-delay: 90ms;
+}
+
+.anim-delay-2 {
+  animation-delay: 180ms;
+}
+
+.banner-ambient-img {
+  animation: bannerAmbient 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.theater-enter {
+  animation: theaterEnter 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.game-card-enter {
+  animation: cardEnter 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--stagger, 0) * 26ms);
+}
+
+.stat-pop {
+  animation: statPop 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-swap-pop {
+  animation: btnSwapPop 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header nav link smooth animated underline */
+.nav-link {
+  position: relative;
+  padding-block: 4px;
+  transition:
+    color 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: #fbbf24;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.text-amber-400::after {
+  transform: scaleX(1);
+}
+
+/* Featured carousel silky slide & seamless loop transition */
+#featured-track {
+  transition: transform 820ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+#featured-track.no-transition {
+  transition: none !important;
+}
+
+.featured-slide-img {
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured-slide:hover .featured-slide-img {
+  transform: scale(1.045);
+}
+
+.featured-slide.is-active .featured-slide-img {
+  animation: featuredLogoGlide 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.featured-slide.is-active .featured-slide-kicker {
+  animation: slideTextGlide 560ms cubic-bezier(0.16, 1, 0.3, 1) 70ms both;
+}
+
+.featured-slide.is-active .featured-slide-title {
+  animation: slideTextGlide 620ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+
+.featured-slide.is-active .featured-slide-actions {
+  animation: slideTextGlide 640ms cubic-bezier(0.16, 1, 0.3, 1) 170ms both;
+}
+
+.featured-sweep {
+  pointer-events: none;
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.16), transparent);
+  opacity: 0;
+}
+
+.featured-sweep.is-sweeping {
+  animation: carouselSweep 880ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#featured-progress-bar {
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+#featured-progress-bar.is-running {
+  animation: featuredProgressFill 5000ms linear forwards;
+}
+
+#featured-progress-bar.is-paused {
+  animation-play-state: paused;
+}
+
+/* Silky smooth interactive hover & press transitions */
+.btn-tactile {
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 340ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-tactile:hover {
+  transform: translateY(-2px);
+}
+
+.btn-tactile:active {
+  transform: scale(0.97);
+}
+
+.game-card {
+  transition:
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 340ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 320ms ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}
+
+.game-card-thumb {
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .game-card-thumb {
+  transform: scale(1.065);
+}
+
+/* Theater iframe sizing */
+#iframe-stage iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background-color: #020617;
+}
+
+/* Edge-to-edge fullscreen stage so mouse never leaves the game bounds */
+#iframe-stage:fullscreen,
+#iframe-stage:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  aspect-ratio: auto;
+  background-color: #000000;
+}
+
+#iframe-stage:fullscreen iframe,
+#iframe-stage:-webkit-full-screen iframe {
+  width: 100%;
+  height: 100%;
+}
