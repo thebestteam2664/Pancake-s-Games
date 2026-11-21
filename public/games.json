@@ -71,14 +71,14 @@
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/rocketleague/index.html\" title=\"2D Rocket League\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "soccer-tournament",
-      "title": "Soccer Tournament",
-      "category": "Sports",
-      "controls": "Mouse or Touch to aim kicks, bend shots, and guard the goal",
-      "description": "Lead your national squad through group stages and knockout rounds with precision shots and saves.",
-      "thumbnail": "./logos/soccer-tournament.jpg",
+      "id": "fireboy-watergirl",
+      "title": "Fireboy & Watergirl",
+      "category": "Arcade",
+      "controls": "WASD for Watergirl · Arrow Keys for Fireboy · Solve temple switches together",
+      "description": "Classic 2-player cooperative temple puzzle platformer—use fire, water, and teamwork to reach both exit doors.",
+      "thumbnail": "./logos/fireboy-watergirl.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/66da87c150bf4e7c9f2abef8cdbd2f7a/\" title=\"Soccer Tournament\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/fireboywatergirl/index.html\" title=\"Fireboy & Watergirl\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "stickman-golf",
@@ -91,14 +91,14 @@
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/stickmangolf/index.html\" title=\"Stickman Golf\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "drunken-boxing-2",
-      "title": "Drunken Boxing 2",
-      "category": "Sports",
-      "controls": "WASD / Arrow Keys to throw wild punches and dodge · 1P or 2P local",
-      "description": "Wobbly 1v1 and 2-player ragdoll boxing where timing your energy bar lands hilarious knockouts.",
-      "thumbnail": "./logos/drunken-boxing-2.jpg",
+      "id": "helix-jump",
+      "title": "Helix Jump",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or Mouse drag to rotate the tower",
+      "description": "Spin the spiral tower to drop the bouncing ball through gaps while avoiding brightly colored hazard tiles.",
+      "thumbnail": "./logos/helix-jump.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/c363f572a1dc4ca186647cece386385e/\" title=\"Drunken Boxing 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/helixjump/index.html\" title=\"Helix Jump\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "soccer-random",
@@ -151,14 +151,14 @@
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/boxingrandom/index.html\" title=\"Boxing Random\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "8-ball-pool",
-      "title": "8 Ball Pool",
-      "category": "Sports",
-      "controls": "Mouse to aim cue and pull back to set shot power",
-      "description": "Line up bank shots, apply cue spin, and sink the 8-ball cleanly against CPU or a friend.",
-      "thumbnail": "./logos/8-ball-pool.png",
+      "id": "super-mario-64",
+      "title": "Super Mario 64",
+      "category": "Arcade",
+      "controls": "Arrow Keys to move · X to jump · C to punch/dive · Z to crouch",
+      "description": "Explore Peach's Castle in full 3D, leap into paintings, collect Power Stars, and battle Bowser in your browser.",
+      "thumbnail": "./logos/super-mario-64.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/50a8e5775cf8476992f756811468bcbd/\" title=\"8 Ball Pool\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/supermario64/index.html\" title=\"Super Mario 64\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "fnaf-1",
@@ -211,14 +211,14 @@
       "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/baldi-basics/inde\" title=\"Baldi's Basics\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "backrooms-2d",
-      "title": "Backrooms",
-      "category": "Horror",
-      "controls": "WASD to move · Mouse to look · E to interact · Shift to sprint",
-      "description": "Explore eerie yellow maze levels, solve clues, and escape the creatures lurking inside the Backrooms.",
-      "thumbnail": "./logos/backrooms-2d.png",
+      "id": "burrito-bison",
+      "title": "Burrito Bison",
+      "category": "Action",
+      "controls": "Mouse Click or Space to launch & body-slam gummy bears",
+      "description": "Launch the masked luchador across Candy Land, smash through gummy waves, and upgrade rocket belts.",
+      "thumbnail": "./logos/burrito-bison.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/2eb8260c11ae4628926d434548a81ec5/\" title=\"Backrooms\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/burritobison/index.html\" title=\"Burrito Bison\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "bad-time-simulator",
@@ -258,7 +258,7 @@
       "description": "Carve down icy mountain slopes on a sled, dodge rolling snowballs and pines, and unlock new sleds.",
       "thumbnail": "./logos/snow-rider-3d.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/3b79a8537ebc414fb4f9672a9b8c68c8/\" title=\"Snow Rider 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/snowrider3d/\" title=\"Snow Rider 3D\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "tunnel-rush",
@@ -461,24 +461,24 @@
       "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/house-of-hazards/\" title=\"House of Hazards\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "funny-shooter-2",
-      "title": "Funny Shooter 2",
+      "id": "funny-shooter",
+      "title": "Funny Shooter",
       "category": "Action",
       "controls": "WASD to move · Mouse to shoot · 1-7 weapons · Shift to sprint",
-      "description": "Fast first-person arena shooter battling waves of bizarre red giants with wild upgradeable weapons.",
-      "thumbnail": "./logos/funny-shooter-2.png",
+      "description": "Fast first-person arena shooter battling waves of bizarre red enemies with crazy upgradeable weapons.",
+      "thumbnail": "./logos/funny-shooter.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/a1b7ac4025214a5cb0bd01a4f675513a/\" title=\"Funny Shooter 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/funnyshooter/index.html\" title=\"Funny Shooter\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "happy-wheels",
-      "title": "Happy Wheels",
-      "category": "Action",
-      "controls": "Arrow Keys to drive & lean · Space for primary action · Shift/Ctrl for secondary",
-      "description": "Ragdoll physics obstacle courses packed with wild vehicles, traps, and community-created levels.",
-      "thumbnail": "./logos/happy-wheels.jpg",
+      "id": "slope-2",
+      "title": "Slope 2",
+      "category": "Arcade",
+      "controls": "Left/Right Arrows or A/D to steer down the neon track",
+      "description": "Faster sequel to Slope with power-up shields, coin multipliers, and twisting high-speed neon ramps.",
+      "thumbnail": "./logos/slope-2.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/happywheels/index.html\" title=\"Happy Wheels\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/slope2/index.html\" title=\"Slope 2\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "10-minutes-till-dawn",
@@ -551,14 +551,14 @@
       "iframe": "<iframe src=\"https://selenite-copy.pages.dev/drift-boss/index.html\" title=\"Drift Boss\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
-      "id": "eggy-car",
-      "title": "Eggy Car",
+      "id": "moto-x3m-winter",
+      "title": "Moto X3M Winter",
       "category": "Racing",
-      "controls": "Left/Right Arrows or A/D to accelerate and brake gently",
-      "description": "Drive carefully over steep hills without letting the fragile egg bounce off the roof of your car.",
-      "thumbnail": "./logos/eggy-car.png",
+      "controls": "Up/Down to accelerate & brake · Left/Right to flip in mid-air",
+      "description": "Race stunt bikes across icy winter loops, snowmen, and explosive holiday ramps while landing backflips.",
+      "thumbnail": "./logos/moto-x3m-winter.jpg",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/59a98bf799ef499d9d7b9285bccaa196/\" title=\"Eggy Car\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://selenite-copy.pages.dev/motox3m-winter/index.html\" title=\"Moto X3M Winter\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "monkey-mart",
@@ -578,7 +578,7 @@
       "description": "Cast your line deeper with every upgrade, reel in legendary catches, and earn passive aquarium coins.",
       "thumbnail": "./logos/tiny-fishing.png",
       "featured": false,
-      "iframe": "<iframe src=\"https://html5.gamedistribution.com/5ee4b0222a474e44880b6c6d9f96754d/\" title=\"Tiny Fishing\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
+      "iframe": "<iframe src=\"https://astro-assets.pages.dev/gs/src/tiny-fishing/\" title=\"Tiny Fishing\" allow=\"fullscreen; autoplay\" allowfullscreen loading=\"lazy\"></iframe>"
     },
     {
       "id": "cookie-clicker",
