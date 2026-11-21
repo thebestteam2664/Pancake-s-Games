@@ -184,17 +184,27 @@ function stopAutoSaveLoop() {
   }
 }
 
+function resolveAssetUrl(rawPath) {
+  if (typeof rawPath !== 'string') return '';
+  const trimmed = rawPath.trim();
+  if (!trimmed) return '';
+  if (trimmed.startsWith('/') && !trimmed.startsWith('//')) {
+    return `.${trimmed}`;
+  }
+  return trimmed;
+}
+
 function validateSafeUrl(rawUrl) {
   if (typeof rawUrl !== 'string') return null;
   const candidate = rawUrl.trim();
   if (!candidate) return null;
 
-  if (candidate.startsWith('/') && !candidate.startsWith('//')) {
+  if ((candidate.startsWith('/') && !candidate.startsWith('//')) || candidate.startsWith('./')) {
     return candidate;
   }
 
   try {
-    const url = new URL(candidate, window.location.origin);
+    const url = new URL(candidate, window.location.href);
     if (url.protocol === 'https:' || url.protocol === 'http:') {
       return url.href;
     }
@@ -276,7 +286,7 @@ function buildThumbnailContainer(game) {
 
   if (game.thumbnail) {
     const img = document.createElement('img');
-    img.src = game.thumbnail;
+    img.src = resolveAssetUrl(game.thumbnail);
     img.alt = `${game.title} official logo`;
     img.referrerPolicy = 'no-referrer';
     img.loading = 'lazy';
@@ -495,7 +505,7 @@ function createFeaturedSlideElement(game) {
 
   if (game.thumbnail) {
     const img = document.createElement('img');
-    img.src = game.thumbnail;
+    img.src = resolveAssetUrl(game.thumbnail);
     img.alt = `${game.title} featured game logo`;
     img.referrerPolicy = 'no-referrer';
     img.className = 'featured-slide-img h-full w-full max-h-[260px] object-contain p-5 pb-16 bg-slate-900/70';
@@ -721,7 +731,7 @@ function renderSavedGames() {
 
     if (game.thumbnail) {
       const icon = document.createElement('img');
-      icon.src = game.thumbnail;
+      icon.src = resolveAssetUrl(game.thumbnail);
       icon.alt = game.title;
       icon.referrerPolicy = 'no-referrer';
       icon.className = 'h-12 w-12 rounded-lg object-contain bg-slate-950/90 border border-slate-800 p-1 shrink-0';
@@ -1082,7 +1092,7 @@ async function fetchGamesCatalog() {
   renderCatalog();
 
   try {
-    const response = await fetch('/games.json', { cache: 'no-store' });
+    const response = await fetch('./games.json', { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`Failed to load game catalog (HTTP ${response.status})`);
     }
