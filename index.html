@@ -114,10 +114,10 @@
             <div class="flex flex-wrap items-center gap-2 shrink-0">
               <button
                 type="button"
-                id="player-save-btn"
-                class="px-3.5 py-2 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/40 hover:bg-emerald-500/20 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                id="player-delete-save-btn"
+                class="px-3.5 py-2 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/40 hover:bg-red-500/20 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               >
-                Save Progress
+                Delete Save
               </button>
               <button
                 type="button"
@@ -326,14 +326,14 @@
         <div class="flex items-center justify-between gap-4 mb-4">
           <div>
             <h2 class="font-display text-lg font-bold text-slate-100">Continue Playing (Saved Progress)</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Clears saved session, playtime &amp; checkpoint notes. External games also store internal levels under their own host site data.</p>
+            <p class="text-xs text-slate-400 mt-0.5">Auto-saves your session, playtime &amp; checkpoint notes. Deleting a save wipes all local game data for locally hosted games (Ragdoll Hit, Ragdoll Archers, 10 Minutes Till Dawn).</p>
           </div>
           <button
             type="button"
             id="clear-saved-btn"
-            class="text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
+            class="px-3 py-1.5 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:bg-red-500/20 hover:border-red-400 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
-            Clear all saves
+            Delete All Saves
           </button>
         </div>
         <div id="saved-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -349,7 +349,14 @@
             </p>
           </div>
 
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              id="catalog-delete-all-btn"
+              class="hidden px-3.5 py-2 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:bg-red-500/20 hover:border-red-400 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              Delete All Saves
+            </button>
             <label for="search-input" class="sr-only">Search games</label>
             <input
               id="search-input"
@@ -411,6 +418,47 @@
         </button>
       </div>
     </footer>
+
+    <div
+      id="delete-confirm-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-confirm-title"
+      aria-describedby="delete-confirm-message"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div class="w-full max-w-md rounded-2xl border border-red-500/40 bg-slate-900 p-6 shadow-2xl">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-500/15 border border-red-500/35 text-red-400 font-bold text-base" aria-hidden="true">
+            !
+          </div>
+          <div class="min-w-0 flex-1">
+            <h2 id="delete-confirm-title" class="font-display text-lg font-bold text-slate-50">
+              Delete Saved Progress?
+            </h2>
+            <p id="delete-confirm-message" class="mt-2 text-sm leading-relaxed text-slate-300">
+              This will permanently erase the saved progress for this game.
+            </p>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-wrap items-center justify-end gap-3">
+          <button
+            type="button"
+            id="delete-confirm-cancel-btn"
+            class="btn-tactile px-4 py-2 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg whitespace-nowrap cursor-pointer"
+          >
+            Nevermind
+          </button>
+          <button
+            type="button"
+            id="delete-confirm-yes-btn"
+            class="btn-tactile px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-500 rounded-lg whitespace-nowrap cursor-pointer"
+          >
+            Are you sure?
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="./src/app.js"></script>
   </body>

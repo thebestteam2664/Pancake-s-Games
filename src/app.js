@@ -19,6 +19,7 @@ const state = {
   sessionStartMs: null,
   autoSaveTimer: null,
   clearedActiveSave: false,
+  pendingDeleteAction: null,
   favorites: new Set(),
   saves: {}, // { [gameId]: { savedAt: number, playSeconds: number, note: string } }
   loading: true,
@@ -35,7 +36,7 @@ const els = {
   playerSaveStatus: document.getElementById('player-save-status'),
   playerTitle: document.getElementById('player-title'),
   playerMeta: document.getElementById('player-meta'),
-  playerSaveBtn: document.getElementById('player-save-btn'),
+  playerDeleteSaveBtn: document.getElementById('player-delete-save-btn'),
   playerFavoriteBtn: document.getElementById('player-favorite-btn'),
   playerReloadBtn: document.getElementById('player-reload-btn'),
   playerDirectLink: document.getElementById('player-direct-link'),
@@ -61,6 +62,7 @@ const els = {
   savedSection: document.getElementById('saved-section'),
   savedGrid: document.getElementById('saved-grid'),
   clearSavedBtn: document.getElementById('clear-saved-btn'),
+  catalogDeleteAllBtn: document.getElementById('catalog-delete-all-btn'),
   catalogHeading: document.getElementById('catalog-heading'),
   searchInput: document.getElementById('search-input'),
   categoryTabs: document.querySelectorAll('.cat-tab'),
@@ -68,6 +70,11 @@ const els = {
   catalogStatus: document.getElementById('catalog-status'),
   gamesGrid: document.getElementById('games-grid'),
   footerTopBtn: document.getElementById('footer-top-btn'),
+  deleteConfirmModal: document.getElementById('delete-confirm-modal'),
+  deleteConfirmTitle: document.getElementById('delete-confirm-title'),
+  deleteConfirmMessage: document.getElementById('delete-confirm-message'),
+  deleteConfirmYesBtn: document.getElementById('delete-confirm-yes-btn'),
+  deleteConfirmCancelBtn: document.getElementById('delete-confirm-cancel-btn'),
 };
 
 function loadLocalStorageState() {
@@ -161,13 +168,6 @@ function commitActiveGameSave(explicit = false) {
   if (els.playerCopyNoteBtn) {
     els.playerCopyNoteBtn.classList.toggle('hidden', !noteVal);
   }
-  if (explicit && els.playerSaveStatus) {
-    els.playerSaveStatus.textContent = 'Progress saved! Safe to close the tab and resume later.';
-    els.playerSaveBtn.textContent = 'Saved!';
-    setTimeout(() => {
-      if (els.playerSaveBtn) els.playerSaveBtn.textContent = 'Save Progress';
-    }, 1500);
-  }
 }
 
 function startAutoSaveLoop() {
@@ -249,8 +249,10 @@ function parseIframeConfig(iframeHtml, fallbackTitle) {
 /**
  * Unmount any active iframe and immediately silence audio/WebGL loops by navigating to about:blank first.
  */
-function teardownActiveIframe() {
-  commitActiveGameSave(false);
+function teardownActiveIframe({ skipSave = false } = {}) {
+  if (!skipSave) {
+    commitActiveGameSave(false);
+  }
   stopAutoSaveLoop();
 
   const existing = els.iframeStage.querySelectorAll('iframe');
@@ -662,6 +664,148 @@ function updateTabsUI() {
   });
 }
 
+function deleteIdbDatabase(dbName) {
+  return new Promise((resolve) => {
+    if (!window.indexedDB || !dbName) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    const done = () => {
+      if (!settled) {
+        settled = true;
+        resolve();
+      }
+    };
+    const timer = setTimeout(done, 800);
+    try {
+      const req = window.indexedDB.deleteDatabase(dbName);
+      req.onsuccess = () => {
+        clearTimeout(timer);
+        done();
+      };
+      req.onerror = () => {
+        clearTimeout(timer);
+        done();
+      };
+      req.onblocked = () => {
+        clearTimeout(timer);
+        done();
+      };
+    } catch {
+      clearTimeout(timer);
+      done();
+    }
+  });
+}
+
+async function wipeSingleGameOriginStorage(gameId) {
+  const prefix = `__pg_game_${gameId}__:`;
+  try {
+    const toRemove = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(prefix)) {
+        toRemove.push(k);
+      }
+    }
+    toRemove.forEach((k) => localStorage.removeItem(k));
+  } catch {
+    // Ignore storage restrictions
+  }
+
+  const dbNames = new Set([`/idbfs__${gameId}`, `idbfs__${gameId}`]);
+  try {
+    if (window.indexedDB && typeof window.indexedDB.databases === 'function') {
+      const list = await window.indexedDB.databases();
+      list.forEach((entry) => {
+        if (entry && entry.name && entry.name.endsWith(`__${gameId}`)) {
+          dbNames.add(entry.name);
+        }
+      });
+    }
+  } catch {
+    // Ignore databases() errors
+  }
+
+  await Promise.all([...dbNames].map((name) => deleteIdbDatabase(name)));
+}
+
+async function wipeAllGamesOriginStorage() {
+  try {
+    const toRemove = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const k = localStorage.key(i);
+      if (k && k !== STORAGE_FAVORITES_KEY) {
+        toRemove.push(k);
+      }
+    }
+    toRemove.forEach((k) => localStorage.removeItem(k));
+  } catch {
+    // Ignore storage restrictions
+  }
+
+  try {
+    sessionStorage.clear();
+  } catch {
+    // Ignore storage restrictions
+  }
+
+  const dbNames = new Set([
+    '/idbfs',
+    'idbfs',
+    'UnityCache',
+    '/idbfs__ragdoll-hit',
+    'idbfs__ragdoll-hit',
+    '/idbfs__ragdoll-archers',
+    'idbfs__ragdoll-archers',
+    '/idbfs__10-minutes-till-dawn',
+    'idbfs__10-minutes-till-dawn',
+  ]);
+  try {
+    if (window.indexedDB && typeof window.indexedDB.databases === 'function') {
+      const list = await window.indexedDB.databases();
+      list.forEach((entry) => {
+        if (entry && entry.name) dbNames.add(entry.name);
+      });
+    }
+  } catch {
+    // Ignore databases() errors
+  }
+
+  await Promise.all([...dbNames].map((name) => deleteIdbDatabase(name)));
+
+  try {
+    if (window.caches && typeof window.caches.keys === 'function') {
+      const cacheKeys = await window.caches.keys();
+      await Promise.all(cacheKeys.map((key) => window.caches.delete(key)));
+    }
+  } catch {
+    // Ignore CacheStorage restrictions
+  }
+}
+
+function mountFreshActiveGameIframe(game) {
+  const iframeConfig = parseIframeConfig(game.iframe, game.title);
+  if (!iframeConfig) return;
+
+  const iframeEl = document.createElement('iframe');
+  iframeEl.src = iframeConfig.src;
+  iframeEl.title = iframeConfig.title;
+  iframeEl.setAttribute('allow', iframeConfig.allow);
+  iframeEl.setAttribute('allowfullscreen', '');
+  iframeEl.setAttribute('referrerpolicy', 'no-referrer');
+  els.iframeStage.replaceChildren(iframeEl);
+
+  iframeEl.addEventListener('load', () => {
+    try {
+      iframeEl.focus();
+    } catch {
+      // Ignore cross-origin focus errors
+    }
+  });
+}
+
 function resetActivePlayerSaveUI(statusMessage) {
   state.clearedActiveSave = true;
   state.sessionStartMs = null;
@@ -674,32 +818,93 @@ function resetActivePlayerSaveUI(statusMessage) {
   }
 }
 
-function clearSingleSave(gameId) {
-  if (!state.saves[gameId] && state.activeGameId !== gameId) return;
+async function clearSingleSave(gameId, { restartIfActive = false } = {}) {
+  const isActive = state.activeGameId === gameId;
+  if (!state.saves[gameId] && !isActive) return;
+
+  if (isActive) {
+    state.clearedActiveSave = true;
+    teardownActiveIframe({ skipSave: true });
+  }
+
   delete state.saves[gameId];
   persistSavesToStorage();
 
-  if (state.activeGameId === gameId) {
-    resetActivePlayerSaveUI('Saved progress cleared for this game.');
+  await wipeSingleGameOriginStorage(gameId);
+
+  if (isActive) {
+    resetActivePlayerSaveUI('Save deleted and game data wiped. Relaunch or play again anytime to start fresh.');
+    if (restartIfActive) {
+      const game = state.games.find((g) => g.id === gameId);
+      if (game) mountFreshActiveGameIframe(game);
+    }
   }
 
   renderCatalog();
 }
 
-function clearAllSaves() {
-  state.saves = {};
-  persistSavesToStorage();
-  try {
-    sessionStorage.clear();
-  } catch {
-    // Ignore storage restrictions
+async function clearAllSaves() {
+  const hadActive = Boolean(state.activeGameId);
+  const activeGame = hadActive ? state.games.find((g) => g.id === state.activeGameId) : null;
+
+  if (hadActive) {
+    state.clearedActiveSave = true;
+    teardownActiveIframe({ skipSave: true });
   }
 
-  if (state.activeGameId) {
-    resetActivePlayerSaveUI('All Pancake\'s Games saved sessions & checkpoint notes cleared.');
+  state.saves = {};
+  persistSavesToStorage();
+
+  await wipeAllGamesOriginStorage();
+
+  if (hadActive) {
+    resetActivePlayerSaveUI('All saves and local game data deleted.');
+    if (activeGame) {
+      mountFreshActiveGameIframe(activeGame);
+    }
   }
 
   renderCatalog();
+}
+
+function closeDeleteConfirmModal() {
+  state.pendingDeleteAction = null;
+  if (els.deleteConfirmModal) {
+    els.deleteConfirmModal.classList.add('hidden');
+  }
+}
+
+function openDeleteConfirmModal({ title, message, onConfirm }) {
+  if (!els.deleteConfirmModal) {
+    onConfirm();
+    return;
+  }
+  state.pendingDeleteAction = onConfirm;
+  if (els.deleteConfirmTitle) els.deleteConfirmTitle.textContent = title;
+  if (els.deleteConfirmMessage) els.deleteConfirmMessage.textContent = message;
+  els.deleteConfirmModal.classList.remove('hidden');
+  if (els.deleteConfirmCancelBtn) {
+    els.deleteConfirmCancelBtn.focus();
+  }
+}
+
+function confirmDeleteSingleSave(gameId) {
+  const game = state.games.find((g) => g.id === gameId);
+  const title = game ? game.title : 'this game';
+  openDeleteConfirmModal({
+    title: `Delete ${title} Save?`,
+    message: `Warning: This will permanently delete your saved session, playtime, checkpoint notes, and local game progress for ${title}.`,
+    onConfirm: () => clearSingleSave(gameId, { restartIfActive: true }),
+  });
+}
+
+function confirmDeleteAllSaves() {
+  const count = Object.keys(state.saves).length;
+  openDeleteConfirmModal({
+    title: 'Delete All Saved Progress?',
+    message: `Warning: This will permanently delete ${count === 1 ? 'your 1 saved game' : `all ${count} saved games`} and wipe all locally stored progress. Your Favorites will stay saved.`,
+    onConfirm: () => clearAllSaves(),
+  });
 }
 
 function renderSavedGames() {
@@ -720,9 +925,9 @@ function renderSavedGames() {
   els.savedSection.classList.remove('hidden');
   els.savedGrid.replaceChildren();
 
-  entries.slice(0, 6).forEach(({ game, info }, idx) => {
+  entries.forEach(({ game, info }, idx) => {
     const card = document.createElement('div');
-    card.style.setProperty('--stagger', String(idx));
+    card.style.setProperty('--stagger', String(Math.min(idx, 12)));
     card.className =
       'game-card game-card-enter flex flex-col justify-between gap-3 p-4 rounded-xl border border-slate-800/90 bg-slate-900/80 backdrop-blur-sm hover:border-amber-400/50 hover:shadow-[0_14px_30px_-10px_rgba(245,158,11,0.22)]';
 
@@ -774,11 +979,11 @@ function renderSavedGames() {
     const clearBtn = document.createElement('button');
     clearBtn.type = 'button';
     clearBtn.className =
-      'btn-tactile ml-auto px-2.5 py-1.5 text-xs font-medium text-slate-300 hover:text-red-300 bg-slate-950/70 border border-slate-700/90 hover:border-red-500/50 hover:bg-red-500/10 rounded-md whitespace-nowrap cursor-pointer';
-    clearBtn.textContent = 'Clear Save';
-    clearBtn.setAttribute('aria-label', `Clear saved progress for ${game.title}`);
-    clearBtn.setAttribute('title', `Clear saved progress for ${game.title}`);
-    clearBtn.addEventListener('click', () => clearSingleSave(game.id));
+      'btn-tactile ml-auto px-2.5 py-1.5 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:border-red-400 hover:bg-red-500/20 rounded-md whitespace-nowrap cursor-pointer';
+    clearBtn.textContent = 'Delete Save';
+    clearBtn.setAttribute('aria-label', `Delete saved progress for ${game.title}`);
+    clearBtn.setAttribute('title', `Delete saved progress for ${game.title}`);
+    clearBtn.addEventListener('click', () => confirmDeleteSingleSave(game.id));
 
     actions.appendChild(resumeBtn);
     actions.appendChild(fsBtn);
@@ -794,6 +999,11 @@ function renderCatalog() {
   updateTabsUI();
   updateStats();
   renderSavedGames();
+
+  if (els.catalogDeleteAllBtn) {
+    const showCatalogDeleteAll = state.activeCategory === 'Saved' && Object.keys(state.saves).length > 0;
+    els.catalogDeleteAllBtn.classList.toggle('hidden', !showCatalogDeleteAll);
+  }
 
   if (state.loading) {
     els.gamesGrid.replaceChildren();
@@ -910,7 +1120,7 @@ function renderCatalog() {
     top.appendChild(desc);
 
     const footer = document.createElement('div');
-    footer.className = 'mt-5 pt-3.5 border-t border-slate-800/80 flex items-center gap-2';
+    footer.className = 'mt-5 pt-3.5 border-t border-slate-800/80 flex flex-wrap items-center gap-2';
 
     const playBtn = document.createElement('button');
     playBtn.type = 'button';
@@ -943,6 +1153,17 @@ function renderCatalog() {
     footer.appendChild(playBtn);
     footer.appendChild(fsBtn);
     footer.appendChild(favBtn);
+
+    if (savedInfo) {
+      const deleteSaveBtn = document.createElement('button');
+      deleteSaveBtn.type = 'button';
+      deleteSaveBtn.className =
+        'btn-tactile px-2.5 py-2 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:border-red-400 hover:bg-red-500/20 rounded-lg whitespace-nowrap shrink-0 cursor-pointer';
+      deleteSaveBtn.textContent = 'Delete Save';
+      deleteSaveBtn.setAttribute('aria-label', `Delete saved progress for ${game.title}`);
+      deleteSaveBtn.addEventListener('click', () => confirmDeleteSingleSave(game.id));
+      footer.appendChild(deleteSaveBtn);
+    }
 
     body.appendChild(top);
     body.appendChild(footer);
@@ -1176,12 +1397,13 @@ function wireEvents() {
 
   els.playerBackBtn.addEventListener('click', closePlayerAndReturnHome);
   els.playerMuteStopBtn.addEventListener('click', closePlayerAndReturnHome);
-  els.playerSaveBtn.addEventListener('click', () => {
-    state.clearedActiveSave = false;
-    state.sessionStartMs = state.sessionStartMs || Date.now();
-    commitActiveGameSave(true);
-    startAutoSaveLoop();
-  });
+  if (els.playerDeleteSaveBtn) {
+    els.playerDeleteSaveBtn.addEventListener('click', () => {
+      if (state.activeGameId) {
+        confirmDeleteSingleSave(state.activeGameId);
+      }
+    });
+  }
   els.playerSaveNote.addEventListener('input', () => {
     state.clearedActiveSave = false;
     state.sessionStartMs = state.sessionStartMs || Date.now();
@@ -1221,7 +1443,35 @@ function wireEvents() {
     }
   });
 
-  els.clearSavedBtn.addEventListener('click', clearAllSaves);
+  els.clearSavedBtn.addEventListener('click', confirmDeleteAllSaves);
+  if (els.catalogDeleteAllBtn) {
+    els.catalogDeleteAllBtn.addEventListener('click', confirmDeleteAllSaves);
+  }
+
+  if (els.deleteConfirmYesBtn) {
+    els.deleteConfirmYesBtn.addEventListener('click', async () => {
+      const action = state.pendingDeleteAction;
+      closeDeleteConfirmModal();
+      if (typeof action === 'function') {
+        await action();
+      }
+    });
+  }
+  if (els.deleteConfirmCancelBtn) {
+    els.deleteConfirmCancelBtn.addEventListener('click', closeDeleteConfirmModal);
+  }
+  if (els.deleteConfirmModal) {
+    els.deleteConfirmModal.addEventListener('click', (e) => {
+      if (e.target === els.deleteConfirmModal) {
+        closeDeleteConfirmModal();
+      }
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && els.deleteConfirmModal && !els.deleteConfirmModal.classList.contains('hidden')) {
+      closeDeleteConfirmModal();
+    }
+  });
 
   els.footerTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

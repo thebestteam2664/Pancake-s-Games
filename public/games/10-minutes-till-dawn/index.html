@@ -1,6 +1,92 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+  <script>
+    (function () {
+      var GAME_ID = '10-minutes-till-dawn';
+      var LS_PREFIX = '__pg_game_' + GAME_ID + '__:';
+      var IDB_SUFFIX = '__' + GAME_ID;
+      try {
+        var nativeLS = window.localStorage;
+        var getScopedKeys = function () {
+          var keys = [];
+          for (var i = 0; i < nativeLS.length; i++) {
+            var k = nativeLS.key(i);
+            if (k && k.indexOf(LS_PREFIX) === 0) keys.push(k.slice(LS_PREFIX.length));
+          }
+          return keys;
+        };
+        var scopedMethods = {
+          getItem: function (key) { return nativeLS.getItem(LS_PREFIX + String(key)); },
+          setItem: function (key, value) { nativeLS.setItem(LS_PREFIX + String(key), String(value)); },
+          removeItem: function (key) { nativeLS.removeItem(LS_PREFIX + String(key)); },
+          clear: function () {
+            var toDelete = [];
+            for (var i = 0; i < nativeLS.length; i++) {
+              var k = nativeLS.key(i);
+              if (k && k.indexOf(LS_PREFIX) === 0) toDelete.push(k);
+            }
+            for (var j = 0; j < toDelete.length; j++) nativeLS.removeItem(toDelete[j]);
+          },
+          key: function (index) {
+            var keys = getScopedKeys();
+            return index >= 0 && index < keys.length ? keys[index] : null;
+          }
+        };
+        var scopedProxy = new Proxy(scopedMethods, {
+          get: function (target, prop) {
+            if (prop === 'length') return getScopedKeys().length;
+            if (prop in target) return target[prop];
+            if (typeof prop === 'symbol') return undefined;
+            var val = nativeLS.getItem(LS_PREFIX + String(prop));
+            return val === null ? undefined : val;
+          },
+          set: function (target, prop, value) {
+            if (typeof prop === 'symbol') return false;
+            nativeLS.setItem(LS_PREFIX + String(prop), String(value));
+            return true;
+          },
+          deleteProperty: function (target, prop) {
+            if (typeof prop === 'symbol') return false;
+            nativeLS.removeItem(LS_PREFIX + String(prop));
+            return true;
+          },
+          has: function (target, prop) {
+            if (typeof prop === 'symbol') return false;
+            return prop in target || nativeLS.getItem(LS_PREFIX + String(prop)) !== null;
+          },
+          ownKeys: function () { return getScopedKeys(); },
+          getOwnPropertyDescriptor: function (target, prop) {
+            if (typeof prop === 'symbol') return undefined;
+            var val = nativeLS.getItem(LS_PREFIX + String(prop));
+            return val === null ? undefined : { enumerable: true, configurable: true, writable: true, value: val };
+          }
+        });
+        Object.defineProperty(window, 'localStorage', {
+          configurable: true,
+          enumerable: true,
+          get: function () { return scopedProxy; }
+        });
+      } catch (e) {}
+      try {
+        var proto = IDBFactory.prototype;
+        var origOpen = proto.open;
+        var origDelete = proto.deleteDatabase;
+        var scopeDbName = function (name) {
+          var str = String(name || '');
+          if (!str || str === 'UnityCache' || str.indexOf(IDB_SUFFIX) !== -1) return str;
+          return str + IDB_SUFFIX;
+        };
+        proto.open = function (name, version) {
+          var scoped = scopeDbName(name);
+          return arguments.length > 1 ? origOpen.call(this, scoped, version) : origOpen.call(this, scoped);
+        };
+        proto.deleteDatabase = function (name) {
+          return origDelete.call(this, scopeDbName(name));
+        };
+      } catch (e) {}
+    })();
+  </script>
   <base href="https://cdn.jsdelivr.net/gh/bubbls/UGS-Assets@main/10minutestilldawn/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">

@@ -1,6 +1,92 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+  <script>
+    (function () {
+      var GAME_ID = 'ragdoll-archers';
+      var LS_PREFIX = '__pg_game_' + GAME_ID + '__:';
+      var IDB_SUFFIX = '__' + GAME_ID;
+      try {
+        var nativeLS = window.localStorage;
+        var getScopedKeys = function () {
+          var keys = [];
+          for (var i = 0; i < nativeLS.length; i++) {
+            var k = nativeLS.key(i);
+            if (k && k.indexOf(LS_PREFIX) === 0) keys.push(k.slice(LS_PREFIX.length));
+          }
+          return keys;
+        };
+        var scopedMethods = {
+          getItem: function (key) { return nativeLS.getItem(LS_PREFIX + String(key)); },
+          setItem: function (key, value) { nativeLS.setItem(LS_PREFIX + String(key), String(value)); },
+          removeItem: function (key) { nativeLS.removeItem(LS_PREFIX + String(key)); },
+          clear: function () {
+            var toDelete = [];
+            for (var i = 0; i < nativeLS.length; i++) {
+              var k = nativeLS.key(i);
+              if (k && k.indexOf(LS_PREFIX) === 0) toDelete.push(k);
+            }
+            for (var j = 0; j < toDelete.length; j++) nativeLS.removeItem(toDelete[j]);
+          },
+          key: function (index) {
+            var keys = getScopedKeys();
+            return index >= 0 && index < keys.length ? keys[index] : null;
+          }
+        };
+        var scopedProxy = new Proxy(scopedMethods, {
+          get: function (target, prop) {
+            if (prop === 'length') return getScopedKeys().length;
+            if (prop in target) return target[prop];
+            if (typeof prop === 'symbol') return undefined;
+            var val = nativeLS.getItem(LS_PREFIX + String(prop));
+            return val === null ? undefined : val;
+          },
+          set: function (target, prop, value) {
+            if (typeof prop === 'symbol') return false;
+            nativeLS.setItem(LS_PREFIX + String(prop), String(value));
+            return true;
+          },
+          deleteProperty: function (target, prop) {
+            if (typeof prop === 'symbol') return false;
+            nativeLS.removeItem(LS_PREFIX + String(prop));
+            return true;
+          },
+          has: function (target, prop) {
+            if (typeof prop === 'symbol') return false;
+            return prop in target || nativeLS.getItem(LS_PREFIX + String(prop)) !== null;
+          },
+          ownKeys: function () { return getScopedKeys(); },
+          getOwnPropertyDescriptor: function (target, prop) {
+            if (typeof prop === 'symbol') return undefined;
+            var val = nativeLS.getItem(LS_PREFIX + String(prop));
+            return val === null ? undefined : { enumerable: true, configurable: true, writable: true, value: val };
+          }
+        });
+        Object.defineProperty(window, 'localStorage', {
+          configurable: true,
+          enumerable: true,
+          get: function () { return scopedProxy; }
+        });
+      } catch (e) {}
+      try {
+        var proto = IDBFactory.prototype;
+        var origOpen = proto.open;
+        var origDelete = proto.deleteDatabase;
+        var scopeDbName = function (name) {
+          var str = String(name || '');
+          if (!str || str === 'UnityCache' || str.indexOf(IDB_SUFFIX) !== -1) return str;
+          return str + IDB_SUFFIX;
+        };
+        proto.open = function (name, version) {
+          var scoped = scopeDbName(name);
+          return arguments.length > 1 ? origOpen.call(this, scoped, version) : origOpen.call(this, scoped);
+        };
+        proto.deleteDatabase = function (name) {
+          return origDelete.call(this, scopeDbName(name));
+        };
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Ragdoll Archers</title>
@@ -12,7 +98,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #1e293b;
+      background: #0f172a;
       font-family: system-ui, -apple-system, sans-serif;
     }
     #unity-container {
@@ -24,7 +110,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      background: #1e293b;
+      background: #0f172a;
     }
     #loading-cover {
       position: absolute;
@@ -33,7 +119,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       background: #0f172a;
       color: #f8fafc;
       z-index: 10;
@@ -49,6 +135,8 @@
       font-size: 18px;
       font-weight: 700;
       letter-spacing: 0.02em;
+      text-align: center;
+      padding: 0 16px;
     }
     #unity-progress-bar-empty {
       width: 240px;
@@ -68,83 +156,140 @@
     // Block external popup/redirect attempts from in-game promo links
     window.open = function () { return null; };
 
-    // Clean offline SDK stub so Unity runs without fetching blocked external SDK scripts
-    window.Crazygames = window.Crazygames || {};
-    window.CrazyGames = {
-      SDK: {
-        environment: 'crazygames',
-        addInitCallback: function (cb) {
-          if (typeof cb === 'function') {
+    // Ensure Unity CrazyGames SiteLock passes cleanly on any hosting domain
+    try {
+      Object.defineProperty(document, 'URL', {
+        configurable: true,
+        get: function () { return 'http://localhost/'; }
+      });
+      Object.defineProperty(document, 'documentURI', {
+        configurable: true,
+        get: function () { return 'http://localhost/'; }
+      });
+    } catch (e) {}
+
+    // Base CDN root for Ragdoll Archers assets
+    window.__RA_CDN_BASE = 'https://cdn.jsdelivr.net/gh/StaticQuasar931/Ragdoll-Archers@main/';
+    window.__RA_WASM_URL = window.__RA_CDN_BASE + 'Build/build.wasm';
+
+    (function () {
+      function isBlockedSdkUrl(url) {
+        if (!url || typeof url !== 'string') return false;
+        var lower = url.toLowerCase();
+        return lower.indexOf('crazygames.com') !== -1 ||
+          lower.indexOf('crazygames-sdk') !== -1 ||
+          lower.indexOf('gamedistribution.com') !== -1 ||
+          lower.indexOf('imasdk.googleapis.com') !== -1;
+      }
+
+      // Intercept dynamic script tags pointing to blocked SDK domains and resolve immediately against local-sdk.js
+      var origNodeAppend = Node.prototype.appendChild;
+      Node.prototype.appendChild = function (node) {
+        if (node && node.nodeType === 1 && node.tagName === 'SCRIPT') {
+          var src = node.getAttribute && node.getAttribute('src');
+          if (isBlockedSdkUrl(src || node.src)) {
+            node.removeAttribute('src');
             setTimeout(function () {
-              cb({
-                userAccountAvailable: false,
-                systemInfo: {
-                  countryCode: 'US',
-                  locale: 'en-US',
-                  device: { type: 'desktop' },
-                  os: { name: 'Windows' },
-                  browser: { name: 'Chrome' }
+              node.dispatchEvent(new Event('load'));
+            }, 0);
+            return node;
+          }
+        }
+        return origNodeAppend.call(this, node);
+      };
+
+      var origInsertBefore = Node.prototype.insertBefore;
+      Node.prototype.insertBefore = function (node, refNode) {
+        if (node && node.nodeType === 1 && node.tagName === 'SCRIPT') {
+          var src = node.getAttribute && node.getAttribute('src');
+          if (isBlockedSdkUrl(src || node.src)) {
+            node.removeAttribute('src');
+            setTimeout(function () {
+              node.dispatchEvent(new Event('load'));
+            }, 0);
+            return node;
+          }
+        }
+        return origInsertBefore.call(this, node, refNode);
+      };
+
+      // Reassemble split WASM parts (.001 + .002) transparently for Unity loader.js and short-circuit blocked SDK calls
+      var origFetch = window.fetch ? window.fetch.bind(window) : null;
+      var wasmPromise = null;
+
+      function fetchMergedWasm() {
+        if (!wasmPromise) {
+          wasmPromise = Promise.all([
+            origFetch(window.__RA_CDN_BASE + 'Build/build.wasm.001').then(function (r) {
+              if (!r.ok) throw new Error('WASM part 1 HTTP ' + r.status);
+              return r.arrayBuffer();
+            }),
+            origFetch(window.__RA_CDN_BASE + 'Build/build.wasm.002').then(function (r) {
+              if (!r.ok) throw new Error('WASM part 2 HTTP ' + r.status);
+              return r.arrayBuffer();
+            })
+          ]).then(function (parts) {
+            var p1 = new Uint8Array(parts[0]);
+            var p2 = new Uint8Array(parts[1]);
+            var merged = new Uint8Array(p1.length + p2.length);
+            merged.set(p1, 0);
+            merged.set(p2, p1.length);
+            return merged;
+          });
+        }
+        return wasmPromise;
+      }
+
+      if (origFetch) {
+        window.fetch = function (resource, init) {
+          var url = typeof resource === 'string' ? resource : (resource && resource.url) || '';
+          if (url === window.__RA_WASM_URL) {
+            if (init && String(init.method || 'GET').toUpperCase() === 'HEAD') {
+              return Promise.resolve(new Response(null, {
+                status: 200,
+                headers: {
+                  'Content-Type': 'application/wasm',
+                  'Content-Length': '21347382'
+                }
+              }));
+            }
+            return fetchMergedWasm().then(function (merged) {
+              return new Response(merged, {
+                status: 200,
+                statusText: 'OK',
+                headers: {
+                  'Content-Type': 'application/wasm',
+                  'Content-Length': String(merged.byteLength)
                 }
               });
-            }, 0);
+            });
           }
-        },
-        ad: {
-          hasAdblock: function (cb) {
-            if (typeof cb === 'function') setTimeout(function () { cb(null, false); }, 0);
-          },
-          requestAd: function (adType, callbacks) {
-            if (callbacks && typeof callbacks.adStarted === 'function') callbacks.adStarted();
-            setTimeout(function () {
-              if (callbacks && typeof callbacks.adFinished === 'function') callbacks.adFinished();
-            }, 10);
+          if (isBlockedSdkUrl(url)) {
+            return Promise.resolve(new Response('', {
+              status: 200,
+              headers: { 'Content-Type': 'application/javascript' }
+            }));
           }
-        },
-        banner: {
-          requestOverlayBanners: function (banners, cb) {
-            if (Array.isArray(banners) && typeof cb === 'function') {
-              banners.forEach(function (b) { cb(b.id, 'bannerError', 'disabled'); });
-            }
-          }
-        },
-        game: {
-          gameplayStart: function () {},
-          gameplayStop: function () {},
-          happytime: function () {},
-          loadingStart: function () {},
-          loadingStop: function () {},
-          inviteLink: function () { return ''; },
-          showInviteButton: function () {},
-          hideInviteButton: function () {}
-        },
-        user: {
-          addAuthListener: function () {},
-          getUser: function (cb) { if (typeof cb === 'function') cb(null, null); },
-          getUserToken: function (cb) { if (typeof cb === 'function') cb('not_logged_in', null); },
-          getXsollaUserToken: function (cb) { if (typeof cb === 'function') cb('not_logged_in', null); },
-          addScore: function () {},
-          showAuthPrompt: function (cb) { if (typeof cb === 'function') cb('disabled', null); },
-          showAccountLinkPrompt: function (cb) { if (typeof cb === 'function') cb('disabled', null); }
-        }
+          return origFetch(resource, init);
+        };
       }
-    };
 
-    // Intercept blocked external SDK script tag injection and satisfy load listener locally
-    (function () {
-      var origAppendChild = HTMLHeadElement.prototype.appendChild;
-      HTMLHeadElement.prototype.appendChild = function (node) {
-        if (node && node.tagName === 'SCRIPT' && typeof node.src === 'string' &&
-            (node.src.indexOf('crazygames-sdk') !== -1 || node.src.indexOf('trafficjam3d') !== -1)) {
-          node.removeAttribute('src');
-          setTimeout(function () {
-            node.dispatchEvent(new Event('load'));
-          }, 0);
-          return node;
+      var origXhrOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function (method, url) {
+        if (isBlockedSdkUrl(String(url || ''))) {
+          this.__blockedSdkRequest = true;
+          return;
         }
-        return origAppendChild.call(this, node);
+        return origXhrOpen.apply(this, arguments);
+      };
+      var origXhrSend = XMLHttpRequest.prototype.send;
+      XMLHttpRequest.prototype.send = function () {
+        if (this.__blockedSdkRequest) return;
+        return origXhrSend.apply(this, arguments);
       };
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/gh/StaticQuasar931/Ragdoll-Archers@main/local-sdk.js"></script>
 </head>
 <body>
   <div id="unity-container" class="unity-desktop">
@@ -158,40 +303,75 @@
     </div>
   </div>
   <script>
-    const loaderUrl = "https://cdn.jsdelivr.net/gh/bubbls/ruffle@7117cc5006472d782b65d96abd375597d6273242/v11121212.js";
-    const config = {
-      dataUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/6697b6deba8b617c67b69c55dcd07cb1.data.unityweb",
-      frameworkUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/0be3c3ee7115b26e1ae28e643afdf1f2.js.unityweb",
-      codeUrl: "https://cdn.jsdelivr.net/gh/bubbls/ruffle@04dd5345a30d6ebf4b0e2cc385568750cd56ed5a/b3397c29f6878557c1c614cbf9e196ea.wasm.unityweb",
-      companyName: "Ericetto",
-      productName: "Ragdoll Archers",
-      productVersion: "0.1"
-    };
+    (function () {
+      var cdnBase = window.__RA_CDN_BASE;
+      var container = document.querySelector('#unity-container');
+      var canvas = document.querySelector('#unity-canvas');
+      var loadingCover = document.querySelector('#loading-cover');
+      var loadingTitle = document.querySelector('#loading-title');
+      var progressBarFull = document.querySelector('#unity-progress-bar-full');
 
-    const container = document.querySelector("#unity-container");
-    const canvas = document.querySelector("#unity-canvas");
-    const loadingCover = document.querySelector("#loading-cover");
-    const progressBarFull = document.querySelector("#unity-progress-bar-full");
+      // Lock local CrazyGames SDK shim so nothing overwrites it
+      try {
+        if (window.CrazyGames && window.CrazySDK) {
+          var localCG = window.CrazyGames;
+          var localSDK = window.CrazySDK;
+          Object.defineProperty(window, 'CrazyGames', {
+            configurable: true,
+            enumerable: true,
+            get: function () { return localCG; },
+            set: function () {}
+          });
+          Object.defineProperty(window, 'CrazySDK', {
+            configurable: true,
+            enumerable: true,
+            get: function () { return localSDK; },
+            set: function () {}
+          });
+          if (localCG.SDK && typeof localCG.SDK.init === 'function') {
+            localCG.SDK.init({ debug: false }).catch(function () {});
+          }
+        }
+      } catch (e) {}
 
-    const unityLoader = document.createElement("script");
-    unityLoader.src = loaderUrl;
-    unityLoader.onload = function () {
-      createUnityInstance(canvas, config, function (progress) {
-        progressBarFull.style.width = (100 * progress) + "%";
-      }).then(function (unityInstance) {
-        window.unityInstance = unityInstance;
-        loadingCover.style.display = "none";
-      }).catch(function (message) {
-        document.getElementById("loading-title").textContent = "Failed to load: " + message;
+      var config = {
+        dataUrl: cdnBase + 'Build/build.data',
+        frameworkUrl: cdnBase + 'Build/build.framework.js',
+        codeUrl: window.__RA_WASM_URL,
+        streamingAssetsUrl: cdnBase + 'StreamingAssets',
+        companyName: 'Ericetto',
+        productName: 'Ragdoll Archers',
+        productVersion: '0.1',
+        cacheControl: function (url) {
+          if (url && url.endsWith('.data')) return 'must-revalidate';
+          return 'no-store';
+        }
+      };
+
+      var unityLoader = document.createElement('script');
+      unityLoader.src = cdnBase + 'Build/loader.js';
+      unityLoader.onload = function () {
+        createUnityInstance(canvas, config, function (progress) {
+          var pct = Math.max(5, Math.round(progress * 100));
+          progressBarFull.style.width = pct + '%';
+        }).then(function (unityInstance) {
+          window.unityInstance = unityInstance;
+          loadingCover.style.display = 'none';
+        }).catch(function (message) {
+          loadingTitle.textContent = 'Failed to load Ragdoll Archers: ' + message;
+        });
+      };
+      unityLoader.onerror = function () {
+        loadingTitle.textContent = 'Failed to load Unity loader.';
+      };
+      document.body.appendChild(unityLoader);
+
+      document.addEventListener('pointerdown', function () {
+        container.focus();
+        window.focus();
+        canvas.focus();
       });
-    };
-    document.body.appendChild(unityLoader);
-
-    document.addEventListener("pointerdown", function () {
-      container.focus();
-      window.focus();
-      canvas.focus();
-    });
+    })();
   </script>
 </body>
 </html>
