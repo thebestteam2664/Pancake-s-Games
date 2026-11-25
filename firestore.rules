@@ -1,0 +1,320 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwnerUid(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Only the singleton claimed TheGGhampter account (or verified project owner email) is Admin
+    function isAdmin() {
+      return isSignedIn() && (
+        (
+          request.auth.token.email == 'thebestteam2664@gmail.com' &&
+          request.auth.token.email_verified == true
+        ) ||
+        (
+          exists(/databases/$(database)/documents/config/owner) &&
+          get(/databases/$(database)/documents/config/owner).data.ownerUid == request.auth.uid &&
+          exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.usernameLower == 'thegghampter'
+        )
+      );
+    }
+
+    function parentUserExists(userId) {
+      return exists(/databases/$(database)/documents/users/$(userId)) &&
+        get(/databases/$(database)/documents/users/$(userId)).data.uid == userId;
+    }
+
+    function isOwnerClaimCandidate() {
+      return isSignedIn() &&
+        request.auth.token.email == 'u_746865676768616d70746572@users.pancakes-games.app' &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.usernameLower == 'thegghampter';
+    }
+
+    // Validation Blueprint: UserProfile
+    function isValidUserProfile(data, userId) {
+      return data.keys().hasAll(['uid', 'username', 'usernameLower', 'favorites', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['uid', 'username', 'usernameLower', 'favorites', 'createdAt', 'updatedAt']) &&
+        data.uid is string &&
+        data.uid.size() >= 1 &&
+        data.uid.size() <= 128 &&
+        data.uid == userId &&
+        data.uid == request.auth.uid &&
+        data.username is string &&
+        data.username.size() >= 3 &&
+        data.username.size() <= 24 &&
+        data.username.matches('^[a-zA-Z0-9_.-]+$') &&
+        data.usernameLower is string &&
+        data.usernameLower.size() >= 3 &&
+        data.usernameLower.size() <= 24 &&
+        data.usernameLower.matches('^[a-z0-9_.-]+$') &&
+        data.usernameLower == data.username.lower() &&
+        data.favorites is list &&
+        data.favorites.size() <= 1000 &&
+        (
+          data.favorites.size() == 0 ||
+          (data.favorites[0] is string && data.favorites[0].size() >= 1 && data.favorites[0].size() <= 128)
+        ) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    // Validation Blueprint: GameSave
+    function isValidGameSave(data, userId, gameId) {
+      return data.keys().hasAll(['ownerId', 'gameId', 'savedAt', 'playSeconds', 'note', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'gameId', 'savedAt', 'playSeconds', 'note', 'updatedAt']) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId == userId &&
+        data.ownerId == request.auth.uid &&
+        data.gameId is string &&
+        isValidId(data.gameId) &&
+        data.gameId == gameId &&
+        data.savedAt is number &&
+        data.savedAt >= 0 &&
+        data.savedAt <= 9999999999999 &&
+        data.playSeconds is number &&
+        data.playSeconds >= 0 &&
+        data.playSeconds <= 100000000 &&
+        data.note is string &&
+        data.note.size() <= 2000 &&
+        data.updatedAt is timestamp;
+    }
+
+    // Validation Blueprint: GameStorageEntry
+    function isValidGameStorageEntry(data, userId) {
+      return data.keys().hasAll(['ownerId', 'gameId', 'storageKey', 'storageValue', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'gameId', 'storageKey', 'storageValue', 'updatedAt']) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId == userId &&
+        data.ownerId == request.auth.uid &&
+        data.gameId is string &&
+        isValidId(data.gameId) &&
+        data.storageKey is string &&
+        data.storageKey.size() >= 1 &&
+        data.storageKey.size() <= 256 &&
+        data.storageValue is string &&
+        data.storageValue.size() <= 100000 &&
+        data.updatedAt is timestamp;
+    }
+
+    // Validation Blueprint: GameSuggestion
+    function isValidGameSuggestion(data, suggestionId) {
+      return data.keys().hasAll(['suggestionId', 'title', 'siteUrl', 'notes', 'submittedByUid', 'submittedByUsername', 'createdAt']) &&
+        data.keys().hasOnly(['suggestionId', 'title', 'siteUrl', 'notes', 'submittedByUid', 'submittedByUsername', 'createdAt']) &&
+        data.suggestionId is string &&
+        isValidId(data.suggestionId) &&
+        data.suggestionId == suggestionId &&
+        data.title is string &&
+        data.title.size() >= 2 &&
+        data.title.size() <= 100 &&
+        data.siteUrl is string &&
+        data.siteUrl.size() <= 300 &&
+        (data.siteUrl == '' || data.siteUrl.matches('^https?://.*')) &&
+        data.notes is string &&
+        data.notes.size() <= 500 &&
+        data.submittedByUid is string &&
+        isValidId(data.submittedByUid) &&
+        data.submittedByUsername is string &&
+        data.submittedByUsername.size() >= 1 &&
+        data.submittedByUsername.size() <= 24 &&
+        (
+          isSignedIn()
+            ? (data.submittedByUid == request.auth.uid && data.submittedByUsername.matches('^[a-zA-Z0-9_.-]+$'))
+            : (data.submittedByUid == 'guest' && data.submittedByUsername == 'Guest')
+        ) &&
+        data.createdAt is timestamp;
+    }
+
+    // Validation Blueprint: OwnerLock
+    function isValidOwnerLock(data) {
+      return data.keys().hasAll(['ownerUid', 'ownerUsername', 'createdAt']) &&
+        data.keys().hasOnly(['ownerUid', 'ownerUsername', 'createdAt']) &&
+        data.ownerUid is string &&
+        isValidId(data.ownerUid) &&
+        data.ownerUid == request.auth.uid &&
+        data.ownerUsername is string &&
+        data.ownerUsername == 'thegghampter' &&
+        data.createdAt is timestamp;
+    }
+
+    // Validation Blueprint: DeletedAccount
+    function isValidDeletedAccount(data, userId) {
+      return data.keys().hasAll(['uid', 'username', 'deletedBy', 'deletedAt']) &&
+        data.keys().hasOnly(['uid', 'username', 'deletedBy', 'deletedAt']) &&
+        data.uid is string &&
+        isValidId(data.uid) &&
+        data.uid == userId &&
+        data.username is string &&
+        data.username.size() >= 1 &&
+        data.username.size() <= 24 &&
+        data.deletedBy is string &&
+        isValidId(data.deletedBy) &&
+        data.deletedBy == request.auth.uid &&
+        data.deletedAt is timestamp;
+    }
+
+    // Startup Firestore connection check endpoint (/test/connection)
+    match /test/{docId} {
+      allow get: if docId == 'connection';
+      allow list, create, update, delete: if false;
+    }
+
+    // Player-submitted game/site suggestions (any user can submit; only owner can read/list/delete)
+    match /gameSuggestions/{suggestionId} {
+      allow get: if isValidId(suggestionId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(suggestionId) &&
+        isValidGameSuggestion(incoming(), suggestionId) &&
+        incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isValidId(suggestionId) && isAdmin();
+    }
+
+    // Immutable singleton owner lock (/config/owner)
+    match /config/{docId} {
+      allow get: if docId == 'owner' && isSignedIn() && (
+        existing().ownerUid == request.auth.uid ||
+        (request.auth.token.email == 'thebestteam2664@gmail.com' && request.auth.token.email_verified == true)
+      );
+      allow list: if false;
+      allow create: if docId == 'owner' &&
+        isOwnerClaimCandidate() &&
+        !exists(/databases/$(database)/documents/config/owner) &&
+        isValidOwnerLock(incoming()) &&
+        incoming().createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // Revocation markers for accounts deleted by the owner
+    match /deletedAccounts/{userId} {
+      allow get: if isValidId(userId) && (isOwnerUid(userId) || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isValidId(userId) &&
+        isAdmin() &&
+        userId != request.auth.uid &&
+        isValidDeletedAccount(incoming(), userId) &&
+        incoming().deletedAt == request.time;
+      allow update: if false;
+      allow delete: if isValidId(userId) && isAdmin();
+    }
+
+    // Player profiles + per-game saves & localStorage backups
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwnerUid(userId) || isAdmin());
+      allow list: if isAdmin();
+
+      allow create: if isOwnerUid(userId) &&
+        isValidId(userId) &&
+        !exists(/databases/$(database)/documents/deletedAccounts/$(userId)) &&
+        isValidUserProfile(incoming(), userId) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isOwnerUid(userId) &&
+        isValidId(userId) &&
+        isValidUserProfile(incoming(), userId) &&
+        incoming().uid == existing().uid &&
+        incoming().username == existing().username &&
+        incoming().usernameLower == existing().usernameLower &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['favorites', 'updatedAt']);
+
+      allow delete: if isValidId(userId) && isAdmin() && userId != request.auth.uid;
+
+      match /gameSaves/{gameId} {
+        allow get: if isValidId(userId) &&
+          isValidId(gameId) &&
+          (isOwnerUid(userId) || isAdmin()) &&
+          parentUserExists(userId) &&
+          existing().ownerId == userId;
+
+        allow list: if (isOwnerUid(userId) && existing().ownerId == request.auth.uid) || isAdmin();
+
+        allow create: if isOwnerUid(userId) &&
+          isValidId(userId) &&
+          isValidId(gameId) &&
+          isValidGameSave(incoming(), userId, gameId) &&
+          incoming().updatedAt == request.time &&
+          parentUserExists(userId);
+
+        allow update: if isOwnerUid(userId) &&
+          isValidId(userId) &&
+          isValidId(gameId) &&
+          isValidGameSave(incoming(), userId, gameId) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().gameId == existing().gameId &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['savedAt', 'playSeconds', 'note', 'updatedAt']) &&
+          parentUserExists(userId);
+
+        allow delete: if isValidId(userId) &&
+          isValidId(gameId) &&
+          (isOwnerUid(userId) || isAdmin()) &&
+          existing().ownerId == userId;
+      }
+
+      match /gameStorage/{entryId} {
+        allow get: if isValidId(userId) &&
+          isValidId(entryId) &&
+          (isOwnerUid(userId) || isAdmin()) &&
+          parentUserExists(userId) &&
+          existing().ownerId == userId;
+
+        allow list: if (isOwnerUid(userId) && existing().ownerId == request.auth.uid) || isAdmin();
+
+        allow create: if isOwnerUid(userId) &&
+          isValidId(userId) &&
+          isValidId(entryId) &&
+          isValidGameStorageEntry(incoming(), userId) &&
+          incoming().updatedAt == request.time &&
+          parentUserExists(userId);
+
+        allow update: if isOwnerUid(userId) &&
+          isValidId(userId) &&
+          isValidId(entryId) &&
+          isValidGameStorageEntry(incoming(), userId) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().gameId == existing().gameId &&
+          incoming().storageKey == existing().storageKey &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['storageValue', 'updatedAt']) &&
+          parentUserExists(userId);
+
+        allow delete: if isValidId(userId) &&
+          isValidId(entryId) &&
+          (isOwnerUid(userId) || isAdmin()) &&
+          existing().ownerId == userId;
+      }
+    }
+  }
+}

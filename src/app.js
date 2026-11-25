@@ -1,7 +1,32 @@
+import {
+  subscribeToAuthState,
+  signUpWithUsername,
+  signInWithUsername,
+  signOutAccount,
+  loadUserAccountData,
+  ensureUserProfile,
+  ensureOwnerLock,
+  isOwnerAccount,
+  syncFavoritesToCloud,
+  syncSingleGameToCloud,
+  deleteRemoteSingleGameSave,
+  deleteAllRemoteSaves,
+  getDisplayUsername,
+  mapAuthErrorMessage,
+  adminFetchAllAccounts,
+  adminInspectUserAccount,
+  adminDeleteUserAccount,
+  submitGameSuggestion,
+  adminFetchGameSuggestions,
+  adminDeleteGameSuggestion,
+} from './firebaseAccount.js';
+
 const STORAGE_FAVORITES_KEY = 'pancakes_games_favorites_v1';
 const STORAGE_SAVES_KEY = 'pancakes_games_saves_v1';
+const STORAGE_ONBOARDED_KEY = 'pancakes_games_onboarded_v1';
 const FEATURED_GAME_IDS = ['1v1-lol', 'football-bros', 'ragdoll-hit', 'fnaf-1', 'slope'];
 const FEATURED_AUTO_MS = 5000;
+const CLOUD_AUTOSYNC_INTERVAL_MS = 25000;
 
 const state = {
   games: [],
@@ -22,6 +47,32 @@ const state = {
   pendingDeleteAction: null,
   favorites: new Set(),
   saves: {}, // { [gameId]: { savedAt: number, playSeconds: number, note: string } }
+  account: {
+    ready: false,
+    user: null,
+    username: '',
+    isOwner: false,
+    mode: 'signup',
+    busy: false,
+    suppressNextAuthSync: false,
+    onboardPromptChecked: false,
+    lastCloudSyncAt: {},
+    noteSyncTimer: null,
+  },
+  suggest: {
+    busy: false,
+  },
+  admin: {
+    activeTab: 'accounts',
+    accounts: [],
+    suggestions: [],
+    selectedUid: null,
+    selectedDetails: null,
+    searchQuery: '',
+    loading: false,
+    suggestionsLoading: false,
+    inspectLoading: false,
+  },
   loading: true,
   error: null,
 };
@@ -75,6 +126,51 @@ const els = {
   deleteConfirmMessage: document.getElementById('delete-confirm-message'),
   deleteConfirmYesBtn: document.getElementById('delete-confirm-yes-btn'),
   deleteConfirmCancelBtn: document.getElementById('delete-confirm-cancel-btn'),
+  headerGuestActions: document.getElementById('header-guest-actions'),
+  openSigninBtn: document.getElementById('open-signin-btn'),
+  openSignupBtn: document.getElementById('open-signup-btn'),
+  headerUserActions: document.getElementById('header-user-actions'),
+  headerUsernameBadge: document.getElementById('header-username-badge'),
+  signoutBtn: document.getElementById('signout-btn'),
+  accountModal: document.getElementById('account-modal'),
+  accountModalTitle: document.getElementById('account-modal-title'),
+  accountModalSubtitle: document.getElementById('account-modal-subtitle'),
+  accountTabSignup: document.getElementById('account-tab-signup'),
+  accountTabSignin: document.getElementById('account-tab-signin'),
+  accountForm: document.getElementById('account-form'),
+  accountUsernameInput: document.getElementById('account-username-input'),
+  accountPasswordInput: document.getElementById('account-password-input'),
+  accountErrorBox: document.getElementById('account-error-box'),
+  accountCancelBtn: document.getElementById('account-cancel-btn'),
+  accountSubmitBtn: document.getElementById('account-submit-btn'),
+  openAdminPanelBtn: document.getElementById('open-admin-panel-btn'),
+  adminPanelModal: document.getElementById('admin-panel-modal'),
+  adminAccountCount: document.getElementById('admin-account-count'),
+  adminRefreshBtn: document.getElementById('admin-refresh-btn'),
+  adminCloseBtn: document.getElementById('admin-close-btn'),
+  adminTabAccounts: document.getElementById('admin-tab-accounts'),
+  adminTabSuggestions: document.getElementById('admin-tab-suggestions'),
+  adminSearchInput: document.getElementById('admin-search-input'),
+  adminStatusBox: document.getElementById('admin-status-box'),
+  adminAccountsView: document.getElementById('admin-accounts-view'),
+  adminAccountsList: document.getElementById('admin-accounts-list'),
+  adminAccountInspector: document.getElementById('admin-account-inspector'),
+  adminSuggestionsView: document.getElementById('admin-suggestions-view'),
+  heroSuggestGameBtn: document.getElementById('hero-suggest-game-btn'),
+  catalogSuggestGameBtn: document.getElementById('catalog-suggest-game-btn'),
+  footerSuggestGameBtn: document.getElementById('footer-suggest-game-btn'),
+  suggestGameModal: document.getElementById('suggest-game-modal'),
+  suggestGameForm: document.getElementById('suggest-game-form'),
+  suggestTitleInput: document.getElementById('suggest-title-input'),
+  suggestUrlInput: document.getElementById('suggest-url-input'),
+  suggestNotesInput: document.getElementById('suggest-notes-input'),
+  suggestFeedbackBox: document.getElementById('suggest-feedback-box'),
+  suggestCancelBtn: document.getElementById('suggest-cancel-btn'),
+  suggestSubmitBtn: document.getElementById('suggest-submit-btn'),
+  welcomeAccountModal: document.getElementById('welcome-account-modal'),
+  welcomeSignupBtn: document.getElementById('welcome-signup-btn'),
+  welcomeSigninBtn: document.getElementById('welcome-signin-btn'),
+  welcomeGuestBtn: document.getElementById('welcome-guest-btn'),
 };
 
 function loadLocalStorageState() {
@@ -144,7 +240,54 @@ function formatRelativeTime(timestamp) {
   return `${days}d ago`;
 }
 
-function commitActiveGameSave(explicit = false) {
+function collectPgGameStorageEntries(filterGameId = null) {
+  const entries = [];
+  const pattern = /^__pg_game_([a-zA-Z0-9_-]+)__:(.+)$/;
+  try {
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (!key) continue;
+      const match = pattern.exec(key);
+      if (!match) continue;
+      const gameId = match[1];
+      if (filterGameId && gameId !== filterGameId) continue;
+      const value = localStorage.getItem(key);
+      if (typeof value === 'string') {
+        entries.push({ gameId, storageKey: key, storageValue: value });
+      }
+    }
+  } catch {
+    // Ignore storage restrictions
+  }
+  return entries;
+}
+
+function clearAllPgGameLocalStorage() {
+  try {
+    const toRemove = [];
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('__pg_game_')) {
+        toRemove.push(k);
+      }
+    }
+    toRemove.forEach((k) => localStorage.removeItem(k));
+  } catch {
+    // Ignore storage restrictions
+  }
+}
+
+function syncGameToAccountCloud(gameId, saveInfo) {
+  const user = state.account.user;
+  if (!user || !gameId || !saveInfo) return Promise.resolve();
+  state.account.lastCloudSyncAt[gameId] = Date.now();
+  const entries = collectPgGameStorageEntries(gameId);
+  return syncSingleGameToCloud(user.uid, gameId, saveInfo, entries).catch((err) => {
+    console.warn('Cloud game save sync skipped:', err);
+  });
+}
+
+function commitActiveGameSave(explicit = false, forceCloud = false) {
   if (!state.activeGameId) return;
   if (!explicit && state.clearedActiveSave) return;
 
@@ -167,6 +310,13 @@ function commitActiveGameSave(explicit = false) {
   }
   if (els.playerCopyNoteBtn) {
     els.playerCopyNoteBtn.classList.toggle('hidden', !noteVal);
+  }
+
+  if (state.account.user) {
+    const lastSync = state.account.lastCloudSyncAt[state.activeGameId] || 0;
+    if (forceCloud || explicit || now - lastSync >= CLOUD_AUTOSYNC_INTERVAL_MS) {
+      syncGameToAccountCloud(state.activeGameId, state.saves[state.activeGameId]);
+    }
   }
 }
 
@@ -251,7 +401,7 @@ function parseIframeConfig(iframeHtml, fallbackTitle) {
  */
 function teardownActiveIframe({ skipSave = false } = {}) {
   if (!skipSave) {
-    commitActiveGameSave(false);
+    commitActiveGameSave(false, true);
   }
   stopAutoSaveLoop();
 
@@ -736,7 +886,7 @@ async function wipeAllGamesOriginStorage() {
     const toRemove = [];
     for (let i = 0; i < localStorage.length; i += 1) {
       const k = localStorage.key(i);
-      if (k && k !== STORAGE_FAVORITES_KEY) {
+      if (k && k !== STORAGE_FAVORITES_KEY && k !== STORAGE_ONBOARDED_KEY) {
         toRemove.push(k);
       }
     }
@@ -828,9 +978,18 @@ async function clearSingleSave(gameId, { restartIfActive = false } = {}) {
   }
 
   delete state.saves[gameId];
+  delete state.account.lastCloudSyncAt[gameId];
   persistSavesToStorage();
 
   await wipeSingleGameOriginStorage(gameId);
+
+  if (state.account.user) {
+    try {
+      await deleteRemoteSingleGameSave(state.account.user.uid, gameId);
+    } catch (err) {
+      console.warn('Cloud delete save failed:', err);
+    }
+  }
 
   if (isActive) {
     resetActivePlayerSaveUI('Save deleted and game data wiped. Relaunch or play again anytime to start fresh.');
@@ -853,9 +1012,18 @@ async function clearAllSaves() {
   }
 
   state.saves = {};
+  state.account.lastCloudSyncAt = {};
   persistSavesToStorage();
 
   await wipeAllGamesOriginStorage();
+
+  if (state.account.user) {
+    try {
+      await deleteAllRemoteSaves(state.account.user.uid);
+    } catch (err) {
+      console.warn('Cloud delete all saves failed:', err);
+    }
+  }
 
   if (hadActive) {
     resetActivePlayerSaveUI('All saves and local game data deleted.');
@@ -1220,6 +1388,9 @@ function launchGame(gameId, options = {}) {
   existingSave.savedAt = Date.now();
   state.saves[game.id] = existingSave;
   persistSavesToStorage();
+  if (state.account.user) {
+    syncGameToAccountCloud(game.id, existingSave);
+  }
 
   els.playerTitle.textContent = game.title;
   els.playerMeta.textContent = `${game.category} · ${game.description || ''}`;
@@ -1295,6 +1466,11 @@ function toggleFavorite(gameId) {
     state.favorites.add(gameId);
   }
   saveFavorites();
+  if (state.account.user) {
+    syncFavoritesToCloud(state.account.user.uid, state.favorites).catch((err) => {
+      console.warn('Cloud favorite sync failed:', err);
+    });
+  }
   updatePlayerFavoriteButton();
   renderCatalog();
 }
@@ -1407,8 +1583,17 @@ function wireEvents() {
   els.playerSaveNote.addEventListener('input', () => {
     state.clearedActiveSave = false;
     state.sessionStartMs = state.sessionStartMs || Date.now();
-    commitActiveGameSave(false);
+    commitActiveGameSave(false, false);
     if (!state.autoSaveTimer) startAutoSaveLoop();
+    if (state.account.user && state.activeGameId) {
+      clearTimeout(state.account.noteSyncTimer);
+      const targetId = state.activeGameId;
+      state.account.noteSyncTimer = setTimeout(() => {
+        if (state.account.user && state.saves[targetId]) {
+          syncGameToAccountCloud(targetId, state.saves[targetId]);
+        }
+      }, 650);
+    }
   });
   els.playerCopyNoteBtn.addEventListener('click', async () => {
     try {
@@ -1468,10 +1653,129 @@ function wireEvents() {
     });
   }
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && els.deleteConfirmModal && !els.deleteConfirmModal.classList.contains('hidden')) {
-      closeDeleteConfirmModal();
+    if (e.key === 'Escape') {
+      if (els.deleteConfirmModal && !els.deleteConfirmModal.classList.contains('hidden')) {
+        closeDeleteConfirmModal();
+      } else if (els.suggestGameModal && !els.suggestGameModal.classList.contains('hidden') && !state.suggest.busy) {
+        closeSuggestModal();
+      } else if (els.accountModal && !els.accountModal.classList.contains('hidden') && !state.account.busy) {
+        closeAccountModal();
+      } else if (els.welcomeAccountModal && !els.welcomeAccountModal.classList.contains('hidden')) {
+        markOnboarded();
+        closeWelcomeModal();
+      } else if (els.adminPanelModal && !els.adminPanelModal.classList.contains('hidden')) {
+        closeAdminPanel();
+      }
     }
   });
+
+  if (els.openSigninBtn) {
+    els.openSigninBtn.addEventListener('click', () => openAccountModal('signin'));
+  }
+  if (els.openSignupBtn) {
+    els.openSignupBtn.addEventListener('click', () => openAccountModal('signup'));
+  }
+  if (els.signoutBtn) {
+    els.signoutBtn.addEventListener('click', handleSignOut);
+  }
+  if (els.accountTabSignup) {
+    els.accountTabSignup.addEventListener('click', () => setAccountModalMode('signup'));
+  }
+  if (els.accountTabSignin) {
+    els.accountTabSignin.addEventListener('click', () => setAccountModalMode('signin'));
+  }
+  if (els.accountCancelBtn) {
+    els.accountCancelBtn.addEventListener('click', () => {
+      if (!state.account.busy) closeAccountModal();
+    });
+  }
+  if (els.accountModal) {
+    els.accountModal.addEventListener('click', (e) => {
+      if (e.target === els.accountModal && !state.account.busy) {
+        closeAccountModal();
+      }
+    });
+  }
+  if (els.accountForm) {
+    els.accountForm.addEventListener('submit', handleAccountFormSubmit);
+  }
+
+  [els.heroSuggestGameBtn, els.catalogSuggestGameBtn, els.footerSuggestGameBtn].forEach((btn) => {
+    if (btn) {
+      btn.addEventListener('click', openSuggestModal);
+    }
+  });
+  if (els.suggestCancelBtn) {
+    els.suggestCancelBtn.addEventListener('click', () => {
+      if (!state.suggest.busy) closeSuggestModal();
+    });
+  }
+  if (els.suggestGameModal) {
+    els.suggestGameModal.addEventListener('click', (e) => {
+      if (e.target === els.suggestGameModal && !state.suggest.busy) {
+        closeSuggestModal();
+      }
+    });
+  }
+  if (els.suggestGameForm) {
+    els.suggestGameForm.addEventListener('submit', handleSuggestFormSubmit);
+  }
+
+  if (els.welcomeSignupBtn) {
+    els.welcomeSignupBtn.addEventListener('click', () => {
+      closeWelcomeModal();
+      openAccountModal('signup');
+    });
+  }
+  if (els.welcomeSigninBtn) {
+    els.welcomeSigninBtn.addEventListener('click', () => {
+      closeWelcomeModal();
+      openAccountModal('signin');
+    });
+  }
+  if (els.welcomeGuestBtn) {
+    els.welcomeGuestBtn.addEventListener('click', () => {
+      markOnboarded();
+      closeWelcomeModal();
+    });
+  }
+  if (els.welcomeAccountModal) {
+    els.welcomeAccountModal.addEventListener('click', (e) => {
+      if (e.target === els.welcomeAccountModal) {
+        markOnboarded();
+        closeWelcomeModal();
+      }
+    });
+  }
+
+  if (els.openAdminPanelBtn) {
+    els.openAdminPanelBtn.addEventListener('click', openAdminPanel);
+  }
+  if (els.adminCloseBtn) {
+    els.adminCloseBtn.addEventListener('click', closeAdminPanel);
+  }
+  if (els.adminRefreshBtn) {
+    els.adminRefreshBtn.addEventListener('click', refreshAdminAll);
+  }
+  if (els.adminTabAccounts) {
+    els.adminTabAccounts.addEventListener('click', () => setAdminPanelTab('accounts'));
+  }
+  if (els.adminTabSuggestions) {
+    els.adminTabSuggestions.addEventListener('click', () => setAdminPanelTab('suggestions'));
+  }
+  if (els.adminSearchInput) {
+    els.adminSearchInput.addEventListener('input', (e) => {
+      state.admin.searchQuery = e.target.value;
+      renderAdminAccountsList();
+    });
+  }
+  if (els.adminPanelModal) {
+    els.adminPanelModal.addEventListener('click', (e) => {
+      if (e.target === els.adminPanelModal) {
+        closeAdminPanel();
+      }
+    });
+  }
 
   els.footerTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1536,7 +1840,920 @@ function initWallpaperLooper() {
   ensurePlaying();
 }
 
+function updateAccountHeaderUI() {
+  const isSignedIn = Boolean(state.account.user);
+  const showOwnerPanel = Boolean(isSignedIn && state.account.isOwner);
+  if (els.headerGuestActions) {
+    els.headerGuestActions.classList.toggle('hidden', isSignedIn);
+  }
+  if (els.headerUserActions) {
+    els.headerUserActions.classList.toggle('hidden', !isSignedIn);
+  }
+  if (els.openAdminPanelBtn) {
+    els.openAdminPanelBtn.classList.toggle('hidden', !showOwnerPanel);
+  }
+  if (els.headerUsernameBadge) {
+    els.headerUsernameBadge.textContent = isSignedIn ? state.account.username || 'Player' : '';
+  }
+}
+
+function setAccountError(message) {
+  if (!els.accountErrorBox) return;
+  if (!message) {
+    els.accountErrorBox.textContent = '';
+    els.accountErrorBox.classList.add('hidden');
+  } else {
+    els.accountErrorBox.textContent = message;
+    els.accountErrorBox.classList.remove('hidden');
+  }
+}
+
+function setAccountBusy(busy) {
+  state.account.busy = busy;
+  if (els.accountSubmitBtn) {
+    els.accountSubmitBtn.disabled = busy;
+    if (busy) {
+      els.accountSubmitBtn.textContent = state.account.mode === 'signup' ? 'Creating account...' : 'Signing in...';
+    } else {
+      els.accountSubmitBtn.textContent = state.account.mode === 'signup' ? 'Sign up' : 'Sign in';
+    }
+  }
+  if (els.accountCancelBtn) els.accountCancelBtn.disabled = busy;
+  if (els.accountTabSignup) els.accountTabSignup.disabled = busy;
+  if (els.accountTabSignin) els.accountTabSignin.disabled = busy;
+  if (els.accountUsernameInput) els.accountUsernameInput.disabled = busy;
+  if (els.accountPasswordInput) els.accountPasswordInput.disabled = busy;
+}
+
+function setAccountModalMode(mode) {
+  const normalized = mode === 'signin' ? 'signin' : 'signup';
+  state.account.mode = normalized;
+  setAccountError('');
+
+  const isSignup = normalized === 'signup';
+  if (els.accountModalTitle) {
+    els.accountModalTitle.textContent = isSignup ? 'Create Your Account' : 'Sign In to Your Account';
+  }
+  if (els.accountModalSubtitle) {
+    els.accountModalSubtitle.textContent = isSignup
+      ? 'Pick a username and password to keep all your game saves and favorites synced.'
+      : 'Enter your username and password to restore your saved games and favorites.';
+  }
+
+  const activeTabCls =
+    'btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-amber-400 text-slate-950 shadow-[0_0_16px_-4px_rgba(251,191,36,0.5)]';
+  const inactiveTabCls =
+    'btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700';
+
+  if (els.accountTabSignup) {
+    els.accountTabSignup.className = isSignup ? activeTabCls : inactiveTabCls;
+    els.accountTabSignup.setAttribute('aria-selected', isSignup ? 'true' : 'false');
+  }
+  if (els.accountTabSignin) {
+    els.accountTabSignin.className = !isSignup ? activeTabCls : inactiveTabCls;
+    els.accountTabSignin.setAttribute('aria-selected', !isSignup ? 'true' : 'false');
+  }
+  if (els.accountPasswordInput) {
+    els.accountPasswordInput.setAttribute('autocomplete', isSignup ? 'new-password' : 'current-password');
+    els.accountPasswordInput.placeholder = isSignup ? 'At least 6 characters' : 'Enter your password';
+  }
+  if (els.accountSubmitBtn && !state.account.busy) {
+    els.accountSubmitBtn.textContent = isSignup ? 'Sign up' : 'Sign in';
+  }
+}
+
+function openAccountModal(mode = 'signup') {
+  if (!els.accountModal) return;
+  setAccountModalMode(mode);
+  if (els.accountPasswordInput) {
+    els.accountPasswordInput.value = '';
+  }
+  els.accountModal.classList.remove('hidden');
+  if (els.accountUsernameInput) {
+    els.accountUsernameInput.focus();
+  }
+}
+
+function closeAccountModal() {
+  if (!els.accountModal) return;
+  els.accountModal.classList.add('hidden');
+  setAccountError('');
+  if (els.accountPasswordInput) {
+    els.accountPasswordInput.value = '';
+  }
+}
+
+function applyAccountDataToWebsite(accountData, user) {
+  clearAllPgGameLocalStorage();
+  if (accountData && Array.isArray(accountData.storageEntries)) {
+    accountData.storageEntries.forEach((entry) => {
+      if (entry && typeof entry.storageKey === 'string' && typeof entry.storageValue === 'string') {
+        try {
+          localStorage.setItem(entry.storageKey, entry.storageValue);
+        } catch {
+          // Ignore storage quota issues
+        }
+      }
+    });
+  }
+
+  state.favorites = new Set(
+    (accountData && Array.isArray(accountData.favorites) ? accountData.favorites : []).filter(
+      (id) => typeof id === 'string'
+    )
+  );
+  saveFavorites();
+
+  state.saves =
+    accountData && accountData.saves && typeof accountData.saves === 'object' ? { ...accountData.saves } : {};
+  state.account.lastCloudSyncAt = {};
+  persistSavesToStorage();
+
+  state.account.user = user;
+  state.account.username = getDisplayUsername(user, accountData ? accountData.profile : null);
+  state.account.isOwner = isOwnerAccount(accountData ? accountData.profile : null, user);
+  updateAccountHeaderUI();
+
+  if (state.activeGameId) {
+    const activeSave = state.saves[state.activeGameId] || { savedAt: Date.now(), playSeconds: 0, note: '' };
+    if (els.playerSaveNote) els.playerSaveNote.value = activeSave.note || '';
+    if (els.playerCopyNoteBtn) els.playerCopyNoteBtn.classList.toggle('hidden', !(activeSave.note || '').trim());
+    if (els.playerPlaytime) els.playerPlaytime.textContent = formatDuration(activeSave.playSeconds);
+    updatePlayerFavoriteButton();
+    reloadActiveGame();
+  }
+
+  renderCatalog();
+}
+
+async function handleAccountFormSubmit(event) {
+  event.preventDefault();
+  if (state.account.busy) return;
+
+  const username = els.accountUsernameInput ? els.accountUsernameInput.value : '';
+  const password = els.accountPasswordInput ? els.accountPasswordInput.value : '';
+
+  setAccountError('');
+  setAccountBusy(true);
+  state.account.suppressNextAuthSync = true;
+
+  try {
+    if (state.account.mode === 'signup') {
+      commitActiveGameSave(false, false);
+      const guestSnapshot = {
+        favorites: [...state.favorites],
+        saves: { ...state.saves },
+        storageEntries: collectPgGameStorageEntries(),
+      };
+      const result = await signUpWithUsername(username, password, guestSnapshot);
+      state.account.user = result.user;
+      state.account.username = getDisplayUsername(result.user, result.profile);
+      state.account.isOwner = isOwnerAccount(result.profile, result.user);
+      markOnboarded();
+      closeWelcomeModal();
+      updateAccountHeaderUI();
+      closeAccountModal();
+    } else {
+      const result = await signInWithUsername(username, password);
+      applyAccountDataToWebsite(result, result.user);
+      markOnboarded();
+      closeWelcomeModal();
+      closeAccountModal();
+    }
+  } catch (error) {
+    setAccountError(mapAuthErrorMessage(error));
+  } finally {
+    state.account.suppressNextAuthSync = false;
+    setAccountBusy(false);
+  }
+}
+
+async function handleSignOut() {
+  if (state.account.busy) return;
+  clearTimeout(state.account.noteSyncTimer);
+
+  if (state.activeGameId && !state.clearedActiveSave) {
+    commitActiveGameSave(true, true);
+  }
+
+  state.account.suppressNextAuthSync = true;
+  try {
+    await signOutAccount();
+  } catch (err) {
+    console.warn('Sign out warning:', err);
+  } finally {
+    state.account.suppressNextAuthSync = false;
+  }
+
+  state.account.user = null;
+  state.account.username = '';
+  state.account.isOwner = false;
+  state.account.lastCloudSyncAt = {};
+  closeAdminPanel();
+  state.admin.accounts = [];
+  state.admin.suggestions = [];
+  state.admin.selectedUid = null;
+  state.admin.selectedDetails = null;
+  setAdminPanelTab('accounts');
+  state.favorites = new Set();
+  state.saves = {};
+  saveFavorites();
+  persistSavesToStorage();
+  clearAllPgGameLocalStorage();
+
+  if (state.activeGameId) {
+    state.clearedActiveSave = true;
+    teardownActiveIframe({ skipSave: true });
+    state.activeGameId = null;
+    els.playerSection.classList.add('hidden');
+    els.heroSection.classList.remove('hidden');
+    setWallpaperPaused(false);
+    startFeaturedAutoScroll();
+  }
+
+  updateAccountHeaderUI();
+  renderCatalog();
+}
+
+function setAdminStatus(message, isError = true) {
+  if (!els.adminStatusBox) return;
+  if (!message) {
+    els.adminStatusBox.textContent = '';
+    els.adminStatusBox.classList.add('hidden');
+    return;
+  }
+  els.adminStatusBox.textContent = message;
+  els.adminStatusBox.className = isError ? 'text-xs text-red-300' : 'text-xs text-emerald-300';
+}
+
+function formatAdminDate(ms) {
+  if (!ms) return 'Unknown';
+  try {
+    return new Date(ms).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch {
+    return 'Unknown';
+  }
+}
+
+function renderAdminInspector() {
+  const container = els.adminAccountInspector;
+  if (!container) return;
+  container.replaceChildren();
+
+  const selected = state.admin.accounts.find((a) => a.uid === state.admin.selectedUid);
+  if (!selected) {
+    const empty = document.createElement('p');
+    empty.className = 'text-xs text-slate-400';
+    empty.textContent =
+      'Select an account on the left to view their saved games, playtime, checkpoint notes, and favorites.';
+    container.appendChild(empty);
+    return;
+  }
+
+  const header = document.createElement('div');
+  header.className = 'flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800';
+
+  const titleWrap = document.createElement('div');
+  const titleRow = document.createElement('div');
+  titleRow.className = 'flex items-center gap-2';
+
+  const nameEl = document.createElement('h3');
+  nameEl.className = 'font-display text-lg font-bold text-slate-50';
+  nameEl.textContent = selected.username;
+  titleRow.appendChild(nameEl);
+
+  if (selected.isOwner) {
+    const badge = document.createElement('span');
+    badge.className =
+      'px-2 py-0.5 text-[10px] font-semibold text-amber-300 bg-amber-400/15 border border-amber-400/40 rounded-md';
+    badge.textContent = 'Owner';
+    titleRow.appendChild(badge);
+  }
+
+  const metaEl = document.createElement('p');
+  metaEl.className = 'mt-1 text-xs text-slate-400 font-mono';
+  metaEl.textContent = `Joined ${formatAdminDate(selected.createdAtMs)} · ${selected.favorites.length} favorites`;
+
+  titleWrap.appendChild(titleRow);
+  titleWrap.appendChild(metaEl);
+  header.appendChild(titleWrap);
+
+  if (!selected.isOwner && selected.uid !== state.account.user?.uid) {
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className =
+      'btn-tactile px-3.5 py-2 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/40 hover:bg-red-500/20 rounded-lg whitespace-nowrap cursor-pointer';
+    delBtn.textContent = 'Delete Account';
+    delBtn.addEventListener('click', () => confirmAdminDeleteAccount(selected));
+    header.appendChild(delBtn);
+  }
+
+  container.appendChild(header);
+
+  if (state.admin.inspectLoading) {
+    const loadingEl = document.createElement('p');
+    loadingEl.className = 'mt-4 text-xs text-slate-400';
+    loadingEl.textContent = 'Loading account data...';
+    container.appendChild(loadingEl);
+    return;
+  }
+
+  const details = state.admin.selectedDetails || { saves: [], storageEntries: [] };
+
+  const statsRow = document.createElement('div');
+  statsRow.className = 'mt-4 grid grid-cols-3 gap-3';
+  [
+    { label: 'Saved Games', value: String(details.saves.length) },
+    { label: 'Favorites', value: String(selected.favorites.length) },
+    { label: 'Local Save Keys', value: String(details.storageEntries.length) },
+  ].forEach((stat) => {
+    const card = document.createElement('div');
+    card.className = 'rounded-xl border border-slate-800 bg-slate-900/80 p-3';
+    const lbl = document.createElement('p');
+    lbl.className = 'text-[11px] text-slate-400';
+    lbl.textContent = stat.label;
+    const val = document.createElement('p');
+    val.className = 'mt-1 font-mono text-base font-bold text-slate-100';
+    val.textContent = stat.value;
+    card.appendChild(lbl);
+    card.appendChild(val);
+    statsRow.appendChild(card);
+  });
+  container.appendChild(statsRow);
+
+  const savesHeading = document.createElement('h4');
+  savesHeading.className = 'mt-5 text-xs font-semibold uppercase tracking-wider text-slate-400';
+  savesHeading.textContent = 'Saved Games';
+  container.appendChild(savesHeading);
+
+  if (details.saves.length === 0) {
+    const noSaves = document.createElement('p');
+    noSaves.className = 'mt-2 text-xs text-slate-500';
+    noSaves.textContent = 'No saved game progress recorded on this account yet.';
+    container.appendChild(noSaves);
+  } else {
+    const savesList = document.createElement('div');
+    savesList.className = 'mt-2 space-y-2';
+    details.saves.forEach((save) => {
+      const gameObj = state.games.find((g) => g.id === save.gameId);
+      const row = document.createElement('div');
+      row.className = 'rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2';
+
+      const topLine = document.createElement('div');
+      topLine.className = 'flex items-center justify-between gap-2';
+      const gameName = document.createElement('span');
+      gameName.className = 'text-xs font-semibold text-slate-100 truncate';
+      gameName.textContent = gameObj ? gameObj.title : save.gameId;
+
+      const timeEl = document.createElement('span');
+      timeEl.className = 'text-[11px] font-mono text-slate-400 shrink-0';
+      timeEl.textContent = `${formatDuration(save.playSeconds)} · ${formatRelativeTime(save.savedAt)}`;
+
+      topLine.appendChild(gameName);
+      topLine.appendChild(timeEl);
+      row.appendChild(topLine);
+
+      if (save.note) {
+        const noteEl = document.createElement('p');
+        noteEl.className = 'mt-1 text-[11px] text-amber-300/90 break-all';
+        noteEl.textContent = `Note: ${save.note}`;
+        row.appendChild(noteEl);
+      }
+
+      savesList.appendChild(row);
+    });
+    container.appendChild(savesList);
+  }
+
+  if (selected.favorites.length > 0) {
+    const favHeading = document.createElement('h4');
+    favHeading.className = 'mt-5 text-xs font-semibold uppercase tracking-wider text-slate-400';
+    favHeading.textContent = 'Favorites';
+    container.appendChild(favHeading);
+
+    const favWrap = document.createElement('div');
+    favWrap.className = 'mt-2 flex flex-wrap gap-1.5';
+    selected.favorites.forEach((favId) => {
+      const gameObj = state.games.find((g) => g.id === favId);
+      const chip = document.createElement('span');
+      chip.className = 'px-2.5 py-1 text-[11px] text-slate-200 bg-slate-900 border border-slate-800 rounded-md';
+      chip.textContent = gameObj ? gameObj.title : favId;
+      favWrap.appendChild(chip);
+    });
+    container.appendChild(favWrap);
+  }
+}
+
+function renderAdminAccountsList() {
+  const listEl = els.adminAccountsList;
+  if (!listEl) return;
+  listEl.replaceChildren();
+
+  const totalCount = state.admin.accounts.length;
+  if (els.adminAccountCount) {
+    els.adminAccountCount.textContent = `${totalCount} ${totalCount === 1 ? 'account' : 'accounts'}`;
+  }
+
+  if (state.admin.loading) {
+    const p = document.createElement('p');
+    p.className = 'text-xs text-slate-400';
+    p.textContent = 'Loading accounts...';
+    listEl.appendChild(p);
+    return;
+  }
+
+  const q = state.admin.searchQuery.trim().toLowerCase();
+  const filtered = q
+    ? state.admin.accounts.filter((a) => a.username.toLowerCase().includes(q))
+    : state.admin.accounts;
+
+  if (filtered.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'text-xs text-slate-400';
+    p.textContent = q ? 'No accounts match that username.' : 'No accounts created yet.';
+    listEl.appendChild(p);
+    return;
+  }
+
+  filtered.forEach((account) => {
+    const isSelected = account.uid === state.admin.selectedUid;
+    const row = document.createElement('div');
+    row.className = `rounded-xl border p-3 transition-colors ${
+      isSelected
+        ? 'border-amber-400/70 bg-amber-400/10'
+        : 'border-slate-800 bg-slate-950/60 hover:border-slate-700'
+    }`;
+
+    const topRow = document.createElement('div');
+    topRow.className = 'flex items-center justify-between gap-2';
+
+    const info = document.createElement('div');
+    info.className = 'min-w-0';
+
+    const nameLine = document.createElement('div');
+    nameLine.className = 'flex items-center gap-1.5';
+    const nameEl = document.createElement('p');
+    nameEl.className = 'text-sm font-semibold text-slate-100 truncate';
+    nameEl.textContent = account.username;
+    nameLine.appendChild(nameEl);
+
+    if (account.isOwner) {
+      const badge = document.createElement('span');
+      badge.className =
+        'px-1.5 py-0.5 text-[10px] font-semibold text-amber-300 bg-amber-400/15 border border-amber-400/35 rounded';
+      badge.textContent = 'Owner';
+      nameLine.appendChild(badge);
+    }
+
+    const sub = document.createElement('p');
+    sub.className = 'text-[11px] text-slate-400 mt-0.5';
+    sub.textContent = `Joined ${formatAdminDate(account.createdAtMs)} · ${account.favorites.length} favs`;
+
+    info.appendChild(nameLine);
+    info.appendChild(sub);
+    topRow.appendChild(info);
+
+    const actions = document.createElement('div');
+    actions.className = 'mt-2.5 flex items-center gap-2';
+
+    const viewBtn = document.createElement('button');
+    viewBtn.type = 'button';
+    viewBtn.className =
+      'btn-tactile px-2.5 py-1 text-[11px] font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-md cursor-pointer';
+    viewBtn.textContent = isSelected ? 'Viewing' : 'View Data';
+    viewBtn.addEventListener('click', () => selectAdminAccount(account.uid));
+    actions.appendChild(viewBtn);
+
+    if (!account.isOwner && account.uid !== state.account.user?.uid) {
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className =
+        'btn-tactile ml-auto px-2.5 py-1 text-[11px] font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:bg-red-500/20 rounded-md cursor-pointer';
+      delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', () => confirmAdminDeleteAccount(account));
+      actions.appendChild(delBtn);
+    }
+
+    row.appendChild(topRow);
+    row.appendChild(actions);
+    listEl.appendChild(row);
+  });
+}
+
+async function selectAdminAccount(uid) {
+  if (!state.account.isOwner) return;
+  state.admin.selectedUid = uid;
+  state.admin.selectedDetails = null;
+  state.admin.inspectLoading = true;
+  renderAdminAccountsList();
+  renderAdminInspector();
+
+  try {
+    const details = await adminInspectUserAccount(uid);
+    if (state.admin.selectedUid === uid) {
+      state.admin.selectedDetails = details;
+    }
+  } catch (err) {
+    setAdminStatus(err instanceof Error ? err.message : 'Unable to load account details.', true);
+  } finally {
+    state.admin.inspectLoading = false;
+    renderAdminInspector();
+  }
+}
+
+function confirmAdminDeleteAccount(account) {
+  if (!state.account.isOwner || !account || account.isOwner) return;
+  openDeleteConfirmModal({
+    title: `Delete Account "${account.username}"?`,
+    message: `Warning: This will permanently delete ${account.username}'s account profile, saved games, and stored progress.`,
+    onConfirm: async () => {
+      try {
+        setAdminStatus('');
+        await adminDeleteUserAccount(account.uid, account.username);
+        state.admin.accounts = state.admin.accounts.filter((a) => a.uid !== account.uid);
+        if (state.admin.selectedUid === account.uid) {
+          state.admin.selectedUid = null;
+          state.admin.selectedDetails = null;
+        }
+        renderAdminAccountsList();
+        renderAdminInspector();
+        setAdminStatus(`Deleted account "${account.username}".`, false);
+      } catch (err) {
+        setAdminStatus(err instanceof Error ? err.message : 'Failed to delete account.', true);
+      }
+    },
+  });
+}
+
+function validateHttpUrl(rawUrl) {
+  if (typeof rawUrl !== 'string') return null;
+  const candidate = rawUrl.trim();
+  if (!candidate) return null;
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      return parsed.href;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function updateAdminTabCounts() {
+  if (els.adminTabSuggestions) {
+    els.adminTabSuggestions.textContent = `Suggestions (${state.admin.suggestions.length})`;
+  }
+}
+
+function setAdminPanelTab(tabName) {
+  const normalized = tabName === 'suggestions' ? 'suggestions' : 'accounts';
+  state.admin.activeTab = normalized;
+
+  const activeCls =
+    'btn-tactile px-3.5 py-1.5 text-xs font-bold rounded-lg bg-amber-400 text-slate-950 cursor-pointer';
+  const inactiveCls =
+    'btn-tactile px-3.5 py-1.5 text-xs font-bold rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 cursor-pointer';
+
+  if (els.adminTabAccounts) {
+    els.adminTabAccounts.className = normalized === 'accounts' ? activeCls : inactiveCls;
+  }
+  if (els.adminTabSuggestions) {
+    els.adminTabSuggestions.className = normalized === 'suggestions' ? activeCls : inactiveCls;
+  }
+  if (els.adminSearchInput) {
+    els.adminSearchInput.classList.toggle('hidden', normalized !== 'accounts');
+  }
+  if (els.adminAccountsView) {
+    els.adminAccountsView.classList.toggle('hidden', normalized !== 'accounts');
+  }
+  if (els.adminSuggestionsView) {
+    els.adminSuggestionsView.classList.toggle('hidden', normalized !== 'suggestions');
+  }
+}
+
+function renderAdminSuggestionsList() {
+  const container = els.adminSuggestionsView;
+  if (!container) return;
+  container.replaceChildren();
+  updateAdminTabCounts();
+
+  if (state.admin.suggestionsLoading) {
+    const p = document.createElement('p');
+    p.className = 'text-xs text-slate-400';
+    p.textContent = 'Loading game suggestions...';
+    container.appendChild(p);
+    return;
+  }
+
+  if (state.admin.suggestions.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'text-xs text-slate-400';
+    empty.textContent = 'No game or site suggestions submitted yet.';
+    container.appendChild(empty);
+    return;
+  }
+
+  state.admin.suggestions.forEach((sug) => {
+    const card = document.createElement('div');
+    card.className = 'rounded-xl border border-slate-800 bg-slate-900/80 p-4';
+
+    const topRow = document.createElement('div');
+    topRow.className = 'flex items-start justify-between gap-3';
+
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'min-w-0 flex-1';
+
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'text-sm font-semibold text-slate-50 break-words';
+    titleEl.textContent = sug.title;
+
+    const metaEl = document.createElement('p');
+    metaEl.className = 'mt-1 text-[11px] text-slate-400';
+    const timeLabel = sug.createdAtMs ? formatRelativeTime(sug.createdAtMs) : 'Recently';
+    metaEl.textContent = `Submitted by ${sug.submittedByUsername} · ${timeLabel}`;
+
+    titleWrap.appendChild(titleEl);
+    titleWrap.appendChild(metaEl);
+
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className =
+      'btn-tactile px-2.5 py-1 text-[11px] font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:bg-red-500/20 rounded-md whitespace-nowrap shrink-0 cursor-pointer';
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', () => confirmAdminDeleteSuggestion(sug));
+
+    topRow.appendChild(titleWrap);
+    topRow.appendChild(delBtn);
+    card.appendChild(topRow);
+
+    const safeUrl = validateHttpUrl(sug.siteUrl);
+    if (safeUrl) {
+      const linkRow = document.createElement('div');
+      linkRow.className = 'mt-2.5 flex flex-wrap items-center gap-2';
+
+      const anchor = document.createElement('a');
+      anchor.href = safeUrl;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.className = 'text-xs text-amber-300 hover:text-amber-200 underline break-all';
+      anchor.textContent = safeUrl;
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className =
+        'btn-tactile px-2 py-0.5 text-[11px] font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded cursor-pointer';
+      copyBtn.textContent = 'Copy Link';
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(safeUrl);
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy Link';
+          }, 1500);
+        } catch {
+          // Ignore clipboard permissions
+        }
+      });
+
+      linkRow.appendChild(anchor);
+      linkRow.appendChild(copyBtn);
+      card.appendChild(linkRow);
+    }
+
+    if (sug.notes) {
+      const notesEl = document.createElement('p');
+      notesEl.className =
+        'mt-2.5 rounded-lg border border-slate-800/80 bg-slate-950/70 px-3 py-2 text-xs text-slate-200 whitespace-pre-wrap break-words';
+      notesEl.textContent = sug.notes;
+      card.appendChild(notesEl);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+function confirmAdminDeleteSuggestion(sug) {
+  if (!state.account.isOwner || !sug) return;
+  openDeleteConfirmModal({
+    title: `Remove Suggestion "${sug.title}"?`,
+    message: 'This will remove the suggestion from the owner suggestions list.',
+    onConfirm: async () => {
+      try {
+        setAdminStatus('');
+        await adminDeleteGameSuggestion(sug.suggestionId);
+        state.admin.suggestions = state.admin.suggestions.filter(
+          (item) => item.suggestionId !== sug.suggestionId
+        );
+        renderAdminSuggestionsList();
+        setAdminStatus(`Removed suggestion "${sug.title}".`, false);
+      } catch (err) {
+        setAdminStatus(err instanceof Error ? err.message : 'Failed to remove suggestion.', true);
+      }
+    },
+  });
+}
+
+async function refreshAdminAccounts() {
+  if (!state.account.isOwner || !state.account.user) return;
+  state.admin.loading = true;
+  setAdminStatus('');
+  renderAdminAccountsList();
+
+  try {
+    await ensureOwnerLock(state.account.user, { usernameLower: 'thegghampter' });
+    state.admin.accounts = await adminFetchAllAccounts();
+    if (state.admin.selectedUid && !state.admin.accounts.some((a) => a.uid === state.admin.selectedUid)) {
+      state.admin.selectedUid = null;
+      state.admin.selectedDetails = null;
+    }
+  } catch (err) {
+    setAdminStatus(err instanceof Error ? err.message : 'Unable to load accounts.', true);
+  } finally {
+    state.admin.loading = false;
+    renderAdminAccountsList();
+    renderAdminInspector();
+  }
+}
+
+async function refreshAdminSuggestions() {
+  if (!state.account.isOwner || !state.account.user) return;
+  state.admin.suggestionsLoading = true;
+  renderAdminSuggestionsList();
+
+  try {
+    await ensureOwnerLock(state.account.user, { usernameLower: 'thegghampter' });
+    state.admin.suggestions = await adminFetchGameSuggestions();
+  } catch (err) {
+    setAdminStatus(err instanceof Error ? err.message : 'Unable to load suggestions.', true);
+  } finally {
+    state.admin.suggestionsLoading = false;
+    renderAdminSuggestionsList();
+  }
+}
+
+async function refreshAdminAll() {
+  await Promise.all([refreshAdminAccounts(), refreshAdminSuggestions()]);
+}
+
+function openAdminPanel() {
+  if (!state.account.user || !state.account.isOwner || !els.adminPanelModal) return;
+  els.adminPanelModal.classList.remove('hidden');
+  setAdminPanelTab(state.admin.activeTab || 'accounts');
+  refreshAdminAll();
+  if (state.admin.activeTab === 'accounts' && els.adminSearchInput) {
+    els.adminSearchInput.focus();
+  }
+}
+
+function closeAdminPanel() {
+  if (!els.adminPanelModal) return;
+  els.adminPanelModal.classList.add('hidden');
+  setAdminStatus('');
+}
+
+function setSuggestFeedback(message, isError = true) {
+  if (!els.suggestFeedbackBox) return;
+  if (!message) {
+    els.suggestFeedbackBox.textContent = '';
+    els.suggestFeedbackBox.className = 'hidden rounded-lg px-3.5 py-2.5 text-xs leading-relaxed';
+    return;
+  }
+  els.suggestFeedbackBox.textContent = message;
+  els.suggestFeedbackBox.className = isError
+    ? 'rounded-lg border border-red-500/40 bg-red-500/10 px-3.5 py-2.5 text-xs leading-relaxed text-red-300'
+    : 'rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-2.5 text-xs leading-relaxed text-emerald-300';
+}
+
+function setSuggestBusy(busy) {
+  state.suggest.busy = busy;
+  if (els.suggestSubmitBtn) {
+    els.suggestSubmitBtn.disabled = busy;
+    els.suggestSubmitBtn.textContent = busy ? 'Sending...' : 'Send Suggestion';
+  }
+  if (els.suggestCancelBtn) els.suggestCancelBtn.disabled = busy;
+  if (els.suggestTitleInput) els.suggestTitleInput.disabled = busy;
+  if (els.suggestUrlInput) els.suggestUrlInput.disabled = busy;
+  if (els.suggestNotesInput) els.suggestNotesInput.disabled = busy;
+}
+
+function openSuggestModal() {
+  if (!els.suggestGameModal) return;
+  setSuggestFeedback('');
+  els.suggestGameModal.classList.remove('hidden');
+  if (els.suggestTitleInput) {
+    els.suggestTitleInput.focus();
+  }
+}
+
+function closeSuggestModal() {
+  if (!els.suggestGameModal) return;
+  els.suggestGameModal.classList.add('hidden');
+  setSuggestFeedback('');
+}
+
+async function handleSuggestFormSubmit(event) {
+  event.preventDefault();
+  if (state.suggest.busy) return;
+
+  const title = els.suggestTitleInput ? els.suggestTitleInput.value : '';
+  const siteUrl = els.suggestUrlInput ? els.suggestUrlInput.value : '';
+  const notes = els.suggestNotesInput ? els.suggestNotesInput.value : '';
+
+  setSuggestFeedback('');
+  setSuggestBusy(true);
+
+  try {
+    const created = await submitGameSuggestion(
+      { title, siteUrl, notes },
+      state.account.username
+    );
+    if (els.suggestTitleInput) els.suggestTitleInput.value = '';
+    if (els.suggestUrlInput) els.suggestUrlInput.value = '';
+    if (els.suggestNotesInput) els.suggestNotesInput.value = '';
+    setSuggestFeedback(`Suggestion sent for "${created.title}"! The site owner can see it now.`, false);
+    if (state.account.isOwner && els.adminPanelModal && !els.adminPanelModal.classList.contains('hidden')) {
+      refreshAdminSuggestions();
+    }
+  } catch (err) {
+    setSuggestFeedback(mapAuthErrorMessage(err), true);
+  } finally {
+    setSuggestBusy(false);
+  }
+}
+
+function hasOnboarded() {
+  try {
+    return localStorage.getItem(STORAGE_ONBOARDED_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function markOnboarded() {
+  try {
+    localStorage.setItem(STORAGE_ONBOARDED_KEY, '1');
+  } catch {
+    // Ignore storage quota issues
+  }
+}
+
+function openWelcomeModal() {
+  if (!els.welcomeAccountModal) return;
+  els.welcomeAccountModal.classList.remove('hidden');
+  if (els.welcomeSignupBtn) {
+    els.welcomeSignupBtn.focus();
+  }
+}
+
+function closeWelcomeModal() {
+  if (!els.welcomeAccountModal) return;
+  els.welcomeAccountModal.classList.add('hidden');
+}
+
+function initAccountAuthSync() {
+  updateAccountHeaderUI();
+  subscribeToAuthState(async (user) => {
+    state.account.ready = true;
+    if (state.account.suppressNextAuthSync) return;
+
+    if (!user) {
+      state.account.user = null;
+      state.account.username = '';
+      state.account.isOwner = false;
+      closeAdminPanel();
+      updateAccountHeaderUI();
+      if (!state.account.onboardPromptChecked) {
+        state.account.onboardPromptChecked = true;
+        if (!hasOnboarded()) {
+          openWelcomeModal();
+        }
+      }
+      return;
+    }
+
+    state.account.onboardPromptChecked = true;
+    markOnboarded();
+    closeWelcomeModal();
+
+    state.account.user = user;
+    state.account.username = getDisplayUsername(user);
+    state.account.isOwner = isOwnerAccount(null, user);
+    updateAccountHeaderUI();
+
+    try {
+      const profile = await ensureUserProfile(user);
+      state.account.isOwner = isOwnerAccount(profile, user);
+      const accountData = await loadUserAccountData(user.uid);
+      applyAccountDataToWebsite(accountData, user);
+    } catch (err) {
+      console.warn('Unable to hydrate account data:', err);
+    }
+  });
+}
+
 loadLocalStorageState();
 initWallpaperLooper();
 wireEvents();
+initAccountAuthSync();
 fetchGamesCatalog();

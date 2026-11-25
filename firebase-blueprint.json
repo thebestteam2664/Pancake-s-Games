@@ -1,0 +1,331 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private player account profile storing username and favorite game IDs.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the account owner."
+        },
+        "username": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 24,
+          "pattern": "^[a-zA-Z0-9_.-]+$",
+          "description": "Display username chosen by the player."
+        },
+        "usernameLower": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 24,
+          "pattern": "^[a-z0-9_.-]+$",
+          "description": "Lowercase normalized username."
+        },
+        "favorites": {
+          "type": "array",
+          "description": "List of favorited game IDs (up to 1000)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the account profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the account profile was last updated."
+        }
+      },
+      "required": [
+        "uid",
+        "username",
+        "usernameLower",
+        "favorites",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GameSave": {
+      "title": "GameSave",
+      "description": "Saved session metadata, playtime, and checkpoint note for a single game.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "gameId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Game identifier matching the catalog ID."
+        },
+        "savedAt": {
+          "type": "number",
+          "description": "Client epoch milliseconds timestamp when progress was saved."
+        },
+        "playSeconds": {
+          "type": "number",
+          "description": "Total accumulated seconds played."
+        },
+        "note": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 2000,
+          "description": "Optional checkpoint note or export code."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the last save sync."
+        }
+      },
+      "required": [
+        "ownerId",
+        "gameId",
+        "savedAt",
+        "playSeconds",
+        "note",
+        "updatedAt"
+      ]
+    },
+    "GameStorageEntry": {
+      "title": "GameStorageEntry",
+      "description": "Per-game localStorage key/value pair synced under a user's account.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "gameId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Game identifier associated with the scoped localStorage entry."
+        },
+        "storageKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Scoped localStorage key (__pg_game_<gameId>__:<key>)."
+        },
+        "storageValue": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 100000,
+          "description": "String value persisted for the scoped localStorage key."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the last storage sync."
+        }
+      },
+      "required": [
+        "ownerId",
+        "gameId",
+        "storageKey",
+        "storageValue",
+        "updatedAt"
+      ]
+    },
+    "GameSuggestion": {
+      "title": "GameSuggestion",
+      "description": "Player-submitted suggestion for a game or website to add, readable and removable only by the owner.",
+      "type": "object",
+      "properties": {
+        "suggestionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Client-generated suggestion document ID."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Suggested game or website name."
+        },
+        "siteUrl": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300,
+          "description": "Optional http(s) URL to the game or site."
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 500,
+          "description": "Optional player notes about the suggestion."
+        },
+        "submittedByUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Submitter Firebase UID or 'guest' when unauthenticated."
+        },
+        "submittedByUsername": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "description": "Display username of submitter or 'Guest'."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the suggestion was submitted."
+        }
+      },
+      "required": [
+        "suggestionId",
+        "title",
+        "siteUrl",
+        "notes",
+        "submittedByUid",
+        "submittedByUsername",
+        "createdAt"
+      ]
+    },
+    "OwnerLock": {
+      "title": "OwnerLock",
+      "description": "Immutable singleton binding site owner privileges exclusively to the TheGGhampter account.",
+      "type": "object",
+      "properties": {
+        "ownerUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the claimed TheGGhampter owner account."
+        },
+        "ownerUsername": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 12,
+          "pattern": "^thegghampter$",
+          "description": "Lowercase owner username (must be thegghampter)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when owner lock was initialized."
+        }
+      },
+      "required": [
+        "ownerUid",
+        "ownerUsername",
+        "createdAt"
+      ]
+    },
+    "DeletedAccount": {
+      "title": "DeletedAccount",
+      "description": "Revocation marker recorded when the owner deletes an account via the control panel.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the deleted account."
+        },
+        "username": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "description": "Username of the deleted account at deletion time."
+        },
+        "deletedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the owner who deleted the account."
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the account was deleted."
+        }
+      },
+      "required": [
+        "uid",
+        "username",
+        "deletedBy",
+        "deletedAt"
+      ]
+    },
+    "ConnectionCheck": {
+      "title": "ConnectionCheck",
+      "description": "Public read-only connectivity probe document at /test/connection.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "maxLength": 32,
+          "description": "Optional connectivity status."
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Private player profile document keyed by Firebase Auth UID."
+    },
+    "/users/{userId}/gameSaves/{gameId}": {
+      "schema": {
+        "$ref": "#/entities/GameSave"
+      },
+      "description": "Per-game save metadata, playtime, and checkpoint notes owned by {userId}."
+    },
+    "/users/{userId}/gameStorage/{entryId}": {
+      "schema": {
+        "$ref": "#/entities/GameStorageEntry"
+      },
+      "description": "Per-game localStorage key/value backups owned by {userId}."
+    },
+    "/gameSuggestions/{suggestionId}": {
+      "schema": {
+        "$ref": "#/entities/GameSuggestion"
+      },
+      "description": "Player-submitted game/site suggestions visible and manageable exclusively by TheGGhampter."
+    },
+    "/config/{docId}": {
+      "schema": {
+        "$ref": "#/entities/OwnerLock"
+      },
+      "description": "Singleton owner lock document (/config/owner) binding admin privileges to TheGGhampter."
+    },
+    "/deletedAccounts/{userId}": {
+      "schema": {
+        "$ref": "#/entities/DeletedAccount"
+      },
+      "description": "Deleted account revocation markers written by the owner control panel."
+    },
+    "/test/{docId}": {
+      "schema": {
+        "$ref": "#/entities/ConnectionCheck"
+      },
+      "description": "Server connectivity check endpoint allowing single-document get on /test/connection only."
+    }
+  }
+}

@@ -71,15 +71,53 @@
           </button>
         </nav>
 
-        <!-- Zone 3: 1 primary action -->
-        <div class="flex items-center shrink-0">
+        <!-- Zone 3: Random Game + Account Actions -->
+        <div class="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             id="random-game-btn"
-            class="btn-tactile px-4 py-2 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 hover:shadow-[0_0_20px_-4px_rgba(251,191,36,0.55)] rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            class="btn-tactile hidden sm:inline-flex px-3.5 py-2 text-xs font-semibold text-slate-200 bg-slate-900 border border-slate-700 hover:border-amber-400 hover:text-amber-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Random Game
           </button>
+
+          <div id="header-guest-actions" class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              id="open-signin-btn"
+              class="btn-tactile px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-100 bg-slate-900 border border-slate-700 hover:border-amber-400 hover:text-amber-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Sign in
+            </button>
+            <button
+              type="button"
+              id="open-signup-btn"
+              class="btn-tactile px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 hover:shadow-[0_0_20px_-4px_rgba(251,191,36,0.55)] rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Sign up
+            </button>
+          </div>
+
+          <div id="header-user-actions" class="hidden flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              id="open-admin-panel-btn"
+              class="hidden btn-tactile px-3 py-2 text-xs font-semibold text-amber-950 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              Control Panel
+            </button>
+            <span
+              id="header-username-badge"
+              class="px-3 py-1.5 text-xs font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/40 rounded-lg whitespace-nowrap max-w-[150px] truncate"
+            ></span>
+            <button
+              type="button"
+              id="signout-btn"
+              class="btn-tactile px-3 py-2 text-xs font-semibold text-slate-200 bg-slate-900 border border-slate-700 hover:border-red-400 hover:text-red-300 rounded-lg whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -237,6 +275,13 @@
                 >
                   Play Fullscreen
                 </button>
+                <button
+                  type="button"
+                  id="hero-suggest-game-btn"
+                  class="btn-tactile px-5 py-3 text-sm font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/40 hover:bg-amber-400/20 rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+                >
+                  Suggest Game
+                </button>
               </div>
             </div>
 
@@ -352,6 +397,13 @@
           <div class="flex flex-wrap items-center gap-3">
             <button
               type="button"
+              id="catalog-suggest-game-btn"
+              class="btn-tactile px-3.5 py-2 text-xs font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/40 hover:bg-amber-400/20 rounded-lg whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              Suggest Game
+            </button>
+            <button
+              type="button"
               id="catalog-delete-all-btn"
               class="hidden px-3.5 py-2 text-xs font-semibold text-red-300 bg-red-500/10 border border-red-500/35 hover:bg-red-500/20 hover:border-red-400 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
@@ -413,9 +465,14 @@
     <footer class="relative z-10 border-t border-slate-800/80 bg-slate-950/75 backdrop-blur-md">
       <div class="mx-auto max-w-[1320px] px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
         <p>Pancake's Games · Unblocked browser arcade with saved progress &amp; fullscreen play.</p>
-        <button type="button" id="footer-top-btn" class="hover:text-amber-300 transition-colors cursor-pointer">
-          Back to Top
-        </button>
+        <div class="flex items-center gap-5">
+          <button type="button" id="footer-suggest-game-btn" class="text-amber-300 hover:text-amber-200 transition-colors cursor-pointer">
+            Suggest a Game
+          </button>
+          <button type="button" id="footer-top-btn" class="hover:text-amber-300 transition-colors cursor-pointer">
+            Back to Top
+          </button>
+        </div>
       </div>
     </footer>
 
@@ -457,6 +514,363 @@
             Are you sure?
           </button>
         </div>
+      </div>
+    </div>
+
+    <div
+      id="account-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="account-modal-title"
+      aria-describedby="account-modal-subtitle"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div class="w-full max-w-md rounded-2xl border border-amber-400/40 bg-slate-900 p-6 shadow-2xl">
+        <div class="flex items-start gap-3">
+          <div
+            class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 border border-amber-400/35 text-amber-300"
+            aria-hidden="true"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h2 id="account-modal-title" class="font-display text-lg font-bold text-slate-50">
+              Create Your Account
+            </h2>
+            <p id="account-modal-subtitle" class="mt-1 text-sm leading-relaxed text-slate-300">
+              Pick a username and password to keep all your game saves and favorites synced.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-2 gap-3" role="tablist" aria-label="Account mode">
+          <button
+            type="button"
+            id="account-tab-signup"
+            role="tab"
+            aria-selected="true"
+            class="btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-amber-400 text-slate-950 shadow-[0_0_16px_-4px_rgba(251,191,36,0.5)]"
+          >
+            Sign up
+          </button>
+          <button
+            type="button"
+            id="account-tab-signin"
+            role="tab"
+            aria-selected="false"
+            class="btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700"
+          >
+            Sign in
+          </button>
+        </div>
+
+        <form id="account-form" class="mt-5 space-y-4" novalidate>
+          <div>
+            <label for="account-username-input" class="block text-xs font-semibold text-slate-200">
+              Username
+            </label>
+            <input
+              id="account-username-input"
+              type="text"
+              required
+              minlength="3"
+              maxlength="24"
+              autocomplete="username"
+              placeholder="Enter a username"
+              class="mt-1.5 w-full px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400"
+            />
+            <p class="mt-1 text-[11px] text-slate-400">
+              3–24 characters using letters, numbers, _, -, or .
+            </p>
+          </div>
+
+          <div>
+            <label for="account-password-input" class="block text-xs font-semibold text-slate-200">
+              Password
+            </label>
+            <input
+              id="account-password-input"
+              type="password"
+              required
+              minlength="6"
+              maxlength="128"
+              autocomplete="new-password"
+              placeholder="At least 6 characters"
+              class="mt-1.5 w-full px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400"
+            />
+          </div>
+
+          <div
+            id="account-error-box"
+            role="alert"
+            class="hidden rounded-lg border border-red-500/40 bg-red-500/10 px-3.5 py-2.5 text-xs leading-relaxed text-red-300"
+          ></div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-end gap-3">
+            <button
+              type="button"
+              id="account-cancel-btn"
+              class="btn-tactile px-4 py-2 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg whitespace-nowrap cursor-pointer"
+            >
+              Nevermind
+            </button>
+            <button
+              type="submit"
+              id="account-submit-btn"
+              class="btn-tactile px-5 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="admin-panel-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="admin-panel-title"
+      class="hidden fixed inset-0 z-40 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div class="w-full max-w-4xl max-h-[88vh] flex flex-col rounded-2xl border border-amber-400/45 bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-slate-800 bg-slate-950/60">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 border border-amber-400/35 text-amber-300" aria-hidden="true">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l3 7h7l-5.5 4.2L18.5 21 12 16.8 5.5 21l2-7.8L2 9h7l3-7z" />
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <h2 id="admin-panel-title" class="font-display text-lg font-bold text-slate-50 truncate">
+                  Owner Control Panel
+                </h2>
+                <span id="admin-account-count" class="px-2 py-0.5 text-[11px] font-mono font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/30 rounded-md">
+                  0 accounts
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 truncate">
+                Signed in as owner · Inspect created accounts and remove accounts if needed
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              id="admin-refresh-btn"
+              class="btn-tactile px-3 py-1.5 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg whitespace-nowrap cursor-pointer"
+            >
+              Refresh
+            </button>
+            <button
+              type="button"
+              id="admin-close-btn"
+              class="btn-tactile px-3 py-1.5 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg whitespace-nowrap cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+
+        <div class="px-6 py-3 border-b border-slate-800/80 bg-slate-900/90 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              id="admin-tab-accounts"
+              class="btn-tactile px-3.5 py-1.5 text-xs font-bold rounded-lg bg-amber-400 text-slate-950 cursor-pointer"
+            >
+              Accounts
+            </button>
+            <button
+              type="button"
+              id="admin-tab-suggestions"
+              class="btn-tactile px-3.5 py-1.5 text-xs font-bold rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 cursor-pointer"
+            >
+              Suggestions (0)
+            </button>
+            <label for="admin-search-input" class="sr-only">Filter accounts by username</label>
+            <input
+              id="admin-search-input"
+              type="search"
+              placeholder="Search accounts by username..."
+              class="w-full sm:w-64 px-3.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-800 rounded-lg focus:outline-none focus:border-amber-400"
+            />
+          </div>
+          <p id="admin-status-box" role="alert" class="hidden text-xs text-red-300"></p>
+        </div>
+
+        <div id="admin-accounts-view" class="grid grid-cols-1 md:grid-cols-12 flex-1 min-h-[340px] overflow-hidden">
+          <div class="md:col-span-5 border-b md:border-b-0 md:border-r border-slate-800 overflow-y-auto max-h-[54vh] p-4 space-y-2.5" id="admin-accounts-list">
+            <p class="text-xs text-slate-400">Loading accounts...</p>
+          </div>
+
+          <div class="md:col-span-7 overflow-y-auto max-h-[54vh] p-5 bg-slate-950/40" id="admin-account-inspector">
+            <p class="text-xs text-slate-400">
+              Select an account on the left to view their saved games, playtime, checkpoint notes, and favorites.
+            </p>
+          </div>
+        </div>
+
+        <div id="admin-suggestions-view" class="hidden flex-1 min-h-[340px] overflow-y-auto max-h-[54vh] p-5 space-y-3 bg-slate-950/30">
+          <p class="text-xs text-slate-400">Loading game suggestions...</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="suggest-game-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="suggest-game-title"
+      aria-describedby="suggest-game-subtitle"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div class="w-full max-w-md rounded-2xl border border-amber-400/40 bg-slate-900 p-6 shadow-2xl">
+        <div class="flex items-start gap-3">
+          <div
+            class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 border border-amber-400/35 text-amber-300"
+            aria-hidden="true"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h2 id="suggest-game-title" class="font-display text-lg font-bold text-slate-50">
+              Suggest a Game or Site
+            </h2>
+            <p id="suggest-game-subtitle" class="mt-1 text-sm leading-relaxed text-slate-300">
+              Tell the site owner what game or website you want added next.
+            </p>
+          </div>
+        </div>
+
+        <form id="suggest-game-form" class="mt-5 space-y-4" novalidate>
+          <div>
+            <label for="suggest-title-input" class="block text-xs font-semibold text-slate-200">
+              Game or Website Name
+            </label>
+            <input
+              id="suggest-title-input"
+              type="text"
+              required
+              minlength="2"
+              maxlength="100"
+              placeholder="e.g. Minecraft Classic, PolyTrack, coolmathgames.com"
+              class="mt-1.5 w-full px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400"
+            />
+          </div>
+
+          <div>
+            <label for="suggest-url-input" class="block text-xs font-semibold text-slate-200">
+              Website Link <span class="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <input
+              id="suggest-url-input"
+              type="url"
+              maxlength="300"
+              placeholder="https://..."
+              class="mt-1.5 w-full px-3.5 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400"
+            />
+          </div>
+
+          <div>
+            <label for="suggest-notes-input" class="block text-xs font-semibold text-slate-200">
+              Notes <span class="text-slate-400 font-normal">(optional)</span>
+            </label>
+            <textarea
+              id="suggest-notes-input"
+              rows="2"
+              maxlength="500"
+              placeholder="Any details or version you want..."
+              class="mt-1.5 w-full px-3.5 py-2 text-sm text-slate-100 placeholder:text-slate-500 bg-slate-950/90 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400 resize-none"
+            ></textarea>
+          </div>
+
+          <div
+            id="suggest-feedback-box"
+            role="alert"
+            class="hidden rounded-lg px-3.5 py-2.5 text-xs leading-relaxed"
+          ></div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-end gap-3">
+            <button
+              type="button"
+              id="suggest-cancel-btn"
+              class="btn-tactile px-4 py-2 text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg whitespace-nowrap cursor-pointer"
+            >
+              Nevermind
+            </button>
+            <button
+              type="submit"
+              id="suggest-submit-btn"
+              class="btn-tactile px-5 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Send Suggestion
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="welcome-account-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="welcome-account-title"
+      aria-describedby="welcome-account-message"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div class="w-full max-w-md rounded-2xl border border-amber-400/40 bg-slate-900 p-6 shadow-2xl">
+        <div class="flex items-start gap-3">
+          <div
+            class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 border border-amber-400/35 text-amber-300"
+            aria-hidden="true"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h2 id="welcome-account-title" class="font-display text-lg font-bold text-slate-50">
+              Do you have an account?
+            </h2>
+            <p id="welcome-account-message" class="mt-2 text-sm leading-relaxed text-slate-300">
+              Sign in to restore your saved progress, create a username account to keep your saves anywhere, or jump right in as a guest.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            id="welcome-signup-btn"
+            class="btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-[0_0_16px_-4px_rgba(251,191,36,0.5)]"
+          >
+            Sign up
+          </button>
+          <button
+            type="button"
+            id="welcome-signin-btn"
+            class="btn-tactile w-full py-3 px-4 text-sm font-bold rounded-xl cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700"
+          >
+            Sign in
+          </button>
+        </div>
+
+        <button
+          type="button"
+          id="welcome-guest-btn"
+          class="btn-tactile mt-3 w-full py-2.5 px-4 text-xs font-semibold text-slate-300 hover:text-slate-100 bg-slate-950/70 hover:bg-slate-800/80 border border-slate-800 rounded-xl cursor-pointer"
+        >
+          Continue as Guest
+        </button>
       </div>
     </div>
 
